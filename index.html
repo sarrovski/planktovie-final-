@@ -109,13 +109,13 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .hero-certifications{display:flex;gap:1.25rem;padding-top:1.25rem;border-top:1px solid var(--gray-100)}
 .hero-cert{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--gray-500)}
 .hero-cert svg{color:var(--teal);flex-shrink:0}
-.hero-visual{background:var(--gray-50);border:1px solid var(--gray-100);border-radius:var(--radius);overflow:hidden;position:relative;aspect-ratio:5/4}
-.hero-visual-inner{padding:2.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center}
+.hero-visual{background:#ffffff;border:1px solid var(--gray-100);border-radius:var(--radius);overflow:hidden;position:relative;aspect-ratio:5/4}
+.hero-visual-inner{padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:.75rem}
 .hero-visual-icon{font-size:3.5rem;margin-bottom:1rem;opacity:.35}
 .hero-visual-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;width:100%;max-width:260px}
-.hv-stat{padding:.65rem;background:var(--white);border:1px solid var(--gray-100);border-radius:4px;text-align:center}
+.hv-stat{padding:.75rem;background:#fff;border:1px solid rgba(0,122,110,.12);border-radius:6px;text-align:center;box-shadow:0 2px 8px rgba(0,122,110,.06)}
 .hv-stat .n{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--navy)}
-.hv-stat .l{font-size:.62rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-top:.1rem}
+.hv-stat .l{font-size:.62rem;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-top:.1rem}
 
 /* ═══ NOTICE BAR ═══ */
 /* ═══ ANIMAL FRIEZE — BLUEPRINT ═══ */
@@ -179,7 +179,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .pg{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
 .pc{border:1px solid var(--gray-100);border-radius:var(--radius);overflow:hidden;transition:all .2s;background:var(--white);cursor:pointer}
 .pc:hover{border-color:var(--gray-200);box-shadow:0 2px 10px rgba(0,0,0,.04)}
-.pc-img{height:180px;background:var(--gray-50);display:flex;align-items:center;justify-content:center;position:relative;padding:.75rem}
+.pc-img{height:180px;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;padding:.75rem}
 .pc-img img{max-width:100%;max-height:100%;object-fit:contain}
 .pc-tag{position:absolute;top:.45rem;left:.45rem;padding:.12rem .4rem;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;border-radius:3px}
 .tag-best{background:var(--teal-light);color:var(--teal)}.tag-pro{background:var(--blue-light);color:var(--blue)}.tag-sale{background:var(--amber-light);color:var(--amber)}.tag-brand{background:#f3f0ff;color:#6d28d9}
@@ -205,7 +205,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .team-g{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
 .tm{padding:1.25rem;border:1px solid var(--gray-100);border-radius:var(--radius);text-align:center;background:var(--white);transition:border-color .2s}
 .tm:hover{border-color:var(--teal)}
-.tm-av{width:52px;height:52px;border-radius:50%;margin:0 auto .65rem;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:#fff;background:var(--navy)}
+.tm-av{width:80px;height:80px;border-radius:50%;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:#fff;background:var(--navy)}
 .tm h4{font-size:.86rem;font-weight:600;color:var(--gray-700)}.tm .role{font-size:.68rem;color:var(--teal);font-weight:600;margin-top:.1rem}
 .tm p{font-size:.74rem;color:var(--gray-400);margin-top:.35rem;line-height:1.5}
 
@@ -218,8 +218,8 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .brand-block-rev .brand-block-img{order:1}
 .brand-block-text h2{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--navy);margin-bottom:.5rem}
 .brand-block-text p{font-size:.92rem;color:var(--gray-500);line-height:1.75}
-.brand-block-img{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;background:var(--gray-50);border:1px solid var(--gray-100)}
-.brand-block-img img{width:100%;height:100%;object-fit:contain;padding:1rem}
+.brand-block-img{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;background:#fff;border:1px solid var(--gray-100)}
+.brand-block-img img{width:100%;height:100%;object-fit:contain;padding:1rem;mix-blend-mode:multiply}
 .brand-block-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--teal);opacity:.4}
 .brand-block-placeholder span{font-size:.72rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
 @media(max-width:640px){.brand-block,.brand-block-rev{grid-template-columns:1fr}.brand-block-rev .brand-block-text{order:1}.brand-block-rev .brand-block-img{order:2}}
@@ -299,7 +299,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 
 /* ═══ PRODUCT DETAIL ═══ */
 .pd-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
-.pd-gallery{background:var(--gray-50);border:1px solid var(--gray-100);border-radius:var(--radius);position:sticky;top:calc(var(--nav-h) + 1.5rem);overflow:hidden}
+.pd-gallery{background:#fff;border:1px solid var(--gray-100);border-radius:var(--radius);position:sticky;top:calc(var(--nav-h) + 1.5rem);overflow:hidden}
 .pd-gallery img{max-width:100%;max-height:100%;object-fit:contain}
 
 .pd-gallery-view{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:1.5rem}
@@ -446,7 +446,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 <nav class="nav"><div class="wrap nav-inner">
   <div class="nav-left">
     <div class="logo" onclick="go('home')">
-      <div class="logo-mark"><img src="logo-labo-transparent.png" alt="Planktovie"></div>
+      <div class="logo-mark" style="background:var(--navy);border-radius:4px;padding:3px 6px"><img src="logo-labo-transparent.png" alt="Planktovie"></div>
     </div>
     <div class="nav-links">
       <div class="nav-link active" onclick="go('home')">Home</div>
@@ -513,15 +513,30 @@ input,select,textarea{font-family:inherit;font-size:inherit}
         <div class="hero-cert"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> EU H2020 Funded</div>
       </div>
     </div>
-    <div class="hero-visual"><div class="hero-visual-inner" style="padding:1.5rem">
-      <img src="logo-labo-transparent.png" alt="Planktovie — Innovation for Aquatic Animal Research" style="max-width:320px;margin-bottom:1.5rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,.1))">
-      <div class="hero-visual-grid">
-        <div class="hv-stat"><div class="n">20+</div><div class="l">Years Expertise</div></div>
-        <div class="hv-stat"><div class="n">58</div><div class="l">Products</div></div>
-        <div class="hv-stat"><div class="n">40+</div><div class="l">Countries</div></div>
-        <div class="hv-stat"><div class="n">100%</div><div class="l">Certified</div></div>
+    <div class="hero-visual">
+      <!-- Decorative background -->
+      <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden">
+        <div style="position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(0,122,110,.35) 0%,transparent 70%);top:-100px;right:-100px"></div>
+        <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 70%);bottom:-40px;left:-40px"></div>
+        <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.05" viewBox="0 0 400 320"><defs><pattern id="hg" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0L0 0 0 32" fill="none" stroke="white" stroke-width=".5"/></pattern></defs><rect width="400" height="320" fill="url(#hg)"/></svg>
       </div>
-    </div></div>
+      <!-- Content -->
+      <div class="hero-visual-inner" style="padding:2rem;position:relative;z-index:1;gap:1.5rem">
+        <!-- FishGun image -->
+        <div style="flex:1;display:flex;align-items:center;justify-content:center">
+          <img src="brand-fishgun.png" alt="FishGun L3" style="max-width:240px;max-height:180px;object-fit:contain;mix-blend-mode:multiply">
+        </div>
+        <!-- Label -->
+        <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.25rem">FishGun L3 · Live Feed Dispenser</div>
+        <!-- Stats grid -->
+        <div class="hero-visual-grid" style="width:100%">
+          <div class="hv-stat"><div class="n">20+</div><div class="l">Years Expertise</div></div>
+          <div class="hv-stat"><div class="n">58</div><div class="l">Products</div></div>
+          <div class="hv-stat"><div class="n">40+</div><div class="l">Countries</div></div>
+          <div class="hv-stat"><div class="n">100%</div><div class="l">Certified</div></div>
+        </div>
+      </div>
+    </div>
   </div></div></section>
 
   <div class="notice-bar"><div class="wrap notice-inner">
@@ -532,7 +547,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
   </div></div>
 
   <!-- Animal Frieze -->
-  <div class="frieze" aria-hidden="true"><div class="frieze-inner"><div class="frieze-track"><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafish.jpg/320px-Zebrafish.jpg" alt="Zebrafish" loading="lazy"><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Nothobranchius_rachovii_male.jpg/250px-Nothobranchius_rachovii_male.jpg" alt="Killifish" loading="lazy"><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><img class="fa-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Xenopus_laevis_%28Clawed_frog%29.jpg/320px-Xenopus_laevis_%28Clawed_frog%29.jpg" alt="Xenopus" loading="lazy"><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div></div></div></div>
+  <div class="frieze" aria-hidden="true"><div class="frieze-inner"><div class="frieze-track"><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="38" cy="20" rx="22" ry="10" fill="#b8e0d8"/><path d="M60 20 Q74 13 76 20 Q74 27 60 20Z" fill="#007a6e"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".6"/><circle cx="20" cy="17" r="2.5" fill="#0f2b4c"/><line x1="28" y1="11" x2="28" y2="29" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="35" y1="10" x2="35" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="42" y1="10" x2="42" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/></svg></div><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="36" cy="20" rx="20" ry="9" fill="#a8d5d0"/><path d="M56 20 Q70 13 72 20 Q70 27 56 20Z" fill="#007a6e" opacity=".8"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".5"/><circle cx="19" cy="17" r="2.5" fill="#0f2b4c"/><path d="M28 12 Q33 7 38 12" fill="#007a6e" opacity=".7"/><path d="M28 28 Q33 33 38 28" fill="#007a6e" opacity=".7"/><ellipse cx="48" cy="17" rx="5" ry="3" fill="#007a6e" opacity=".2" transform="rotate(-10 48 17)"/></svg></div><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="60" height="50" viewBox="0 0 60 50"><ellipse cx="30" cy="26" rx="18" ry="14" fill="#c8e6e3"/><circle cx="30" cy="26" r="6" fill="#007a6e" opacity=".2"/><circle cx="20" cy="20" r="3.5" fill="none" stroke="#0f2b4c" stroke-width="1.2"/><circle cx="20" cy="20" r="1.5" fill="#0f2b4c"/><path d="M12 32 Q6 38 4 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M48 32 Q54 38 56 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 38 Q18 44 14 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M40 38 Q42 44 46 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="38" cy="20" rx="22" ry="10" fill="#b8e0d8"/><path d="M60 20 Q74 13 76 20 Q74 27 60 20Z" fill="#007a6e"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".6"/><circle cx="20" cy="17" r="2.5" fill="#0f2b4c"/><line x1="28" y1="11" x2="28" y2="29" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="35" y1="10" x2="35" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="42" y1="10" x2="42" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/></svg></div><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="36" cy="20" rx="20" ry="9" fill="#a8d5d0"/><path d="M56 20 Q70 13 72 20 Q70 27 56 20Z" fill="#007a6e" opacity=".8"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".5"/><circle cx="19" cy="17" r="2.5" fill="#0f2b4c"/><path d="M28 12 Q33 7 38 12" fill="#007a6e" opacity=".7"/><path d="M28 28 Q33 33 38 28" fill="#007a6e" opacity=".7"/><ellipse cx="48" cy="17" rx="5" ry="3" fill="#007a6e" opacity=".2" transform="rotate(-10 48 17)"/></svg></div><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="60" height="50" viewBox="0 0 60 50"><ellipse cx="30" cy="26" rx="18" ry="14" fill="#c8e6e3"/><circle cx="30" cy="26" r="6" fill="#007a6e" opacity=".2"/><circle cx="20" cy="20" r="3.5" fill="none" stroke="#0f2b4c" stroke-width="1.2"/><circle cx="20" cy="20" r="1.5" fill="#0f2b4c"/><path d="M12 32 Q6 38 4 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M48 32 Q54 38 56 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 38 Q18 44 14 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M40 38 Q42 44 46 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="38" cy="20" rx="22" ry="10" fill="#b8e0d8"/><path d="M60 20 Q74 13 76 20 Q74 27 60 20Z" fill="#007a6e"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".6"/><circle cx="20" cy="17" r="2.5" fill="#0f2b4c"/><line x1="28" y1="11" x2="28" y2="29" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="35" y1="10" x2="35" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="42" y1="10" x2="42" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/></svg></div><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="36" cy="20" rx="20" ry="9" fill="#a8d5d0"/><path d="M56 20 Q70 13 72 20 Q70 27 56 20Z" fill="#007a6e" opacity=".8"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".5"/><circle cx="19" cy="17" r="2.5" fill="#0f2b4c"/><path d="M28 12 Q33 7 38 12" fill="#007a6e" opacity=".7"/><path d="M28 28 Q33 33 38 28" fill="#007a6e" opacity=".7"/><ellipse cx="48" cy="17" rx="5" ry="3" fill="#007a6e" opacity=".2" transform="rotate(-10 48 17)"/></svg></div><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="60" height="50" viewBox="0 0 60 50"><ellipse cx="30" cy="26" rx="18" ry="14" fill="#c8e6e3"/><circle cx="30" cy="26" r="6" fill="#007a6e" opacity=".2"/><circle cx="20" cy="20" r="3.5" fill="none" stroke="#0f2b4c" stroke-width="1.2"/><circle cx="20" cy="20" r="1.5" fill="#0f2b4c"/><path d="M12 32 Q6 38 4 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M48 32 Q54 38 56 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 38 Q18 44 14 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M40 38 Q42 44 46 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="38" cy="20" rx="22" ry="10" fill="#b8e0d8"/><path d="M60 20 Q74 13 76 20 Q74 27 60 20Z" fill="#007a6e"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".6"/><circle cx="20" cy="17" r="2.5" fill="#0f2b4c"/><line x1="28" y1="11" x2="28" y2="29" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="35" y1="10" x2="35" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="42" y1="10" x2="42" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/></svg></div><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="36" cy="20" rx="20" ry="9" fill="#a8d5d0"/><path d="M56 20 Q70 13 72 20 Q70 27 56 20Z" fill="#007a6e" opacity=".8"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".5"/><circle cx="19" cy="17" r="2.5" fill="#0f2b4c"/><path d="M28 12 Q33 7 38 12" fill="#007a6e" opacity=".7"/><path d="M28 28 Q33 33 38 28" fill="#007a6e" opacity=".7"/><ellipse cx="48" cy="17" rx="5" ry="3" fill="#007a6e" opacity=".2" transform="rotate(-10 48 17)"/></svg></div><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="60" height="50" viewBox="0 0 60 50"><ellipse cx="30" cy="26" rx="18" ry="14" fill="#c8e6e3"/><circle cx="30" cy="26" r="6" fill="#007a6e" opacity=".2"/><circle cx="20" cy="20" r="3.5" fill="none" stroke="#0f2b4c" stroke-width="1.2"/><circle cx="20" cy="20" r="1.5" fill="#0f2b4c"/><path d="M12 32 Q6 38 4 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M48 32 Q54 38 56 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 38 Q18 44 14 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M40 38 Q42 44 46 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="38" cy="20" rx="22" ry="10" fill="#b8e0d8"/><path d="M60 20 Q74 13 76 20 Q74 27 60 20Z" fill="#007a6e"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".6"/><circle cx="20" cy="17" r="2.5" fill="#0f2b4c"/><line x1="28" y1="11" x2="28" y2="29" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="35" y1="10" x2="35" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="42" y1="10" x2="42" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/></svg></div><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="36" cy="20" rx="20" ry="9" fill="#a8d5d0"/><path d="M56 20 Q70 13 72 20 Q70 27 56 20Z" fill="#007a6e" opacity=".8"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".5"/><circle cx="19" cy="17" r="2.5" fill="#0f2b4c"/><path d="M28 12 Q33 7 38 12" fill="#007a6e" opacity=".7"/><path d="M28 28 Q33 33 38 28" fill="#007a6e" opacity=".7"/><ellipse cx="48" cy="17" rx="5" ry="3" fill="#007a6e" opacity=".2" transform="rotate(-10 48 17)"/></svg></div><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="60" height="50" viewBox="0 0 60 50"><ellipse cx="30" cy="26" rx="18" ry="14" fill="#c8e6e3"/><circle cx="30" cy="26" r="6" fill="#007a6e" opacity=".2"/><circle cx="20" cy="20" r="3.5" fill="none" stroke="#0f2b4c" stroke-width="1.2"/><circle cx="20" cy="20" r="1.5" fill="#0f2b4c"/><path d="M12 32 Q6 38 4 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M48 32 Q54 38 56 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 38 Q18 44 14 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M40 38 Q42 44 46 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="38" cy="20" rx="22" ry="10" fill="#b8e0d8"/><path d="M60 20 Q74 13 76 20 Q74 27 60 20Z" fill="#007a6e"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".6"/><circle cx="20" cy="17" r="2.5" fill="#0f2b4c"/><line x1="28" y1="11" x2="28" y2="29" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="35" y1="10" x2="35" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="42" y1="10" x2="42" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/></svg></div><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="36" cy="20" rx="20" ry="9" fill="#a8d5d0"/><path d="M56 20 Q70 13 72 20 Q70 27 56 20Z" fill="#007a6e" opacity=".8"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".5"/><circle cx="19" cy="17" r="2.5" fill="#0f2b4c"/><path d="M28 12 Q33 7 38 12" fill="#007a6e" opacity=".7"/><path d="M28 28 Q33 33 38 28" fill="#007a6e" opacity=".7"/><ellipse cx="48" cy="17" rx="5" ry="3" fill="#007a6e" opacity=".2" transform="rotate(-10 48 17)"/></svg></div><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="60" height="50" viewBox="0 0 60 50"><ellipse cx="30" cy="26" rx="18" ry="14" fill="#c8e6e3"/><circle cx="30" cy="26" r="6" fill="#007a6e" opacity=".2"/><circle cx="20" cy="20" r="3.5" fill="none" stroke="#0f2b4c" stroke-width="1.2"/><circle cx="20" cy="20" r="1.5" fill="#0f2b4c"/><path d="M12 32 Q6 38 4 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M48 32 Q54 38 56 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 38 Q18 44 14 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M40 38 Q42 44 46 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="38" cy="20" rx="22" ry="10" fill="#b8e0d8"/><path d="M60 20 Q74 13 76 20 Q74 27 60 20Z" fill="#007a6e"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".6"/><circle cx="20" cy="17" r="2.5" fill="#0f2b4c"/><line x1="28" y1="11" x2="28" y2="29" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="35" y1="10" x2="35" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="42" y1="10" x2="42" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/></svg></div><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="36" cy="20" rx="20" ry="9" fill="#a8d5d0"/><path d="M56 20 Q70 13 72 20 Q70 27 56 20Z" fill="#007a6e" opacity=".8"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".5"/><circle cx="19" cy="17" r="2.5" fill="#0f2b4c"/><path d="M28 12 Q33 7 38 12" fill="#007a6e" opacity=".7"/><path d="M28 28 Q33 33 38 28" fill="#007a6e" opacity=".7"/><ellipse cx="48" cy="17" rx="5" ry="3" fill="#007a6e" opacity=".2" transform="rotate(-10 48 17)"/></svg></div><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="60" height="50" viewBox="0 0 60 50"><ellipse cx="30" cy="26" rx="18" ry="14" fill="#c8e6e3"/><circle cx="30" cy="26" r="6" fill="#007a6e" opacity=".2"/><circle cx="20" cy="20" r="3.5" fill="none" stroke="#0f2b4c" stroke-width="1.2"/><circle cx="20" cy="20" r="1.5" fill="#0f2b4c"/><path d="M12 32 Q6 38 4 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M48 32 Q54 38 56 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 38 Q18 44 14 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M40 38 Q42 44 46 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="38" cy="20" rx="22" ry="10" fill="#b8e0d8"/><path d="M60 20 Q74 13 76 20 Q74 27 60 20Z" fill="#007a6e"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".6"/><circle cx="20" cy="17" r="2.5" fill="#0f2b4c"/><line x1="28" y1="11" x2="28" y2="29" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="35" y1="10" x2="35" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/><line x1="42" y1="10" x2="42" y2="30" stroke="#0f2b4c" stroke-width=".8" opacity=".4"/></svg></div><div class="fa-labels"><div class="fa-name">Zebrafish</div><div class="fa-sci">Danio rerio</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="80" height="40" viewBox="0 0 80 40"><ellipse cx="36" cy="20" rx="20" ry="9" fill="#a8d5d0"/><path d="M56 20 Q70 13 72 20 Q70 27 56 20Z" fill="#007a6e" opacity=".8"/><path d="M16 20 Q6 14 4 20 Q6 26 16 20Z" fill="#007a6e" opacity=".5"/><circle cx="19" cy="17" r="2.5" fill="#0f2b4c"/><path d="M28 12 Q33 7 38 12" fill="#007a6e" opacity=".7"/><path d="M28 28 Q33 33 38 28" fill="#007a6e" opacity=".7"/><ellipse cx="48" cy="17" rx="5" ry="3" fill="#007a6e" opacity=".2" transform="rotate(-10 48 17)"/></svg></div><div class="fa-labels"><div class="fa-name">Killifish</div><div class="fa-sci">Nothobranchius rachovii</div></div></div><div class="fa-card"><div style="display:flex;align-items:center;justify-content:center;height:56px"><svg width="60" height="50" viewBox="0 0 60 50"><ellipse cx="30" cy="26" rx="18" ry="14" fill="#c8e6e3"/><circle cx="30" cy="26" r="6" fill="#007a6e" opacity=".2"/><circle cx="20" cy="20" r="3.5" fill="none" stroke="#0f2b4c" stroke-width="1.2"/><circle cx="20" cy="20" r="1.5" fill="#0f2b4c"/><path d="M12 32 Q6 38 4 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M48 32 Q54 38 56 44" stroke="#007a6e" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M20 38 Q18 44 14 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M40 38 Q42 44 46 46" stroke="#007a6e" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div><div class="fa-labels"><div class="fa-name">Xenopus</div><div class="fa-sci">Xenopus laevis</div></div></div></div></div></div>
 
   <section class="sec"><div class="wrap">
     <div class="sec-header"><div class="sec-label">Application Domains</div><h2 class="sec-title">Serving three critical sectors</h2><p class="sec-desc">Precision aquatic nutrition across scientific research, aquaculture, and the aquarium hobby.</p></div>
@@ -607,10 +622,9 @@ input,select,textarea{font-family:inherit;font-size:inherit}
     </div>
     <div class="sec-header" style="margin-top:2.5rem"><div class="sec-label">Leadership</div><h2 class="sec-title">Our Team</h2></div>
     <div class="team-g">
-      <div class="tm"><div class="tm-av" style="background:linear-gradient(135deg,#007a6e,#0f2b4c);display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:.78rem;font-weight:700">CL</span></div><h4>Cyril Lefranc</h4><div class="role">Développeur de produits</div><p>Product development and scientific research lead</p></div>
-      <div class="tm"><div class="tm-av" style="background:linear-gradient(135deg,#007a6e,#0f2b4c);display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:.78rem;font-weight:700">AB</span></div><h4>Aya Boukhlifi</h4><div class="role">Assistante admin &amp; Suivi clientèle</div><p>Administrative support and customer follow-up</p></div>
-      <div class="tm"><div class="tm-av" style="background:linear-gradient(135deg,#007a6e,#0f2b4c);display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:.78rem;font-weight:700">YR</span></div><h4>Yra Rateau</h4><div class="role">Technicienne labo coraux/écotox</div><p>Coral lab and ecotoxicology technician</p></div>
-      <div class="tm"><div class="tm-av" style="background:linear-gradient(135deg,#007a6e,#0f2b4c);display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:.78rem;font-weight:700">AD</span></div><h4>Arthur Detournay</h4><div class="role">Technicien modélisation 3D</div><p>3D modelling technician</p></div>
+      <div class="tm"><div class="tm-av" style="background:none;overflow:hidden;padding:0"><img src="team-cyril.jpg" alt="Cyril Lefranc" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div><h4>Cyril Lefranc, PhD</h4><div class="role">Business Development</div><p>Doctorate in computational fluid dynamics applied to biology</p></div>
+      <div class="tm"><div class="tm-av" style="background:none;overflow:hidden;padding:0"><img src="emmanuel-sobra.jpg" alt="Emmanuel Sobra" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div><h4>Emmanuel Sobra</h4><div class="role">President</div><p>Leadership and company direction</p></div>
+      <div class="tm"><div class="tm-av" style="background:none;overflow:hidden;padding:0"><img src="team-olivier.jpg" alt="Olivier Detournay" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div><h4>Olivier Detournay, PhD</h4><div class="role">Chief Scientific Officer</div><p>Scientific research and innovation lead</p></div>
     </div></section>
 </div>
 
@@ -625,8 +639,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
           <p>Semi-automatic dispensers designed to improve feeding reproducibility and precision while eliminating musculoskeletal strain for laboratory technicians. The FishGun D2 handles solid feeds across all zebrafish developmental stages. The L3 adds live zooplankton transport capability with RFID-based tank identification.</p>
         </div>
         <div class="brand-block-img">
-          <img src="https://planktovie.biz/wp-content/uploads/2021/04/fishgun-d2-category.png" alt="FishGun D2" onerror="this.style.display='none'">
-          <div class="brand-block-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6M12 9v6"/></svg><span>FishGun D2</span></div>
+          <img src="brand-fishgun.png" alt="FishGun L3" style="width:100%;height:100%;object-fit:contain;padding:.75rem">
         </div>
       </div>
       <div class="brand-block brand-block-rev">
@@ -635,8 +648,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
           <p>A stable extruded feed with neutral buoyancy suitable for all stages of fish development, from larval to adult. Growing Micro Asta+ is enriched with Astaxanthin, strengthening both coloration and immune response in marine fish and invertebrates.</p>
         </div>
         <div class="brand-block-img">
-          <img src="https://planktovie.biz/wp-content/uploads/2018/09/growing-micro-category.png" alt="Growing Micro" onerror="this.style.display='none'">
-          <div class="brand-block-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg><span>Growing Micro</span></div>
+          <img src="brand-growing-micro.png" alt="Growing Micro" style="width:100%;height:100%;object-fit:contain;padding:.75rem">
         </div>
       </div>
       <div class="brand-block">
@@ -645,8 +657,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
           <p>We cultivate zooplankton (rotifers, Daphnia, Artemia) fed with carefully selected phytoplankton diets rich in Astaxanthin. All live cultures undergo regular QM Diagnostics sanitary testing to ensure pathogen-free status.</p>
         </div>
         <div class="brand-block-img">
-          <img src="https://planktovie.biz/wp-content/uploads/2018/09/B001-rotifer-1M-1-5.png" alt="Rotifers" onerror="this.style.display='none'">
-          <div class="brand-block-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span>Live Cultures</span></div>
+          <img src="brand-rotifer.png" alt="Live Cultures" style="width:100%;height:100%;object-fit:contain;padding:.75rem">
         </div>
       </div>
       <div class="brand-block brand-block-rev">
@@ -655,8 +666,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
           <p>In partnership with CNRS, we developed photo-bioreactors for high-yield production of difficult microalgae species such as dinoflagellates — now available to the scientific community worldwide.</p>
         </div>
         <div class="brand-block-img">
-          <img src="https://planktovie.biz/wp-content/uploads/2024/07/Logo-corail-1.png" alt="Bioreactor" onerror="this.style.display='none'">
-          <div class="brand-block-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Photo-Bioreactor</span></div>
+          <img src="brand-bioreactor.png" alt="Photo-Bioreactor" style="width:100%;height:100%;object-fit:contain;padding:.75rem">
         </div>
       </div>
     </div>
@@ -1001,7 +1011,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 <footer class="footer" id="mainFooter"><div class="wrap">
   <div class="foot-grid">
     <div class="foot-brand">
-      <div class="logo" onclick="go('home')" style="cursor:pointer"><div class="logo-mark"><img src="logo-labo-transparent.png" alt="Planktovie"></div></div>
+      <div class="logo" onclick="go('home')" style="cursor:pointer"><div class="logo-mark" style="background:var(--navy);border-radius:4px;padding:3px 6px"><img src="logo-labo-transparent.png" alt="Planktovie"></div></div>
       <p>Nutritional solutions and precision equipment for aquatic organisms. Serving research, aquaculture, and aquariology since 2016.</p>
     </div>
     <div class="foot-col"><h5>Shop</h5><a onclick="go('shop')">Live Feed</a><a onclick="go('shop')">Dry Feed</a><a onclick="go('shop')">Equipment</a><a onclick="go('shop')">Salts</a><a onclick="go('shop')">Tests</a></div>
@@ -1289,6 +1299,26 @@ function toggleMobile(){
   mn.style.display=isOpen?'none':'flex';
   mn.classList.toggle('open',!isOpen);
 }
+
+const pages=[
+  {name:'Home',page:'home',desc:'Back to homepage'},
+  {name:'Shop',page:'shop',desc:'Browse all products'},
+  {name:'Our Brand',page:'brand',desc:'FishGun, Growing Micro, Live Plankton'},
+  {name:'Training',page:'training',desc:'Expert training programmes'},
+  {name:'Resources',page:'resources',desc:'Protocols, publications, certificates'},
+  {name:'About',page:'about',desc:'Our team and mission'},
+  {name:'Careers',page:'careers',desc:'Join the Planktovie team'},
+  {name:'Contact',page:'contact',desc:'Request a quote'},
+];
+const resources=[
+  {name:'Feeding Protocols',type:'Protocols',page:'resources'},
+  {name:'Scientific Publications',type:'Publications',page:'resources'},
+  {name:'Equipment & Setup Guides',type:'Manuals',page:'resources'},
+  {name:'Sanitary Certificates',type:'Certificates',page:'resources'},
+  {name:'Partner Resources',type:'Distribution',page:'resources'},
+  {name:'News & Updates',type:'Blog',page:'resources'},
+];
+let searchFocusIdx=-1;
 
 function openSearch(){
   document.getElementById('searchOverlay').classList.add('open');
@@ -1617,12 +1647,12 @@ const tagClassMap = {'Best Seller':'tag-best','Pro':'tag-pro','Sale':'tag-sale',
 
 async function loadProducts() {
   try {
-    const query = encodeURIComponent(`*[_type == "product"] | order(sortOrder asc) {
-      "id": sortOrder,
+    const query = encodeURIComponent(`*[_type == "product"] | order(sortOrder asc, _createdAt asc) {
+      "id": coalesce(sortOrder, 999),
       name,
-      "cat": category,
+      "cat": coalesce(category, ""),
       brand,
-      "aud": audience,
+      "aud": coalesce(audience, "Scientist"),
       price,
       "img": image.asset->url,
       tag,
@@ -1631,29 +1661,34 @@ async function loadProducts() {
       description,
       "slug": slug.current
     }`);
-    const res = await fetch(`${SANITY_API}?query=${query}`);
+    const res = await fetch(`${SANITY_API}?query=${query}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error('Sanity HTTP ' + res.status);
     const data = await res.json();
     if (data.result && data.result.length > 0) {
       products.length = 0;
       data.result.forEach((p, i) => {
+        if (!p.name) return; // skip incomplete entries
         products.push({
           id: p.id || i + 1,
           name: p.name,
-          cat: p.cat,
+          cat: p.cat || '',
           brand: p.brand || 'Planktovie',
           aud: p.aud || 'Scientist',
-          price: p.price || 0,
-          img: p.img ? p.img + '?w=300&h=300&fit=crop' : '',
+          price: typeof p.price === 'number' ? p.price : 0,
+          img: p.img ? p.img + '?w=300&h=300&fit=crop&auto=format' : '',
           tag: p.tag || '',
           tc: tagClassMap[p.tag] || '',
           desc: p.description || '',
           sku: p.sku || '',
           inStock: p.inStock !== false,
+          variants: p.variants || null,
         });
       });
-      console.log('Loaded ' + products.length + ' products from Sanity');
+      console.log('✅ Loaded ' + products.length + ' products from Sanity');
     } else {
-      console.log('No products in Sanity — using hardcoded fallback');
+      console.log('⚠️ No products in Sanity — using hardcoded fallback');
     }
   } catch (err) {
     console.log('Sanity unavailable — using hardcoded fallback:', err.message);
