@@ -36,17 +36,17 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .topbar{background:var(--navy);color:rgba(255,255,255,.75);font-size:.72rem;padding:.4rem 0}
 .topbar-inner{display:flex;justify-content:space-between;align-items:center}
 .topbar a{color:rgba(255,255,255,.75);transition:color .2s;margin-left:1rem;cursor:pointer}.topbar a:hover{color:#fff}
-.nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--gray-100)}
+.nav{position:sticky;top:0;z-index:100;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:var(--nav-h)}
 .nav-left{display:flex;align-items:center;gap:2rem}
 .logo{display:flex;align-items:center;gap:.5rem;cursor:pointer}
 .logo-mark{height:32px}
 .logo-mark img{height:100%;width:auto;object-fit:contain}
-.logo-text{font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--navy);letter-spacing:-.01em}
+.logo-text{font-family:var(--serif);font-weight:700;font-size:1rem;color:#fff;letter-spacing:-.01em}
 .nav-links{display:flex;gap:.15rem}
-.nav-link{padding:.4rem .8rem;font-size:.84rem;font-weight:500;color:var(--gray-600);border-radius:4px;transition:all .15s;cursor:pointer}
-.nav-link:hover{color:var(--gray-800);background:var(--gray-50)}
-.nav-link.active{color:var(--teal);font-weight:600}
+.nav-link{padding:.4rem .8rem;font-size:.84rem;font-weight:500;color:rgba(255,255,255,.8);border-radius:4px;transition:all .15s;cursor:pointer}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-link.active{color:#4dd9c8;font-weight:600}
 .nav-right{display:flex;align-items:center;gap:.75rem}
 .nav-search-box{display:flex;align-items:center;gap:.4rem;padding:.35rem .65rem;border:1px solid var(--gray-200);border-radius:4px;font-size:.8rem;color:var(--gray-400);transition:border-color .2s;cursor:pointer}
 .nav-search-box:hover{border-color:var(--gray-300)}
@@ -109,7 +109,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .hero-certifications{display:flex;gap:1.25rem;padding-top:1.25rem;border-top:1px solid var(--gray-100)}
 .hero-cert{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--gray-500)}
 .hero-cert svg{color:var(--teal);flex-shrink:0}
-.hero-visual{background:linear-gradient(145deg,#f0f8f6 0%,#e8f4f0 100%);border:1px solid #c8e6e0;border-radius:var(--radius);overflow:hidden;position:relative;aspect-ratio:5/4}
+.hero-visual{background:#ffffff;border:1px solid var(--gray-100);border-radius:var(--radius);overflow:hidden;position:relative;aspect-ratio:5/4}
 .hero-visual-inner{padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:.75rem}
 .hero-visual-icon{font-size:3.5rem;margin-bottom:1rem;opacity:.35}
 .hero-visual-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;width:100%;max-width:260px}
@@ -446,7 +446,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 <nav class="nav"><div class="wrap nav-inner">
   <div class="nav-left">
     <div class="logo" onclick="go('home')">
-      <div class="logo-mark"><img src="logo-labo-transparent.png" alt="Planktovie" style="mix-blend-mode:multiply"></div>
+      <div class="logo-mark"><img src="logo-labo-transparent.png" alt="Planktovie"></div>
     </div>
     <div class="nav-links">
       <div class="nav-link active" onclick="go('home')">Home</div>
@@ -524,7 +524,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
       <div class="hero-visual-inner" style="padding:2rem;position:relative;z-index:1;gap:1.5rem">
         <!-- FishGun image -->
         <div style="flex:1;display:flex;align-items:center;justify-content:center">
-          <img src="brand-fishgun.png" alt="FishGun L3" style="max-width:200px;max-height:150px;object-fit:contain;filter:drop-shadow(0 12px 32px rgba(0,0,0,.5)) brightness(1.05)">
+          <img src="brand-fishgun.png" alt="FishGun L3" style="max-width:240px;max-height:180px;object-fit:contain;mix-blend-mode:multiply">
         </div>
         <!-- Label -->
         <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.25rem">FishGun L3 · Live Feed Dispenser</div>
@@ -1011,7 +1011,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 <footer class="footer" id="mainFooter"><div class="wrap">
   <div class="foot-grid">
     <div class="foot-brand">
-      <div class="logo" onclick="go('home')" style="cursor:pointer"><div class="logo-mark"><img src="logo-labo-transparent.png" alt="Planktovie" style="mix-blend-mode:multiply"></div></div>
+      <div class="logo" onclick="go('home')" style="cursor:pointer"><div class="logo-mark"><img src="logo-labo-transparent.png" alt="Planktovie"></div></div>
       <p>Nutritional solutions and precision equipment for aquatic organisms. Serving research, aquaculture, and aquariology since 2016.</p>
     </div>
     <div class="foot-col"><h5>Shop</h5><a onclick="go('shop')">Live Feed</a><a onclick="go('shop')">Dry Feed</a><a onclick="go('shop')">Equipment</a><a onclick="go('shop')">Salts</a><a onclick="go('shop')">Tests</a></div>
