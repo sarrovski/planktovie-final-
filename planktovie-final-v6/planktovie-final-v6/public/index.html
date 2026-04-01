@@ -524,7 +524,47 @@ input,select,textarea{font-family:inherit;font-size:inherit}
       <div class="hero-visual-inner" style="padding:2rem;position:relative;z-index:1;gap:1.5rem">
         <!-- FishGun image -->
         <div style="flex:1;display:flex;align-items:center;justify-content:center">
-          <img src="brand-fishgun.png" alt="FishGun L3">
+          <svg width="320" height="220" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1.25rem;filter:drop-shadow(0 4px 18px rgba(0,122,110,0.18))">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1b4d6e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0f2b4c;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="finGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#007a6e;stop-opacity:0.7"/>
+      <stop offset="100%" style="stop-color:#007a6e;stop-opacity:0.2"/>
+    </linearGradient>
+  </defs>
+  <!-- Tail fin -->
+  <path d="M255,110 Q290,80 300,110 Q290,140 255,110" fill="url(#bodyGrad)" opacity="0.85"/>
+  <!-- Main body -->
+  <ellipse cx="145" cy="110" rx="115" ry="44" fill="url(#bodyGrad)"/>
+  <!-- Belly highlight -->
+  <ellipse cx="130" cy="118" rx="90" ry="24" fill="#1e5c82" opacity="0.4"/>
+  <!-- Zebra stripes -->
+  <line x1="80" y1="68" x2="76" y2="152" stroke="#4dd9c8" stroke-width="5.5" stroke-linecap="round" opacity="0.75"/>
+  <line x1="105" y1="66" x2="100" y2="154" stroke="#4dd9c8" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+  <line x1="130" y1="66" x2="126" y2="154" stroke="#4dd9c8" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+  <line x1="155" y1="68" x2="152" y2="152" stroke="#4dd9c8" stroke-width="4.5" stroke-linecap="round" opacity="0.70"/>
+  <line x1="178" y1="72" x2="176" y2="148" stroke="#4dd9c8" stroke-width="4" stroke-linecap="round" opacity="0.65"/>
+  <line x1="200" y1="78" x2="199" y2="142" stroke="#4dd9c8" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+  <!-- Dorsal fin -->
+  <path d="M95,66 Q130,28 175,66" fill="url(#finGrad)" stroke="#007a6e" stroke-width="1.5"/>
+  <!-- Pectoral fin -->
+  <path d="M105,118 Q88,140 100,152 Q110,142 118,125" fill="#1b4d6e" opacity="0.7"/>
+  <!-- Anal fin -->
+  <path d="M130,150 Q145,168 160,152" fill="url(#finGrad)" opacity="0.6"/>
+  <!-- Eye -->
+  <circle cx="42" cy="104" r="13" fill="#0a1e35"/>
+  <circle cx="42" cy="104" r="9" fill="#fff"/>
+  <circle cx="42" cy="104" r="6" fill="#0f2b4c"/>
+  <circle cx="44" cy="102" r="2.5" fill="#fff"/>
+  <!-- Mouth -->
+  <path d="M20,108 Q30,114 40,110" stroke="#4dd9c8" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Latin name label -->
+  <text x="160" y="200" text-anchor="middle" font-family="monospace" font-size="11" fill="#007a6e" font-weight="700" letter-spacing="3">DANIO RERIO</text>
+  <text x="160" y="214" text-anchor="middle" font-family="monospace" font-size="9" fill="#4dd9c8" letter-spacing="1" opacity="0.8">zebrafish · modèle de référence</text>
+</svg>
         </div>
         <!-- Label -->
         <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.25rem">FishGun L3 · Live Feed Dispenser</div>
