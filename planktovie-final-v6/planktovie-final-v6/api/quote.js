@@ -1,20 +1,17 @@
 // api/quote.js — Vercel Serverless Function
 // Sends quote request emails via Resend
 
-export default async function handler(req, res) {
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    return res.status(200).end();
-  }
+module.exports = async function handler(req, res) {
+  // CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { name, email, phone, organization, role, message } = req.body;
+    const { name, email, phone, organization, role, message } = req.body || {};
 
     if (!name || !email || !message) {
       return res.status(400).json({ error: 'Name, email, and message are required.' });
@@ -25,7 +22,7 @@ export default async function handler(req, res) {
     }
 
     const RESEND_KEY = process.env.RESEND_API_KEY;
-    const QUOTE_EMAIL = process.env.QUOTE_EMAIL || 'contact@planktovie.biz';
+    const QUOTE_EMAIL = process.env.QUOTE_EMAIL || 'info@planktovie.biz';
 
     if (!RESEND_KEY) {
       console.error('RESEND_API_KEY not set');
@@ -73,13 +70,13 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       console.error('Resend error:', result);
-      return res.status(500).json({ error: 'Failed to send email.' });
+      return res.status(500).json({ error: 'Failed to send email. Please try again later.' });
     }
 
     return res.status(200).json({ success: true, message: 'Quote request sent.' });
 
   } catch (error) {
     console.error('Server error:', error);
-    return res.status(500).json({ error: 'An unexpected error occurred.' });
+    return res.status(500).json({ error: 'An unexpected error occurred. Please try again.' });
   }
-}
+};
