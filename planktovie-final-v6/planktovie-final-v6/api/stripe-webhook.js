@@ -1,12 +1,11 @@
 // api/stripe-webhook.js — Vercel Serverless Function
 // Handles Stripe webhook events (payment confirmation, failures)
-// Configure in Stripe dashboard: https://dashboard.stripe.com/webhooks
-// Event to listen for: checkout.session.completed
 
-import Stripe from 'stripe';
+const Stripe = require('stripe');
 
 // Vercel needs raw body for webhook signature verification
-export const config = { api: { bodyParser: false } };
+const config = { api: { bodyParser: false } };
+module.exports.config = config;
 
 async function getRawBody(req) {
   return new Promise((resolve, reject) => {
@@ -17,13 +16,13 @@ async function getRawBody(req) {
   });
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end('Method not allowed');
 
   const STRIPE_SECRET  = process.env.STRIPE_SECRET_KEY;
   const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
   const RESEND_KEY     = process.env.RESEND_API_KEY;
-  const ORDER_EMAIL    = process.env.QUOTE_EMAIL || 'contact@planktovie.biz';
+  const ORDER_EMAIL    = process.env.QUOTE_EMAIL || 'info@planktovie.biz';
 
   if (!STRIPE_SECRET || !WEBHOOK_SECRET) {
     return res.status(500).json({ error: 'Stripe not configured.' });
@@ -41,7 +40,6 @@ export default async function handler(req, res) {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // ── Handle events ──────────────────────────────────────────────────────────
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
 
@@ -53,9 +51,8 @@ export default async function handler(req, res) {
     const org       = session.metadata?.billing_org || '';
     const date      = new Date().toISOString().replace('T', ' ').split('.')[0];
 
-    console.log(`✅ Payment confirmed: ${orderNum} — ${customer} — ${currency} ${amount}`);
+    console.log(`Payment confirmed: ${orderNum} - ${customer} - ${currency} ${amount}`);
 
-    // Optional: send confirmation email via Resend
     if (RESEND_KEY && email) {
       try {
         const confirmHtml = `
@@ -72,15 +69,14 @@ export default async function handler(req, res) {
                 ${org ? `<tr><td style="padding:8px 12px;color:#6b7685;font-weight:600">Organization</td><td style="padding:8px 12px;color:#2d3748">${org}</td></tr>` : ''}
                 <tr style="background:#f4f6f8"><td style="padding:8px 12px;color:#6b7685;font-weight:600">Date</td><td style="padding:8px 12px;color:#2d3748">${date}</td></tr>
               </table>
-              <p>Our team will review your order and ship within 2–5 business days. Live culture orders may require additional coordination for temperature-controlled shipping.</p>
-              <p>Questions? Reply to this email or contact us at <a href="mailto:contact@planktovie.biz" style="color:#007a6e">contact@planktovie.biz</a>.</p>
+              <p>Our team will review your order and ship within 2-5 business days.</p>
+              <p>Questions? Reply to this email or contact us at <a href="mailto:info@planktovie.biz" style="color:#007a6e">info@planktovie.biz</a>.</p>
               <div style="margin-top:24px;padding-top:16px;border-top:1px solid #e8ecf0;font-size:12px;color:#8b95a3">
                 Planktovie — Aquatic Organism Solutions · Marseille, France · planktovie.biz
               </div>
             </div>
           </div>`;
 
-        // Email to customer
         await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
@@ -92,7 +88,6 @@ export default async function handler(req, res) {
           }),
         });
 
-        // Notify Planktovie team
         await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
@@ -105,13 +100,11 @@ export default async function handler(req, res) {
         });
 
       } catch (emailErr) {
-        // Non-fatal — log but don't fail the webhook
         console.error('Email send error:', emailErr.message);
       }
     }
   }
 
-  // ── Other events to handle in future ──────────────────────────────────────
   if (event.type === 'checkout.session.expired') {
     console.log(`Session expired: ${event.data.object.id}`);
   }
@@ -121,4 +114,4 @@ export default async function handler(req, res) {
   }
 
   return res.status(200).json({ received: true });
-}
+};

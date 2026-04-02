@@ -1,9 +1,9 @@
 // api/create-checkout.js — Vercel Serverless Function
 // Creates a Stripe Checkout Session and returns the redirect URL
 
-import Stripe from 'stripe';
+const Stripe = require('stripe');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS preflight
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { cart, shipping, billing, vatRate = 0.20 } = req.body;
+    const { cart, shipping, billing, vatRate = 0.20 } = req.body || {};
 
     if (!cart || !Array.isArray(cart) || cart.length === 0) {
       return res.status(400).json({ error: 'Cart is empty.' });
@@ -33,7 +33,6 @@ export default async function handler(req, res) {
           name: item.name,
           metadata: { sku: `PKV-${String(item.id).padStart(4, '0')}` },
         },
-        // Price in cents, excluding VAT
         unit_amount: Math.round(item.price * 100),
       },
       quantity: item.qty,
@@ -57,7 +56,6 @@ export default async function handler(req, res) {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      // Collect billing + shipping address
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: [
@@ -65,16 +63,13 @@ export default async function handler(req, res) {
           'PL','CZ','HU','RO','GR','HR','US','CA','AU','JP','SG','GB',
         ],
       },
-      // Tax — Stripe Tax or manual VAT line
       automatic_tax: { enabled: false },
-      // Pre-fill customer info if billing was collected
       customer_email: billing?.email || undefined,
       metadata: {
         source: 'planktovie-website',
         billing_name: billing ? `${billing.first} ${billing.last}` : '',
         billing_org: billing?.org || '',
       },
-      // Success / cancel redirect back to site
       success_url: `${origin}/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?checkout=cancelled`,
       locale: 'auto',
@@ -86,4 +81,4 @@ export default async function handler(req, res) {
     console.error('Stripe error:', err.message);
     return res.status(500).json({ error: err.message || 'Failed to create checkout session.' });
   }
-}
+};
