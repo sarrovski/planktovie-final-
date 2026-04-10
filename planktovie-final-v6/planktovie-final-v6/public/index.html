@@ -898,19 +898,25 @@ input,select,textarea{font-family:inherit;font-size:inherit}
     <div style="display:flex;flex-direction:column;gap:1.25rem;margin-top:1rem">
       <div style="border:1px solid var(--gray-100);border-radius:var(--radius);padding:1.5rem">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
-          <div><div style="font-family:var(--mono);font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:.3rem">Stage / Alternance · Sales</div><h3 style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--navy)">Commercial Representative (H/F)</h3></div>
+          <div><div style="font-family:var(--mono);font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:.3rem">CDD 6 mois · Technicien(ne) · Marseille</div><h3 style="font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--navy)">Technicien(ne) Coraux Tropicaux & Écotoxicologie (H/F)</h3></div>
           <span style="display:inline-block;padding:.25rem .65rem;background:var(--teal-light);color:var(--teal);border-radius:99px;font-size:.72rem;font-weight:600">Open</span>
         </div>
-        <p style="font-size:.84rem;color:var(--gray-500);line-height:1.7;margin-bottom:.85rem">6-month internship or 1-year work-study programme. You will develop innovative business strategies, create new relationships with scientific clients, build commercial proposals, and represent Planktovie at events. Based at our offices in Technopole Château-Gombert, Marseille.</p>
+        <p style="font-size:.84rem;color:var(--gray-500);line-height:1.7;margin-bottom:.85rem">Dans le cadre du développement de nos activités, nous recherchons une personne passionnée et rigoureuse pour rejoindre notre équipe à Marseille (Château Gombert), à partir de juin.</p>
         <div style="font-size:.8rem;color:var(--gray-600);margin-bottom:.85rem">
-          <strong>Key skills:</strong> lead development, prospecting, listening, client relationship management, scientific communication.
+          <strong>Missions :</strong> maintenance de systèmes d'aquaculture (microalgues, zooplancton, coraux tropicaux SPS/LPS), tests d'écotoxicologie sur coraux, collecte et analyse de données expérimentales, rédaction de rapports scientifiques.
         </div>
-        <button class="btn btn-teal btn-sm" onclick="go('contact')">Apply via Quote Form →</button>
+        <div style="font-size:.8rem;color:var(--gray-600);margin-bottom:.85rem">
+          <strong>Profil :</strong> BTS, Licence pro ou équivalent en biologie/aquaculture/environnement. Expérience concrète en aquariophilie récifale indispensable (Ca, KH, Mg, maintenance coraux, bouturage). Rigueur scientifique, autonomie, sens de l'observation.
+        </div>
+        <div style="font-size:.8rem;color:var(--gray-600);margin-bottom:.85rem">
+          <strong>Contrat :</strong> CDD 6 mois à partir de juin — évolution possible en CDI selon profil et performance.
+        </div>
+        <a href="mailto:info@planktovie.biz" class="btn btn-teal btn-sm">Postuler — info@planktovie.biz →</a>
       </div>
       <div style="border:1px solid var(--gray-100);border-radius:var(--radius);padding:1.5rem;background:var(--gray-50)">
         <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-400);margin-bottom:.3rem">Spontaneous Applications</div>
         <h3 style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:.5rem">Don't see a match?</h3>
-        <p style="font-size:.84rem;color:var(--gray-500);line-height:1.6;margin-bottom:.85rem">We are always interested in hearing from passionate scientists, technicians, and life science professionals. Send your CV and motivation letter to <a href="/cdn-cgi/l/email-protection#8be2e5ede4cbfbe7eae5e0ffe4fde2eea5e9e2f1" style="color:var(--teal)"><span class="__cf_email__" data-cfemail="cea7a0a8a18ebea2afa0a5baa1b8a7abe0aca7b4">[email&#160;protected]</span></a>.</p>
+        <p style="font-size:.84rem;color:var(--gray-500);line-height:1.6;margin-bottom:.85rem">We are always interested in hearing from passionate scientists, technicians, and life science professionals. Send your CV and motivation letter to <a href="mailto:info@planktovie.biz" style="color:var(--teal)">info@planktovie.biz</a>.</p>
       </div>
     </div>
   </div></section>
@@ -1135,7 +1141,7 @@ function renderProducts(cat){
   if(cat!==undefined) activeCat=cat;
   const filtered=getFiltered();
   document.getElementById('productGrid').innerHTML=filtered.length?filtered.map(p=>`
-    <div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy"></div><div class="pc-body">
+    <div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\'>'+this.alt+'</div>')"></div><div class="pc-body">
       <div class="pc-cat">${p.cat}</div><div class="pc-name">${p.name}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2):'Contact us'}</div>
       ${p.price>0?`<button class="pc-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>`:`<button class="pc-btn" onclick="event.stopPropagation();go('contact')" style="background:var(--navy)">Request Quote</button>`}
     </div></div>`).join(''):'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-400)">No products match the selected filters.</div>';
@@ -1262,7 +1268,7 @@ function viewProduct(id){
 
 function renderRelated(items){
   document.getElementById('pdRelated').innerHTML=items.map(p=>`
-    <div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img" style="height:130px">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy"></div><div class="pc-body">
+    <div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img" style="height:130px">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\'>'+this.alt+'</div>')"></div><div class="pc-body">
       <div class="pc-cat">${p.cat}</div><div class="pc-name">${p.name}</div><div class="pc-price">€${p.price.toFixed(2)}</div>
       <button class="pc-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>
     </div></div>`).join('');
@@ -1690,9 +1696,10 @@ async function loadProducts() {
       sku,
       inStock,
       description,
-      "slug": slug.current
+      "slug": slug.current,
+      variants
     }`);
-    const res = await fetch(`${SANITY_API}?query=${query}`, {
+    const res = await fetch(`${SANITY_API}?query=${query}&_t=${Date.now()}`, {
       headers: { 'Accept': 'application/json' }
     });
     if (!res.ok) throw new Error('Sanity HTTP ' + res.status);
