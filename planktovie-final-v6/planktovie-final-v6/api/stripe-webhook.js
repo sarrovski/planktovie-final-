@@ -81,7 +81,7 @@ module.exports = async function handler(req, res) {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'Planktovie <onboarding@resend.dev>',
+            from: 'Planktovie <noreply@planktovie.biz>',
             to: [email],
             subject: `Order Confirmed — ${orderNum}`,
             html: confirmHtml,
@@ -92,7 +92,7 @@ module.exports = async function handler(req, res) {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'Planktovie Website <onboarding@resend.dev>',
+            from: 'Planktovie Website <noreply@planktovie.biz>',
             to: [ORDER_EMAIL],
             subject: `New Order ${orderNum} — ${currency} ${amount}`,
             html: confirmHtml.replace('Dear ' + customer, `<strong>New order received from ${customer}${org ? ' (' + org + ')' : ''}</strong>`),

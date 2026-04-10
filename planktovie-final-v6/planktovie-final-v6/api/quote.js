@@ -58,7 +58,7 @@ module.exports = async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Planktovie Website <onboarding@resend.dev>',
+        from: 'Planktovie Website <noreply@planktovie.biz>',
         to: [QUOTE_EMAIL],
         reply_to: email,
         subject: `Quote Request from ${name}${organization ? ' — ' + organization : ''}`,
