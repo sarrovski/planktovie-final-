@@ -1100,7 +1100,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
   </div>
 </div></footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const B='https://planktovie.biz/wp-content/uploads/';
 const products=[
   // ── Feed Dispenser (FishGun) ──
@@ -1175,14 +1175,16 @@ function getFiltered(){
   });
 }
 
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 function renderProducts(cat){
   if(cat!==undefined) activeCat=cat;
   const filtered=getFiltered();
-  document.getElementById('productGrid').innerHTML=filtered.length?filtered.map(p=>`
-    <div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\'>'+this.alt+'</div>')"></div><div class="pc-body">
-      <div class="pc-cat">${p.cat}</div><div class="pc-name">${p.name}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2):'Contact us'}</div>
+  document.getElementById('productGrid').innerHTML=filtered.length?filtered.map(p=>{
+    const safeName=esc(p.name);
+    return `<div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
+      <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2):'Contact us'}</div>
       ${p.price>0?`<button class="pc-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>`:`<button class="pc-btn" onclick="event.stopPropagation();go('contact')" style="background:var(--navy)">Request Quote</button>`}
-    </div></div>`).join(''):'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-400)">No products match the selected filters.</div>';
+    </div></div>`}).join(''):'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-400)">No products match the selected filters.</div>';
   const topbar=document.querySelector('.shop-top .r');
   if(topbar) topbar.textContent='Showing '+filtered.length+' product'+(filtered.length!==1?'s':'');
   updateFilterUI();
@@ -1305,11 +1307,12 @@ function viewProduct(id){
 }
 
 function renderRelated(items){
-  document.getElementById('pdRelated').innerHTML=items.map(p=>`
-    <div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img" style="height:130px">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\'>'+this.alt+'</div>')"></div><div class="pc-body">
-      <div class="pc-cat">${p.cat}</div><div class="pc-name">${p.name}</div><div class="pc-price">€${p.price.toFixed(2)}</div>
+  document.getElementById('pdRelated').innerHTML=items.map(p=>{
+    const safeName=esc(p.name);
+    return `<div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img" style="height:130px">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
+      <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">€${p.price.toFixed(2)}</div>
       <button class="pc-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>
-    </div></div>`).join('');
+    </div></div>`}).join('');
 }
 
 function selectVariant(sel){
@@ -1786,7 +1789,7 @@ function toggleCareerLang() {
 }
 
 // Initialize
-renderProducts();
+loadProducts();
 </script>
 </body>
 </html>
