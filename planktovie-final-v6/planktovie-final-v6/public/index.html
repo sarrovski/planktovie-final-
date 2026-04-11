@@ -1725,10 +1725,9 @@ const tagClassMap = {'Best Seller':'tag-best','Pro':'tag-pro','Sale':'tag-sale',
 
 async function loadProducts() {
   try {
-    const url = 'https://xysumkw1.api.sanity.io/v2024-01-01/data/query/production?query=*%5B_type%3D%3D%22product%22%5D%20%7C%20order(sortOrder%20asc%2C%20_createdAt%20asc)%20%7B%20%22id%22%3A%20coalesce(sortOrder%2C%20999)%2C%20name%2C%20%22cat%22%3A%20coalesce(category%2C%20%22%22)%2C%20brand%2C%20%22aud%22%3A%20coalesce(audience%2C%20%22Scientist%22)%2C%20price%2C%20%22img%22%3A%20image.asset-%3Eurl%2C%20tag%2C%20sku%2C%20inStock%2C%20description%2C%20%22slug%22%3A%20slug.current%2C%20variants%20%7D&_t=' + Date.now();
-    const res = await fetch(url, {
-      headers: { 'Accept': 'application/json' }
-    });
+    var q = '*[_type == ' + String.fromCharCode(34) + 'product' + String.fromCharCode(34) + '] | order(sortOrder asc, _createdAt asc) { ' + String.fromCharCode(34) + 'id' + String.fromCharCode(34) + ': coalesce(sortOrder, 999), name, ' + String.fromCharCode(34) + 'cat' + String.fromCharCode(34) + ': coalesce(category, ' + String.fromCharCode(34,34) + '), brand, ' + String.fromCharCode(34) + 'aud' + String.fromCharCode(34) + ': coalesce(audience, ' + String.fromCharCode(34) + 'Scientist' + String.fromCharCode(34) + '), price, ' + String.fromCharCode(34) + 'img' + String.fromCharCode(34) + ': image.asset->url, tag, sku, inStock, description, ' + String.fromCharCode(34) + 'slug' + String.fromCharCode(34) + ': slug.current, variants }';
+    var url = 'https://xysumkw1.api.sanity.io/v2024-01-01/data/query/production?query=' + encodeURIComponent(q) + '&_t=' + Date.now();
+    const res = await fetch(url);
     if (!res.ok) throw new Error('Sanity HTTP ' + res.status);
     const data = await res.json();
     if (data.result && data.result.length > 0) {
