@@ -1725,22 +1725,8 @@ const tagClassMap = {'Best Seller':'tag-best','Pro':'tag-pro','Sale':'tag-sale',
 
 async function loadProducts() {
   try {
-    const query = encodeURIComponent(`*[_type == "product"] | order(sortOrder asc, _createdAt asc) {
-      "id": coalesce(sortOrder, 999),
-      name,
-      "cat": coalesce(category, ""),
-      brand,
-      "aud": coalesce(audience, "Scientist"),
-      price,
-      "img": image.asset->url,
-      tag,
-      sku,
-      inStock,
-      description,
-      "slug": slug.current,
-      variants
-    }`);
-    const res = await fetch(`${SANITY_API}?query=${query}&_t=${Date.now()}`, {
+    const query = encodeURIComponent('*[_type == "product"] | order(sortOrder asc, _createdAt asc) { "id": coalesce(sortOrder, 999), name, "cat": coalesce(category, ""), brand, "aud": coalesce(audience, "Scientist"), price, "img": image.asset->url, tag, sku, inStock, description, "slug": slug.current, variants }');
+    const res = await fetch(SANITY_API + '?query=' + query + '&_t=' + Date.now(), {
       headers: { 'Accept': 'application/json' }
     });
     if (!res.ok) throw new Error('Sanity HTTP ' + res.status);
