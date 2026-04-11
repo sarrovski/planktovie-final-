@@ -1720,20 +1720,33 @@ function resetQuoteForm(){
 // ─── SANITY CMS INTEGRATION ───
 const SANITY_ID = 'xysumkw1';
 const SANITY_DS = 'production';
-const SANITY_API = `https://${SANITY_ID}.api.sanity.io/v2024-01-01/data/query/${SANITY_DS}`;
 const tagClassMap = {'Best Seller':'tag-best','Pro':'tag-pro','Sale':'tag-sale','New':'tag-new'};
 
 async function loadProducts() {
   try {
-    var q = '*[_type == ' + String.fromCharCode(34) + 'product' + String.fromCharCode(34) + '] | order(sortOrder asc, _createdAt asc) { ' + String.fromCharCode(34) + 'id' + String.fromCharCode(34) + ': coalesce(sortOrder, 999), name, ' + String.fromCharCode(34) + 'cat' + String.fromCharCode(34) + ': coalesce(category, ' + String.fromCharCode(34,34) + '), brand, ' + String.fromCharCode(34) + 'aud' + String.fromCharCode(34) + ': coalesce(audience, ' + String.fromCharCode(34) + 'Scientist' + String.fromCharCode(34) + '), price, ' + String.fromCharCode(34) + 'img' + String.fromCharCode(34) + ': image.asset->url, tag, sku, inStock, description, ' + String.fromCharCode(34) + 'slug' + String.fromCharCode(34) + ': slug.current, variants }';
-    var url = 'https://xysumkw1.api.sanity.io/v2024-01-01/data/query/production?query=' + encodeURIComponent(q) + '&_t=' + Date.now();
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Sanity HTTP ' + res.status);
-    const data = await res.json();
+    var d = String.fromCharCode(34);
+    var parts = [
+      '*[_type == ',d,'product',d,'] | order(sortOrder asc, _createdAt asc) { ',
+      d,'id',d,': coalesce(sortOrder, 999), name, ',
+      d,'cat',d,': coalesce(category, ',d,d,'), brand, ',
+      d,'aud',d,': coalesce(audience, ',d,'Scientist',d,'), price, ',
+      d,'img',d,': image.asset->url, tag, sku, inStock, description, ',
+      d,'slug',d,': slug.current, variants }'
+    ];
+    var groq = parts.join('');
+    var endpoint = ['https://',SANITY_ID,'.api.sanity.io/v2024-01-01/data/query/',SANITY_DS].join('');
+    var url = endpoint + '?query=' + encodeURIComponent(groq);
+    var res = await fetch(url);
+    if (!res.ok) {
+      var errBody = '';
+      try { errBody = await res.text(); } catch(e) {}
+      throw new Error('Sanity HTTP ' + res.status + ' ' + errBody.substring(0, 200));
+    }
+    var data = await res.json();
     if (data.result && data.result.length > 0) {
       products.length = 0;
-      data.result.forEach((p, i) => {
-        if (!p.name) return; // skip incomplete entries
+      data.result.forEach(function(p, i) {
+        if (!p.name) return;
         products.push({
           id: p.id || i + 1,
           name: p.name,
@@ -1750,12 +1763,12 @@ async function loadProducts() {
           variants: p.variants || null,
         });
       });
-      console.log('✅ Loaded ' + products.length + ' products from Sanity');
+      console.log('Loaded ' + products.length + ' products from Sanity');
     } else {
-      console.log('⚠️ No products in Sanity — using hardcoded fallback');
+      console.log('No products in Sanity, using fallback');
     }
   } catch (err) {
-    console.log('Sanity unavailable — using hardcoded fallback:', err.message);
+    console.log('Sanity unavailable, using fallback: ' + err.message);
   }
   renderProducts();
 }
