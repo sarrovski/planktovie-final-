@@ -9,7 +9,7 @@ const SANITY_DS = 'production';
 
 // Fetch product prices from Sanity to prevent client-side price manipulation
 async function fetchSanityPrices() {
-  const groq = `*[_type == "product"] { "id": coalesce(sortOrder, 999), name, price, variants }`;
+  const groq = `*[_type == "product"] { "id": _id, name, price, variants }`;
   const url = `https://${SANITY_ID}.api.sanity.io/v2024-01-01/data/query/${SANITY_DS}?query=${encodeURIComponent(groq)}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error('Failed to fetch product prices from Sanity');
