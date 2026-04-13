@@ -21,6 +21,9 @@
   --sans:'Figtree',-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:'JetBrains Mono',monospace;
   --max-w:1100px;--nav-h:60px;--radius:6px;
+  /* Emil: custom easing curves — built-in CSS easings are too weak */
+  --ease-out-strong:cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong:cubic-bezier(0.77, 0, 0.175, 1);
 }
 html{scroll-behavior:smooth;font-size:16px}
 body{font-family:var(--sans);color:var(--gray-700);background:var(--white);line-height:1.65;-webkit-font-smoothing:antialiased}
@@ -409,7 +412,91 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .foot-certs{display:flex;gap:1.5rem;align-items:center}
 .foot-certs span{font-size:.65rem;color:var(--gray-400);display:flex;align-items:center;gap:.3rem}
 
-/* ═══ RESPONSIVE ═══ */
+/* ═══ EMIL DESIGN ENGINEERING POLISH ═══ */
+
+/* Button press feedback — Emil: buttons must feel responsive (scale 0.97 on :active) */
+.btn:active,.nav-quote:active,.pc-btn:active,.c-checkout:active,.ck-place-order:active,.pd-add-btn:active,.pd-quote-btn:active{transform:scale(0.97)}
+.btn{transition:all .15s var(--ease-out-strong)}
+.nav-quote{transition:all .15s var(--ease-out-strong)}
+.pc-btn{transition:all .15s var(--ease-out-strong)}
+
+/* Card hover — Emil: specify exact properties, use custom easing, keep < 300ms */
+@media(hover:hover) and (pointer:fine){
+  .dm-card{transition:border-color 200ms var(--ease-out-strong),box-shadow 200ms var(--ease-out-strong),transform 200ms var(--ease-out-strong)}
+  .dm-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,122,110,.08)}
+  .pc{transition:border-color 200ms var(--ease-out-strong),box-shadow 200ms var(--ease-out-strong),transform 200ms var(--ease-out-strong)}
+  .pc:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+  .cc{transition:all .2s var(--ease-out-strong)}
+  .cc:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,122,110,.06)}
+  .ft{transition:border-color 200ms var(--ease-out-strong),transform 200ms var(--ease-out-strong)}
+  .ft:hover{border-color:var(--teal);transform:translateY(-1px)}
+  .tr-card{transition:border-color 200ms var(--ease-out-strong),transform 200ms var(--ease-out-strong),box-shadow 200ms var(--ease-out-strong)}
+  .tr-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.04)}
+  .rc{transition:border-color 200ms var(--ease-out-strong),transform 200ms var(--ease-out-strong)}
+  .rc:hover{transform:translateY(-1px)}
+  .tm{transition:border-color 200ms var(--ease-out-strong),transform 200ms var(--ease-out-strong)}
+  .tm:hover{transform:translateY(-2px)}
+  .nav-link{transition:all .15s var(--ease-out-strong)}
+}
+
+/* Cart drawer — Emil: use ease-out for entering elements */
+.c-draw{transition:right .28s var(--ease-out-strong)}
+
+/* Search modal — Emil: scale from 0.96 not 0, combined with opacity */
+.search-modal{transform-origin:top center;opacity:0;transform:translateX(-50%) scale(0.97)}
+.search-modal.open{display:flex;opacity:1;transform:translateX(-50%) scale(1);transition:opacity 180ms var(--ease-out-strong),transform 180ms var(--ease-out-strong)}
+
+/* Toast — Emil: enter from same direction, ease-out for entering */
+.toast{transition:transform .22s var(--ease-out-strong),opacity .22s var(--ease-out-strong)}
+
+/* FAQ accordion — Emil: use ease-out for expanding content */
+.fq-a{transition:max-height .25s var(--ease-out-strong)}
+
+/* Hero stagger animation — Emil: stagger 50ms between items, fadeUp with short duration */
+@keyframes emilFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{opacity:0;animation:emilFadeUp 500ms var(--ease-out-strong) 100ms forwards}
+.hero h1{opacity:0;animation:emilFadeUp 500ms var(--ease-out-strong) 180ms forwards}
+.hero-desc{opacity:0;animation:emilFadeUp 500ms var(--ease-out-strong) 260ms forwards}
+.hero-btns{opacity:0;animation:emilFadeUp 500ms var(--ease-out-strong) 340ms forwards}
+.hero-certifications{opacity:0;animation:emilFadeUp 500ms var(--ease-out-strong) 420ms forwards}
+.hero-visual{opacity:0;animation:emilFadeUp 600ms var(--ease-out-strong) 300ms forwards}
+
+/* Nav entrance */
+@keyframes emilSlideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.topbar{opacity:0;animation:emilSlideDown 400ms var(--ease-out-strong) 0ms forwards}
+.nav{opacity:0;animation:emilSlideDown 400ms var(--ease-out-strong) 50ms forwards}
+
+/* Scroll-triggered reveal — Emil: transitions for interruptibility, stagger children */
+.e-reveal{opacity:0;transform:translateY(16px);transition:opacity 500ms var(--ease-out-strong),transform 500ms var(--ease-out-strong)}
+.e-reveal.e-visible{opacity:1;transform:translateY(0)}
+.e-stagger>.e-reveal:nth-child(1){transition-delay:0ms}
+.e-stagger>.e-reveal:nth-child(2){transition-delay:60ms}
+.e-stagger>.e-reveal:nth-child(3){transition-delay:120ms}
+.e-stagger>.e-reveal:nth-child(4){transition-delay:180ms}
+.e-stagger>.e-reveal:nth-child(5){transition-delay:240ms}
+.e-stagger>.e-reveal:nth-child(6){transition-delay:300ms}
+.e-stagger>.e-reveal:nth-child(7){transition-delay:360ms}
+.e-stagger>.e-reveal:nth-child(8){transition-delay:420ms}
+
+/* Frieze hover — refine the existing transition */
+.fa-card{transition:background .2s var(--ease-out-strong)}
+
+/* Logo partner images — subtle hover lift */
+@media(hover:hover) and (pointer:fine){
+  .sec:last-of-type img[alt]{transition:transform 200ms var(--ease-out-strong),opacity 200ms ease}
+}
+
+/* Focus ring — visible keyboard focus */
+.btn:focus-visible,.nav-link:focus-visible,.pc-btn:focus-visible,.nav-quote:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:4px}
+
+/* Emil: prefers-reduced-motion — keep opacity/color, remove transform */
+@media(prefers-reduced-motion:reduce){
+  .e-reveal{transform:none !important;transition-duration:.15s !important}
+  .hero-eyebrow,.hero h1,.hero-desc,.hero-btns,.hero-certifications,.hero-visual,.topbar,.nav{animation-duration:.01ms !important}
+  .dm-card,.pc,.cc,.ft,.tr-card,.rc,.tm{transition:border-color .15s ease !important;transform:none !important}
+  .btn:active,.nav-quote:active,.pc-btn:active{transform:none !important}
+}
+
 @media(max-width:960px){
   .hero-grid{grid-template-columns:1fr}.hero-visual{display:none}
   .domains-grid,.res-g{grid-template-columns:1fr 1fr}
@@ -570,41 +657,41 @@ input,select,textarea{font-family:inherit;font-size:inherit}
     </div>
   </div></div></section>
 
-  <div class="notice-bar"><div class="wrap notice-inner">
-    <div class="notice-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 20+ Years of Research Expertise</div>
-    <div class="notice-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> 58 Products Available</div>
-    <div class="notice-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Shipping to 40+ Countries</div>
-    <div class="notice-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Qualiopi Certified Training</div>
+  <div class="notice-bar"><div class="wrap notice-inner e-stagger">
+    <div class="notice-item e-reveal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 20+ Years of Research Expertise</div>
+    <div class="notice-item e-reveal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> 58 Products Available</div>
+    <div class="notice-item e-reveal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Shipping to 40+ Countries</div>
+    <div class="notice-item e-reveal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Qualiopi Certified Training</div>
   </div></div>
 
   <!-- Animal Frieze -->
   <div class="frieze" aria-hidden="true"><div class="frieze-inner"><div class="frieze-track"><div class="fa-card"><div class="fa-labels"><div class="fa-name">Danio rerio</div><div class="fa-sci">Zebrafish</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Brachionus plicatilis</div><div class="fa-sci">Rotifer</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Daphnia magna</div><div class="fa-sci">Water flea</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Artemia salina</div><div class="fa-sci">Brine shrimp</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Xenopus laevis</div><div class="fa-sci">Clawed frog</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Oryzias latipes</div><div class="fa-sci">Medaka</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Nothobranchius furzeri</div><div class="fa-sci">Killifish</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Amphiprion ocellaris</div><div class="fa-sci">Clownfish</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Nannochloropsis oculata</div><div class="fa-sci">Microalga</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Tisochrysis lutea</div><div class="fa-sci">T-iso alga</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Symbiodinium sp.</div><div class="fa-sci">Zooxanthella</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Haematococcus pluvialis</div><div class="fa-sci">Astaxanthin alga</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Danio rerio</div><div class="fa-sci">Zebrafish</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Brachionus plicatilis</div><div class="fa-sci">Rotifer</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Daphnia magna</div><div class="fa-sci">Water flea</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Artemia salina</div><div class="fa-sci">Brine shrimp</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Xenopus laevis</div><div class="fa-sci">Clawed frog</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Oryzias latipes</div><div class="fa-sci">Medaka</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Nothobranchius furzeri</div><div class="fa-sci">Killifish</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Amphiprion ocellaris</div><div class="fa-sci">Clownfish</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Nannochloropsis oculata</div><div class="fa-sci">Microalga</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Tisochrysis lutea</div><div class="fa-sci">T-iso alga</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Symbiodinium sp.</div><div class="fa-sci">Zooxanthella</div></div></div><div class="fa-card"><div class="fa-labels"><div class="fa-name">Haematococcus pluvialis</div><div class="fa-sci">Astaxanthin alga</div></div></div></div></div></div>
 
   <section class="sec"><div class="wrap">
-    <div class="sec-header"><div class="sec-label">Application Domains</div><h2 class="sec-title">Serving three critical sectors</h2><p class="sec-desc">Precision aquatic nutrition across scientific research, aquaculture, and the aquarium hobby.</p></div>
-    <div class="domains-grid">
-      <div class="dm-card"><div class="dm-badge research">Research</div><h3>Scientific Research</h3><p>Nutritional solutions for zebrafish (Danio rerio) and other model organisms. CNRS-partnered protocols with QM Diagnostics-certified health standards used in laboratories worldwide.</p></div>
-      <div class="dm-card"><div class="dm-badge aqua">Aquaculture</div><h3>Aquaculture &amp; Hatcheries</h3><p>High-performance feed systems and live plankton cultures for fish farms and hatcheries. Designed for reproducible, scalable nutrition protocols at industrial scale.</p></div>
-      <div class="dm-card"><div class="dm-badge aquar">Aquariology</div><h3>Aquariology</h3><p>Research-grade nutrition now accessible for reef aquariums and ornamental species. Coral feeds, live rotifers, premium salts, water testing, and expert consulting.</p></div>
+    <div class="sec-header e-reveal"><div class="sec-label">Application Domains</div><h2 class="sec-title">Serving three critical sectors</h2><p class="sec-desc">Precision aquatic nutrition across scientific research, aquaculture, and the aquarium hobby.</p></div>
+    <div class="domains-grid e-stagger">
+      <div class="dm-card e-reveal"><div class="dm-badge research">Research</div><h3>Scientific Research</h3><p>Nutritional solutions for zebrafish (Danio rerio) and other model organisms. CNRS-partnered protocols with QM Diagnostics-certified health standards used in laboratories worldwide.</p></div>
+      <div class="dm-card e-reveal"><div class="dm-badge aqua">Aquaculture</div><h3>Aquaculture &amp; Hatcheries</h3><p>High-performance feed systems and live plankton cultures for fish farms and hatcheries. Designed for reproducible, scalable nutrition protocols at industrial scale.</p></div>
+      <div class="dm-card e-reveal"><div class="dm-badge aquar">Aquariology</div><h3>Aquariology</h3><p>Research-grade nutrition now accessible for reef aquariums and ornamental species. Coral feeds, live rotifers, premium salts, water testing, and expert consulting.</p></div>
     </div>
   </div></section>
 
   <section class="sec sec-border"><div class="wrap">
-    <div class="sec-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem"><div><div class="sec-label">Shop</div><h2 class="sec-title">Browse by category</h2></div><button class="btn btn-outline btn-sm" onclick="go('shop')">View All Products →</button></div>
-    <div class="cat-grid">
-      <div class="cc" onclick="goShopCat('Feed Dispenser')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 6v14a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V6"/><line x1="12" y1="10" x2="12" y2="16"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><div><h4>FishGun: Feed Dispenser</h4><span>7 products</span></div></div>
-      <div class="cc" onclick="goShopCat('Preserved / Live Feed')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div><div><h4>Preserved / Live Feed</h4><span>19 products</span></div></div>
-      <div class="cc" onclick="goShopCat('Dry Feed')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h12l2 7H4l2-7z"/><path d="M4 9v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/><line x1="12" y1="13" x2="12" y2="17"/></svg></div><div><h4>Dry Feed</h4><span>3 products</span></div></div>
-      <div class="cc" onclick="goShopCat('Salt for Aquariums')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 22l1-1h18l1 1"/><path d="M6 18V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v10"/><circle cx="12" cy="13" r="2"/></svg></div><div><h4>Salt for Aquariums</h4><span>1 product</span></div></div>
-      <div class="cc" onclick="goShopCat('Equipment')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div><h4>Equipment</h4><span>15 products</span></div></div>
-      <div class="cc" onclick="goShopCat('Supplements')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div><h4>Supplements</h4><span>2 products</span></div></div>
-      <div class="cc" onclick="goShopCat('Tests & Analysis')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg></div><div><h4>Tests &amp; Analysis</h4><span>6 products</span></div></div>
-      <div class="cc" onclick="goShopCat('Pests & Water')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h4>Pests &amp; Water Conditioning</h4><span>2 products</span></div></div>
+    <div class="sec-header e-reveal" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem"><div><div class="sec-label">Shop</div><h2 class="sec-title">Browse by category</h2></div><button class="btn btn-outline btn-sm" onclick="go('shop')">View All Products →</button></div>
+    <div class="cat-grid e-stagger">
+      <div class="cc e-reveal" onclick="goShopCat('Feed Dispenser')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 6v14a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V6"/><line x1="12" y1="10" x2="12" y2="16"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div><div><h4>FishGun: Feed Dispenser</h4><span>7 products</span></div></div>
+      <div class="cc e-reveal" onclick="goShopCat('Preserved / Live Feed')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div><div><h4>Preserved / Live Feed</h4><span>19 products</span></div></div>
+      <div class="cc e-reveal" onclick="goShopCat('Dry Feed')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h12l2 7H4l2-7z"/><path d="M4 9v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/><line x1="12" y1="13" x2="12" y2="17"/></svg></div><div><h4>Dry Feed</h4><span>3 products</span></div></div>
+      <div class="cc e-reveal" onclick="goShopCat('Salt for Aquariums')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 22l1-1h18l1 1"/><path d="M6 18V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v10"/><circle cx="12" cy="13" r="2"/></svg></div><div><h4>Salt for Aquariums</h4><span>1 product</span></div></div>
+      <div class="cc e-reveal" onclick="goShopCat('Equipment')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div><h4>Equipment</h4><span>15 products</span></div></div>
+      <div class="cc e-reveal" onclick="goShopCat('Supplements')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div><h4>Supplements</h4><span>2 products</span></div></div>
+      <div class="cc e-reveal" onclick="goShopCat('Tests & Analysis')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg></div><div><h4>Tests &amp; Analysis</h4><span>6 products</span></div></div>
+      <div class="cc e-reveal" onclick="goShopCat('Pests & Water')"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><h4>Pests &amp; Water Conditioning</h4><span>2 products</span></div></div>
     </div>
   </div></section>
 
   <section class="sec sec-border" style="padding:2.5rem 0"><div class="wrap">
-    <div class="sec-header" style="text-align:center;margin-bottom:1.5rem"><div class="sec-label">Trusted By</div><h2 class="sec-title" style="font-size:1.2rem">Leading research institutions and partners worldwide</h2></div>
+    <div class="sec-header e-reveal" style="text-align:center;margin-bottom:1.5rem"><div class="sec-label">Trusted By</div><h2 class="sec-title" style="font-size:1.2rem">Leading research institutions and partners worldwide</h2></div>
     <div style="display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;">
       <img src="https://planktovie.biz/wp-content/uploads/2018/09/cnrsm.png" alt="CNRS" style="height:40px;object-fit:contain;filter:none;opacity:1">
       <img src="https://planktovie.biz/wp-content/uploads/2018/09/SCIENCEFORSANTE22.png" alt="INSERM" style="height:35px;object-fit:contain;filter:none;opacity:1">
@@ -1244,6 +1331,8 @@ function viewProduct(id){
   const p=products.find(x=>x.id===id);
   if(!p) return;
   pdQtyVal=1;
+  selectedVariantPrice=null;
+  selectedVariantLabel=null;
 
   document.getElementById('pdCrumbName').textContent=p.name;
   document.getElementById('galleryImg').innerHTML=`<img src="${p.img}" alt="${p.name}">`;
@@ -1257,6 +1346,8 @@ function viewProduct(id){
     varWrap.style.display='block';
     varSel.innerHTML=p.variants.map(v=>`<option value='${v.price}'>${v.label} — €${v.price.toFixed(2)}</option>`).join('');
     document.getElementById('pdPrice').textContent='€'+p.variants[0].price.toFixed(2);
+    selectedVariantPrice=p.variants[0].price;
+    selectedVariantLabel=p.variants[0].label;
   } else {
     varWrap.style.display='none';
   }
@@ -1315,8 +1406,13 @@ function renderRelated(items){
     </div></div>`}).join('');
 }
 
+let selectedVariantPrice=null;
+let selectedVariantLabel=null;
+
 function selectVariant(sel){
-  document.getElementById('pdPrice').textContent='€'+parseFloat(sel.value).toFixed(2);
+  selectedVariantPrice=parseFloat(sel.value);
+  selectedVariantLabel=sel.options[sel.selectedIndex].text.split(' — ')[0];
+  document.getElementById('pdPrice').textContent='€'+selectedVariantPrice.toFixed(2);
 }
 
 function pdQtyChange(d){
@@ -1326,22 +1422,36 @@ function pdQtyChange(d){
 
 function addToCartQty(id){
   const p=products.find(x=>x.id===id);
-  const e=cart.find(x=>x.id===id);
-  if(e) e.qty+=pdQtyVal;
-  else cart.push({...p,qty:pdQtyVal});
+  // Determine the actual price and cart key
+  let cartPrice=p.price;
+  let cartName=p.name;
+  let cartKey=id;
+  if(p.variants&&p.variants.length&&selectedVariantPrice!==null){
+    cartPrice=selectedVariantPrice;
+    cartName=p.name+' ('+selectedVariantLabel+')';
+    // Use a unique key so different variants don't merge
+    cartKey=id+'_'+selectedVariantLabel.replace(/\s+/g,'');
+  }
+  const e=cart.find(x=>x.cartKey===cartKey);
+  if(e){ e.qty+=pdQtyVal; }
+  else{ cart.push({...p, id:id, cartKey:cartKey, name:cartName, price:cartPrice, qty:pdQtyVal}); }
   updateCart();
-  showToast(pdQtyVal+'× '+p.name+' added to cart');
+  showToast(pdQtyVal+'× '+cartName+' added to cart');
 }
 
-function addToCart(id){const p=products.find(x=>x.id===id);const e=cart.find(x=>x.id===id);if(e)e.qty++;else cart.push({...p,qty:1});updateCart();showToast(p.name+' added to cart')}
+function addToCart(id){const p=products.find(x=>x.id===id);const e=cart.find(x=>x.cartKey===id||x.id===id);if(e)e.qty++;else cart.push({...p,cartKey:id,qty:1});updateCart();showToast(p.name+' added to cart')}
 function updateCart(){
   const b=document.getElementById('cartBadge'),n=cart.reduce((s,i)=>s+i.qty,0);
   b.textContent=n;b.classList.toggle('hide',n===0);
-  document.getElementById('cBody').innerHTML=cart.length?cart.map(i=>`<div class="c-item"><div class="c-item-img"><img src="${i.img}" alt="${i.name}" style="width:100%;height:100%;object-fit:contain"></div><div class="c-item-info"><div class="c-item-name">${i.name}</div><div class="c-item-price">€${i.price.toFixed(2)}</div><div class="c-item-qty"><button onclick="chg(${i.id},-1)">−</button><span>${i.qty}</span><button onclick="chg(${i.id},1)">+</button></div><div class="c-item-rm" onclick="rm(${i.id})">Remove</div></div></div>`).join(''):'<div class="c-empty">Your cart is empty.</div>';
+  document.getElementById('cBody').innerHTML=cart.length?cart.map(i=>{
+    const key=i.cartKey||i.id;
+    const safeName=esc(i.name);
+    return `<div class="c-item"><div class="c-item-img"><img src="${i.img}" alt="${safeName}" style="width:100%;height:100%;object-fit:contain"></div><div class="c-item-info"><div class="c-item-name">${safeName}</div><div class="c-item-price">€${i.price.toFixed(2)}</div><div class="c-item-qty"><button onclick="chg('${key}',-1)">−</button><span>${i.qty}</span><button onclick="chg('${key}',1)">+</button></div><div class="c-item-rm" onclick="rm('${key}')">Remove</div></div></div>`;
+  }).join(''):'<div class="c-empty">Your cart is empty.</div>';
   document.getElementById('cTotal').textContent='€'+cart.reduce((s,i)=>s+i.price*i.qty,0).toFixed(2);
 }
-function chg(id,d){const i=cart.find(x=>x.id===id);if(i){i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>x.id!==id)}updateCart()}
-function rm(id){cart=cart.filter(x=>x.id!==id);updateCart()}
+function chg(key,d){const i=cart.find(x=>(x.cartKey||x.id)===key||x.id===key);if(i){i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>(x.cartKey||x.id)!==key)}updateCart()}
+function rm(key){cart=cart.filter(x=>(x.cartKey||x.id)!==key);updateCart()}
 function toggleCart(){document.getElementById('cOver').classList.toggle('open');document.getElementById('cDraw').classList.toggle('open')}
 function showToast(m){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 
@@ -1471,9 +1581,10 @@ function renderSearchResults(q){
   }
 
   if(!pRes.length&&!pgRes.length&&!rRes.length){
+    const safeQ=esc(q);
     html=`<div class="search-empty" style="padding:2rem 1rem">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto .5rem;color:var(--gray-300)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      No results for "<strong>${q}</strong>"<br><span style="font-size:.78rem;color:var(--gray-400)">Try a different search term or browse our catalog</span>
+      No results for "<strong>${safeQ}</strong>"<br><span style="font-size:.78rem;color:var(--gray-400)">Try a different search term or browse our catalog</span>
     </div>`;
   }
 
@@ -1788,6 +1899,18 @@ function toggleCareerLang() {
 
 // Initialize
 loadProducts();
+// ─── EMIL DESIGN: Scroll-triggered reveal (IntersectionObserver) ───
+// Uses CSS transitions (not keyframes) for interruptibility per Emil's principles
+(function(){
+  const observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('e-visible');
+      }
+    });
+  },{threshold:0.12, rootMargin:'-30px'});
+  document.querySelectorAll('.e-reveal').forEach(function(el){observer.observe(el);});
+})();
 </script>
 </body>
 </html>
