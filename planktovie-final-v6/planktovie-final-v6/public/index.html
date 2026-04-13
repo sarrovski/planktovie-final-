@@ -182,7 +182,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .pc-img{height:180px;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;padding:.75rem}
 .pc-img img{max-width:100%;max-height:100%;object-fit:contain}
 .pc-tag{position:absolute;top:.45rem;left:.45rem;padding:.12rem .4rem;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;border-radius:3px}
-.tag-best{background:var(--teal-light);color:var(--teal)}.tag-pro{background:var(--blue-light);color:var(--blue)}.tag-sale{background:var(--amber-light);color:var(--amber)}.tag-brand{background:#f3f0ff;color:#6d28d9}
+.tag-best{background:var(--teal-light);color:var(--teal)}.tag-pro{background:var(--blue-light);color:var(--blue)}.tag-sale{background:var(--amber-light);color:var(--amber)}.tag-new{background:#f0fdf4;color:#16a34a}.tag-brand{background:#f3f0ff;color:#6d28d9}
 .pc-body{padding:.85rem}
 .pc-cat{font-family:var(--mono);font-size:.58rem;font-weight:500;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.2rem}
 .pc-name{font-size:.88rem;font-weight:600;color:var(--gray-700);line-height:1.3;margin-bottom:.35rem}
@@ -721,7 +721,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
       <h3>Audience</h3><ul class="fl" id="audFilter"><li class="on" onclick="filterAud('all')">All Audiences</li><li onclick="filterAud('Scientist')">Scientist <span class="c">35</span></li><li onclick="filterAud('Aquaculturist')">Aquaculturist <span class="c">8</span></li><li onclick="filterAud('Aquarist')">Aquarist <span class="c">15</span></li></ul>
     </aside>
     <div>
-      <div class="shop-top"><span class="r">Showing 24 products</span><select><option>Default sorting</option><option>Price: low → high</option><option>Price: high → low</option><option>Newest first</option></select></div>
+      <div class="shop-top"><span class="r">Showing 24 products</span><select onchange="sortProducts(this.value)"><option value="default">Default sorting</option><option value="price-asc">Price: low → high</option><option value="price-desc">Price: high → low</option><option value="newest">Newest first</option></select></div>
       <div class="pg" id="productGrid"></div>
     </div>
   </div></div></section>
@@ -841,7 +841,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
       <div class="fq" onclick="this.classList.toggle('open')"><div class="fq-q">How do I culture rotifers for zebrafish larvae? <span class="t">+</span></div><div class="fq-a">Prepare 50L of culture water at 15 ppt salinity. Inoculate with 5–10 million rotifers from a commercial supplier. Feed daily with Phyto-Feast or RGcomplete phytoplankton. Maintain at 20–25°C with gentle aeration. Harvest after 48–72h when density reaches 200–400 rotifers/mL. See our full rotifer culture protocol in the Resources section.</div></div>
       <div class="fq" onclick="this.classList.toggle('open')"><div class="fq-q">What is the recommended feeding regimen for adult zebrafish? <span class="t">+</span></div><div class="fq-a">Adult zebrafish (Danio rerio) typically require 30 mg of Gemma Micro 500 per individual per day. When using the FishGun D2, set vibration time according to the calibration table in the user guide. Supplement with live Daphnia or rotifers 2–3 times per week for optimal reproduction rates.</div></div>
       <div class="fq" onclick="this.classList.toggle('open')"><div class="fq-q">How long does Daphnia take to culture? <span class="t">+</span></div><div class="fq-a">Daphnia magna cultures typically establish within 7–10 days from inoculation. Feed daily with green water phytoplankton or Phyto-Feast. Maintain water temperature at 20–22°C. Daphnia is particularly valuable for feeding zebrafish from 60 days post-fertilisation through adulthood.</div></div>
-      <div class="fq" onclick="this.classList.toggle('open')"><div class="fq-q">Can training be reimbursed through professional training funds? <span class="t">+</span></div><div class="fq-a">Yes. Planktovie is Qualiopi-certified, making all training programmes eligible for reimbursement through your company's OPCO training fund or the FNE device. Contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8cec7dac5c9dcc1c7c6e8d8c4c9c6c3dcc7dec1cd86cac1d2">[email&#160;protected]</a> for a formal quote and the required documentation.</div></div>
+      <div class="fq" onclick="this.classList.toggle('open')"><div class="fq-q">Can training be reimbursed through professional training funds? <span class="t">+</span></div><div class="fq-a">Yes. Planktovie is Qualiopi-certified, making all training programmes eligible for reimbursement through your company's OPCO training fund or the FNE device. Contact <a href="mailto:formation@planktovie.biz" style="color:var(--teal)">formation@planktovie.biz</a> for a formal quote and the required documentation.</div></div>
       <div class="fq" onclick="this.classList.toggle('open')"><div class="fq-q">Who are your distribution partners in Europe? <span class="t">+</span></div><div class="fq-a">Planktovie distributes through a network of regional specialists: Plexx B.V. (Netherlands &amp; Germany), Histoire d'eaux (France), Marine Home (France), Seafoodia, and Sodispan. Contact us to find the nearest distributor in your country.</div></div>
     </div>
 
@@ -923,7 +923,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
       <h3>Contact Information</h3>
       <p>Our team of scientists, technicians, and specialists typically responds within one business day.</p>
       <div class="cd"><div class="cd-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>Marseille, France</div>
-      <div class="cd"><div class="cd-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="690a06071d080a1d2919050807021d061f000c470b0013">[email&#160;protected]</a></div>
+      <div class="cd"><div class="cd-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><a href="mailto:contact@planktovie.biz" style="color:var(--teal)">contact@planktovie.biz</a></div>
       <div class="cd"><div class="cd-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>planktovie.biz</div>
       <h3 style="margin-top:1.75rem">International Distribution</h3>
       <p>We work with distributors worldwide to ensure prompt local delivery. Contact us to find a distributor in your region or to become a distribution partner.</p>
@@ -1005,7 +1005,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
         <div style="font-size:.8rem;color:var(--gray-600);margin-bottom:.85rem">
           <strong>Contract:</strong> 6-month fixed-term starting June — possible transition to permanent contract based on profile and performance.
         </div>
-        <a href="/cdn-cgi/l/email-protection#11787f777e51617d707f7a657e6778743f73786b" class="btn btn-teal btn-sm">Apply — <span class="__cf_email__" data-cfemail="5f363139301f2f333e31342b3029363a713d3625">[email&#160;protected]</span> →</a>
+        <a href="mailto:info@planktovie.biz" class="btn btn-teal btn-sm">Apply — info@planktovie.biz →</a>
       </div>
       <!-- FR version -->
       <div id="job-fr" style="border:1px solid var(--gray-100);border-radius:var(--radius);padding:1.5rem;display:none">
@@ -1029,19 +1029,19 @@ input,select,textarea{font-family:inherit;font-size:inherit}
         <div style="font-size:.8rem;color:var(--gray-600);margin-bottom:.85rem">
           <strong>Pourquoi nous rejoindre ?</strong> PLANKTOVIE est une entreprise deeptech spécialisée dans les biotechnologies marines. Vous évoluerez dans un environnement innovant, à la croisée de la recherche scientifique et de l'aquaculture appliquée, avec un fort focus sur les coraux tropicaux.
         </div>
-        <a href="/cdn-cgi/l/email-protection#b8d1d6ded7f8c8d4d9d6d3ccd7ced1dd96dad1c2" class="btn btn-teal btn-sm">Postuler — <span class="__cf_email__" data-cfemail="b5dcdbd3daf5c5d9d4dbdec1dac3dcd09bd7dccf">[email&#160;protected]</span> →</a>
+        <a href="mailto:info@planktovie.biz" class="btn btn-teal btn-sm">Postuler — info@planktovie.biz →</a>
       </div>
       <!-- Spontaneous EN -->
       <div id="spontaneous-en" style="border:1px solid var(--gray-100);border-radius:var(--radius);padding:1.5rem;background:var(--gray-50)">
         <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-400);margin-bottom:.3rem">Spontaneous Applications</div>
         <h3 style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:.5rem">Don't see a match?</h3>
-        <p style="font-size:.84rem;color:var(--gray-500);line-height:1.6;margin-bottom:.85rem">We are always interested in hearing from passionate scientists, technicians, and life science professionals. Send your CV and motivation letter to <a href="/cdn-cgi/l/email-protection#7e171018113e0e121f10150a1108171b501c1704" style="color:var(--teal)"><span class="__cf_email__" data-cfemail="bad3d4dcd5facad6dbd4d1ced5ccd3df94d8d3c0">[email&#160;protected]</span></a>.</p>
+        <p style="font-size:.84rem;color:var(--gray-500);line-height:1.6;margin-bottom:.85rem">We are always interested in hearing from passionate scientists, technicians, and life science professionals. Send your CV and motivation letter to <a href="mailto:info@planktovie.biz" style="color:var(--teal)">info@planktovie.biz</a>.</p>
       </div>
       <!-- Spontaneous FR -->
       <div id="spontaneous-fr" style="border:1px solid var(--gray-100);border-radius:var(--radius);padding:1.5rem;background:var(--gray-50);display:none">
         <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-400);margin-bottom:.3rem">Candidatures Spontanées</div>
         <h3 style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:.5rem">Aucun poste ne correspond ?</h3>
-        <p style="font-size:.84rem;color:var(--gray-500);line-height:1.6;margin-bottom:.85rem">Nous sommes toujours intéressés par des scientifiques, techniciens et professionnels des sciences de la vie passionnés. Envoyez votre CV et quelques lignes sur votre expérience en récifal à <a href="/cdn-cgi/l/email-protection#dbb2b5bdb49babb7bab5b0afb4adb2bef5b9b2a1" style="color:var(--teal)"><span class="__cf_email__" data-cfemail="eb82858d84ab9b878a85809f849d828ec5898291">[email&#160;protected]</span></a>.</p>
+        <p style="font-size:.84rem;color:var(--gray-500);line-height:1.6;margin-bottom:.85rem">Nous sommes toujours intéressés par des scientifiques, techniciens et professionnels des sciences de la vie passionnés. Envoyez votre CV et quelques lignes sur votre expérience en récifal à <a href="mailto:info@planktovie.biz" style="color:var(--teal)">info@planktovie.biz</a>.</p>
       </div>
     </div>
   </div></section>
@@ -1076,7 +1076,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
               <div class="ck-fg"><label>First Name *</label><input type="text" placeholder="Jane" id="ckFirst"></div>
               <div class="ck-fg"><label>Last Name *</label><input type="text" placeholder="Smith" id="ckLast"></div>
             </div>
-            <div class="ck-fg"><label>Organization / Institution</label><input type="text" placeholder="e.g. CNRS, University of Marseille"></div>
+            <div class="ck-fg"><label>Organization / Institution</label><input type="text" id="ckOrg" placeholder="e.g. CNRS, University of Marseille"></div>
             <div class="ck-row">
               <div class="ck-fg"><label>Email Address *</label><input type="email" placeholder="jane@institution.org" id="ckEmail"></div>
               <div class="ck-fg"><label>Phone Number</label><input type="tel" placeholder="+33 6 12 34 56 78"></div>
@@ -1173,7 +1173,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 <footer class="footer" id="mainFooter"><div class="wrap">
   <div class="foot-grid">
     <div class="foot-brand">
-      <div class="logo" onclick="go('home')" style="cursor:pointer"><div class="logo-mark"><img src="plankto-logo-light-v2.png" alt="Planktovie"></div></div>
+      <div class="logo" onclick="go('home')" style="cursor:pointer"><div class="logo-mark"><img src="plankto-logo-light-v2.png" alt="Planktovie" style="mix-blend-mode:multiply"></div></div>
       <p>Nutritional solutions and precision equipment for aquatic organisms. Serving research, aquaculture, and aquariology since 2016.</p>
     </div>
     <div class="foot-col"><h5>Shop</h5><a onclick="go('shop')">Live Feed</a><a onclick="go('shop')">Dry Feed</a><a onclick="go('shop')">Equipment</a><a onclick="go('shop')">Salts</a><a onclick="go('shop')">Tests</a></div>
@@ -1250,8 +1250,13 @@ const products=[
   {id:102,name:"Mechanical Filter Sock 200µm",cat:"Aquatic Maintenance & Filtration",brand:"Planktovie",aud:"Scientist",price:0,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"New",tc:"tag-new"},
 ];
 let cart=[];
+// Load cart from localStorage
+try{const saved=localStorage.getItem('planktovie_cart');if(saved)cart=JSON.parse(saved)}catch(e){}
 
 let activeCat='all', activeBrand='all', activeAud='all';
+
+// Restore cart badge on load
+setTimeout(()=>updateCart(),0);
 
 function getFiltered(){
   return products.filter(p=>{
@@ -1265,12 +1270,16 @@ function getFiltered(){
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 function renderProducts(cat){
   if(cat!==undefined) activeCat=cat;
-  const filtered=getFiltered();
+  let filtered=getFiltered();
+  // Apply sorting
+  if(activeSort==='price-asc') filtered=filtered.slice().sort((a,b)=>a.price-b.price);
+  else if(activeSort==='price-desc') filtered=filtered.slice().sort((a,b)=>b.price-a.price);
+  else if(activeSort==='newest') filtered=filtered.slice().sort((a,b)=>b.id-a.id);
   document.getElementById('productGrid').innerHTML=filtered.length?filtered.map(p=>{
     const safeName=esc(p.name);
     return `<div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
       <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2):'Contact us'}</div>
-      ${p.price>0?`<button class="pc-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>`:`<button class="pc-btn" onclick="event.stopPropagation();go('contact')" style="background:var(--navy)">Request Quote</button>`}
+      ${!p.inStock?`<button class="pc-btn" style="background:var(--gray-300);cursor:not-allowed" disabled>Out of Stock</button>`:p.price>0?`<button class="pc-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>`:`<button class="pc-btn" onclick="event.stopPropagation();go('contact')" style="background:var(--navy)">Request Quote</button>`}
     </div></div>`}).join(''):'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-400)">No products match the selected filters.</div>';
   const topbar=document.querySelector('.shop-top .r');
   if(topbar) topbar.textContent='Showing '+filtered.length+' product'+(filtered.length!==1?'s':'');
@@ -1305,6 +1314,9 @@ function filterCat(cat){activeCat=cat;renderProducts()}
 function filterBrand(brand){activeBrand=brand;renderProducts()}
 function filterAud(aud){activeAud=aud;renderProducts()}
 
+let activeSort='default';
+function sortProducts(sort){activeSort=sort;renderProducts()}
+
 function goShopCat(cat){
   activeBrand='all';activeAud='all';
   go('shop');
@@ -1335,7 +1347,7 @@ function viewProduct(id){
   selectedVariantLabel=null;
 
   document.getElementById('pdCrumbName').textContent=p.name;
-  document.getElementById('galleryImg').innerHTML=`<img src="${p.img}" alt="${p.name}">`;
+  document.getElementById('galleryImg').innerHTML=`<img src="${p.img}" alt="${esc(p.name)}">`;
   document.getElementById('pdCat').textContent=p.cat;
   document.getElementById('pdName').textContent=p.name;
   document.getElementById('pdPrice').textContent=p.price>0?'€'+p.price.toFixed(2):'Contact us';
@@ -1354,12 +1366,23 @@ function viewProduct(id){
   document.getElementById('pdQty').textContent='1';
   document.getElementById('pdAddBtn').onclick=function(){addToCartQty(p.id)};
 
-  // Hide add-to-cart actions for price-0 products, show quote button instead
+  // Hide add-to-cart actions for price-0 products or out-of-stock, show quote button instead
   const pdActions=document.querySelector('.pd-actions');
-  if(p.price>0){
+  if(!p.inStock){
+    document.querySelector('.pd-qty').style.display='none';
+    document.getElementById('pdAddBtn').style.display='block';
+    document.getElementById('pdAddBtn').textContent='Out of Stock';
+    document.getElementById('pdAddBtn').disabled=true;
+    document.getElementById('pdAddBtn').style.background='var(--gray-300)';
+    document.getElementById('pdAddBtn').style.cursor='not-allowed';
+    document.getElementById('pdAddBtn').onclick=null;
+  } else if(p.price>0){
     document.querySelector('.pd-qty').style.display='flex';
     document.getElementById('pdAddBtn').style.display='block';
     document.getElementById('pdAddBtn').textContent='Add to Cart';
+    document.getElementById('pdAddBtn').disabled=false;
+    document.getElementById('pdAddBtn').style.background='';
+    document.getElementById('pdAddBtn').style.cursor='';
   } else {
     document.querySelector('.pd-qty').style.display='none';
     document.getElementById('pdAddBtn').style.display='none';
@@ -1381,7 +1404,7 @@ function viewProduct(id){
     <div class="pd-spec"><span class="spec-label">Category</span><span class="spec-value">${p.cat}</span></div>
     <div class="pd-spec"><span class="spec-label">Brand</span><span class="spec-value">${p.brand}</span></div>
     <div class="pd-spec"><span class="spec-label">Reference</span><span class="spec-value">PKV-${String(p.id).padStart(4,'0')}</span></div>
-    <div class="pd-spec"><span class="spec-label">Availability</span><span class="spec-value" style="color:var(--green)">In Stock</span></div>
+    <div class="pd-spec"><span class="spec-label">Availability</span><span class="spec-value" style="color:${p.inStock?'var(--green)':'var(--red)'}">${p.inStock?'In Stock':'Out of Stock'}</span></div>
     <div class="pd-spec"><span class="spec-label">Certification</span><span class="spec-value">QM Diagnostics Sanitary Tested</span></div>
   `;
 
@@ -1449,6 +1472,8 @@ function updateCart(){
     return `<div class="c-item"><div class="c-item-img"><img src="${i.img}" alt="${safeName}" style="width:100%;height:100%;object-fit:contain"></div><div class="c-item-info"><div class="c-item-name">${safeName}</div><div class="c-item-price">€${i.price.toFixed(2)}</div><div class="c-item-qty"><button onclick="chg('${key}',-1)">−</button><span>${i.qty}</span><button onclick="chg('${key}',1)">+</button></div><div class="c-item-rm" onclick="rm('${key}')">Remove</div></div></div>`;
   }).join(''):'<div class="c-empty">Your cart is empty.</div>';
   document.getElementById('cTotal').textContent='€'+cart.reduce((s,i)=>s+i.price*i.qty,0).toFixed(2);
+  // Persist cart to localStorage
+  try{localStorage.setItem('planktovie_cart',JSON.stringify(cart))}catch(e){}
 }
 function chg(key,d){const i=cart.find(x=>(x.cartKey||x.id)===key||x.id===key);if(i){i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>(x.cartKey||x.id)!==key)}updateCart()}
 function rm(key){cart=cart.filter(x=>(x.cartKey||x.id)!==key);updateCart()}
@@ -1459,7 +1484,7 @@ function go(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  const m={home:0,shop:1,brand:2,training:3,resources:4,about:5};
+  const m={home:0,shop:1,brand:2,training:3,resources:4,careers:5,about:6};
   if(m[page]!==undefined)document.querySelectorAll('.nav-link')[m[page]]?.classList.add('active');
   window.scrollTo({top:0,behavior:'instant'});
   // Close mobile nav if open
@@ -1683,26 +1708,27 @@ function renderCheckout(){
   document.getElementById('ckForm').style.display='block';
   document.getElementById('ckSuccess').classList.remove('show');
   const items=document.getElementById('ckItems');
-  items.innerHTML=cart.map(i=>`
+  items.innerHTML=cart.map(i=>{
+    const safeName=esc(i.name);
+    return `
     <div class="ck-item">
-      <div class="ck-item-img"><img src="${i.img}" alt="${i.name}"></div>
+      <div class="ck-item-img"><img src="${i.img}" alt="${safeName}"></div>
       <div class="ck-item-info">
-        <div class="ck-item-name">${i.name}</div>
+        <div class="ck-item-name">${safeName}</div>
         <div class="ck-item-meta">Qty: ${i.qty} × €${i.price.toFixed(2)}</div>
       </div>
       <div class="ck-item-total">€${(i.price*i.qty).toFixed(2)}</div>
-    </div>`).join('');
+    </div>`}).join('');
   updateTotals();
 }
 
 function updateTotals(){
   const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const vat=sub*0.20;
-  const grand=sub+shipCost+vat;
+  const grand=sub+shipCost;
   document.getElementById('ckSubtotal').textContent='€'+sub.toFixed(2);
   document.getElementById('ckShipping').textContent=shipCost>0?'€'+shipCost.toFixed(2):'Free';
-  document.getElementById('ckVat').textContent='€'+vat.toFixed(2);
-  document.getElementById('ckGrandTotal').textContent='€'+grand.toFixed(2);
+  document.getElementById('ckVat').textContent='Calculated at payment';
+  document.getElementById('ckGrandTotal').textContent='€'+grand.toFixed(2)+' excl. VAT';
 }
 
 function selectShip(el,cost){
@@ -1712,12 +1738,7 @@ function selectShip(el,cost){
   updateTotals();
 }
 
-function selectPay(el){
-  el.parentElement.querySelectorAll('.ck-radio').forEach(r=>r.classList.remove('selected'));
-  el.classList.add('selected');
-  const isCc=el.textContent.trim()==='Credit Card';
-  document.getElementById('ccFields').style.display=isCc?'block':'none';
-}
+// selectPay removed — Stripe handles payment method selection
 
 async function initiateStripeCheckout(){
   const first=document.getElementById('ckFirst').value.trim();
@@ -1743,7 +1764,13 @@ async function initiateStripeCheckout(){
         billing:{first,last,email,org:document.getElementById('ckOrg')?.value||''},
       })
     });
-    const data=await res.json();
+    const contentType=res.headers.get('content-type')||'';
+    let data;
+    if(contentType.includes('application/json')){
+      data=await res.json();
+    } else {
+      throw new Error(res.status===404?'Checkout service not available. Please contact us directly.':'Server error ('+res.status+')');
+    }
     if(data.url){
       window.location.href=data.url;
     } else {
@@ -1789,7 +1816,15 @@ async function submitQuote(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({name,email,phone,organization,role,message})
     });
-    const data=await res.json();
+    // Handle non-JSON responses (e.g. HTML error pages, 404s)
+    const contentType=res.headers.get('content-type')||'';
+    let data;
+    if(contentType.includes('application/json')){
+      data=await res.json();
+    } else {
+      const text=await res.text();
+      throw new Error(res.status===404?'Quote service not available. Please email us directly at contact@planktovie.biz':'Server error ('+res.status+'). Please email us at contact@planktovie.biz');
+    }
     if(!res.ok) throw new Error(data.error||'Failed to send');
     document.getElementById('quoteForm').style.display='none';
     document.getElementById('quoteSuccess').style.display='block';
@@ -1819,7 +1854,7 @@ function resetQuoteForm(){
       document.getElementById('orderNum').textContent=num;
       document.getElementById('ckForm').style.display='none';
       document.getElementById('ckSuccess').classList.add('show');
-      cart=[];updateCart();
+      cart=[];updateCart();localStorage.removeItem('planktovie_cart');
     },150);
   }
   if(p.get('checkout')==='cancelled'){
@@ -1898,7 +1933,7 @@ function toggleCareerLang() {
 }
 
 // Initialize
-loadProducts();
+// loadProducts() already called above — do not duplicate
 // ─── EMIL DESIGN: Scroll-triggered reveal (IntersectionObserver) ───
 // Uses CSS transitions (not keyframes) for interruptibility per Emil's principles
 (function(){
