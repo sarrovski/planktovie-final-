@@ -555,7 +555,11 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 <div class="c-draw" id="cDraw">
   <div class="c-head"><h3>Your Cart</h3><div class="c-x" onclick="toggleCart()">×</div></div>
   <div class="c-body" id="cBody"><div class="c-empty">Your cart is empty.<br>Browse our catalog to get started.</div></div>
-  <div class="c-foot"><div class="c-total"><span class="tl">Subtotal (excl. VAT)</span><span class="tv" id="cTotal">€0.00</span></div><button class="c-checkout" onclick="goCheckout()">Proceed to Checkout →</button></div>
+  <div class="c-foot">
+    <div class="c-total"><span class="tl">Subtotal (excl. VAT)</span><span class="tv" id="cTotal">€0.00</span></div>
+    <button class="c-checkout" onclick="goCheckout()">Proceed to Checkout →</button>
+    <button class="c-checkout" onclick="quoteFromCart()" style="background:var(--navy);margin-top:.4rem;font-size:.78rem">Request a Quote Instead →</button>
+  </div>
 </div>
 <div class="toast" id="toast"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span id="toastMsg">Added</span></div>
 
@@ -923,7 +927,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
       <h3>Contact Information</h3>
       <p>Our team of scientists, technicians, and specialists typically responds within one business day.</p>
       <div class="cd"><div class="cd-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>Marseille, France</div>
-      <div class="cd"><div class="cd-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><a href="mailto:contact@planktovie.biz" style="color:var(--teal)">contact@planktovie.biz</a></div>
+      <div class="cd"><div class="cd-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><a href="mailto:info@planktovie.biz" style="color:var(--teal)">info@planktovie.biz</a></div>
       <div class="cd"><div class="cd-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>planktovie.biz</div>
       <h3 style="margin-top:1.75rem">International Distribution</h3>
       <p>We work with distributors worldwide to ensure prompt local delivery. Contact us to find a distributor in your region or to become a distribution partner.</p>
@@ -1277,9 +1281,9 @@ function renderProducts(cat){
   else if(activeSort==='newest') filtered=filtered.slice().sort((a,b)=>b.id-a.id);
   document.getElementById('productGrid').innerHTML=filtered.length?filtered.map(p=>{
     const safeName=esc(p.name);
-    return `<div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
+    return `<div class="pc" onclick="viewProduct('${p.id}')"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
       <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2):'Contact us'}</div>
-      ${!p.inStock?`<button class="pc-btn" style="background:var(--gray-300);cursor:not-allowed" disabled>Out of Stock</button>`:p.price>0?`<button class="pc-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>`:`<button class="pc-btn" onclick="event.stopPropagation();go('contact')" style="background:var(--navy)">Request Quote</button>`}
+      ${!p.inStock?`<button class="pc-btn" style="background:var(--gray-300);cursor:not-allowed" disabled>Out of Stock</button>`:p.price>0?`<button class="pc-btn" onclick="event.stopPropagation();addToCart('${p.id}')">Add to Cart</button>`:`<button class="pc-btn" onclick="event.stopPropagation();go('contact')" style="background:var(--navy)">Request Quote</button>`}
     </div></div>`}).join(''):'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-400)">No products match the selected filters.</div>';
   const topbar=document.querySelector('.shop-top .r');
   if(topbar) topbar.textContent='Showing '+filtered.length+' product'+(filtered.length!==1?'s':'');
@@ -1403,7 +1407,7 @@ function viewProduct(id){
   document.getElementById('pdSpecs').innerHTML=`
     <div class="pd-spec"><span class="spec-label">Category</span><span class="spec-value">${p.cat}</span></div>
     <div class="pd-spec"><span class="spec-label">Brand</span><span class="spec-value">${p.brand}</span></div>
-    <div class="pd-spec"><span class="spec-label">Reference</span><span class="spec-value">PKV-${String(p.id).padStart(4,'0')}</span></div>
+    <div class="pd-spec"><span class="spec-label">Reference</span><span class="spec-value">${p.sku||p.id}</span></div>
     <div class="pd-spec"><span class="spec-label">Availability</span><span class="spec-value" style="color:${p.inStock?'var(--green)':'var(--red)'}">${p.inStock?'In Stock':'Out of Stock'}</span></div>
     <div class="pd-spec"><span class="spec-label">Certification</span><span class="spec-value">QM Diagnostics Sanitary Tested</span></div>
   `;
@@ -1423,9 +1427,9 @@ function viewProduct(id){
 function renderRelated(items){
   document.getElementById('pdRelated').innerHTML=items.map(p=>{
     const safeName=esc(p.name);
-    return `<div class="pc" onclick="viewProduct(${p.id})"><div class="pc-img" style="height:130px">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
+    return `<div class="pc" onclick="viewProduct('${p.id}')"><div class="pc-img" style="height:130px">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
       <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">€${p.price.toFixed(2)}</div>
-      <button class="pc-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>
+      <button class="pc-btn" onclick="event.stopPropagation();addToCart('${p.id}')">Add to Cart</button>
     </div></div>`}).join('');
 }
 
@@ -1478,6 +1482,22 @@ function updateCart(){
 function chg(key,d){const i=cart.find(x=>(x.cartKey||x.id)===key||x.id===key);if(i){i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>(x.cartKey||x.id)!==key)}updateCart()}
 function rm(key){cart=cart.filter(x=>(x.cartKey||x.id)!==key);updateCart()}
 function toggleCart(){document.getElementById('cOver').classList.toggle('open');document.getElementById('cDraw').classList.toggle('open')}
+
+function quoteFromCart(){
+  if(cart.length===0){showToast('Cart is empty');return}
+  // Build a message from cart contents
+  const lines=cart.map(i=>'• '+i.name+' × '+i.qty+(i.price>0?' — €'+i.price.toFixed(2)+'/unit':''));
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const msg='I would like to request a quote for the following products:\n\n'+lines.join('\n')+'\n\nSubtotal: €'+total.toFixed(2)+' (excl. VAT & shipping)\n\nPlease provide institutional pricing and shipping costs.';
+  // Close cart, go to contact page, pre-fill the message
+  toggleCart();
+  go('contact');
+  document.getElementById('qMsg').value=msg;
+  // Reset form state in case it was in success state
+  document.getElementById('quoteForm').style.display='block';
+  document.getElementById('quoteSuccess').style.display='none';
+  document.getElementById('qError').style.display='none';
+}
 function showToast(m){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 
 function go(page){
@@ -1823,7 +1843,7 @@ async function submitQuote(){
       data=await res.json();
     } else {
       const text=await res.text();
-      throw new Error(res.status===404?'Quote service not available. Please email us directly at contact@planktovie.biz':'Server error ('+res.status+'). Please email us at contact@planktovie.biz');
+      throw new Error(res.status===404?'Quote service not available. Please email us directly at info@planktovie.biz':'Server error ('+res.status+'). Please email us at info@planktovie.biz');
     }
     if(!res.ok) throw new Error(data.error||'Failed to send');
     document.getElementById('quoteForm').style.display='none';
@@ -1873,7 +1893,8 @@ async function loadProducts() {
     var d = String.fromCharCode(34);
     var parts = [
       '*[_type == ',d,'product',d,'] | order(sortOrder asc, _createdAt asc) { ',
-      d,'id',d,': coalesce(sortOrder, 999), name, ',
+      d,'id',d,': _id, ',
+      d,'sortOrder',d,': coalesce(sortOrder, 999), name, ',
       d,'cat',d,': coalesce(category, ',d,d,'), brand, ',
       d,'aud',d,': coalesce(audience, ',d,'Scientist',d,'), price, ',
       d,'img',d,': image.asset->url, tag, sku, inStock, description, ',
@@ -1894,7 +1915,7 @@ async function loadProducts() {
       data.result.forEach(function(p, i) {
         if (!p.name) return;
         products.push({
-          id: p.id || i + 1,
+          id: p.id,
           name: p.name,
           cat: p.cat || '',
           brand: p.brand || 'Planktovie',
