@@ -1602,10 +1602,11 @@ function renderSearchResults(q){
   if(pRes.length){
     html+=`<div class="search-group-label">Products (${pRes.length})</div>`;
     pRes.slice(0,6).forEach((p,i)=>{
-      html+=`<div class="search-result" data-action="product" data-id="${p.id}" onclick="searchSelectProduct(${p.id})">
-        <div class="search-result-img"><img src="${p.img}" alt="${p.name}"></div>
+      const safeId=esc(String(p.id));
+      html+=`<div class="search-result" data-action="product" data-id="${safeId}" onclick="searchSelectProduct('${safeId}')">
+        <div class="search-result-img"><img src="${p.img}" alt="${esc(p.name)}"></div>
         <div class="search-result-info"><div class="search-result-name">${highlightMatch(p.name,q)}</div><div class="search-result-meta">${p.cat}</div></div>
-        <div class="search-result-price">€${p.price.toFixed(2)}</div>
+        <div class="search-result-price">${p.price>0?'€'+p.price.toFixed(2):'Quote'}</div>
       </div>`;
     });
     if(pRes.length>6) html+=`<div class="search-result-page" onclick="searchGoShop('${q}')"><div class="srp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div><span>View all ${pRes.length} product results →</span></div>`;
