@@ -412,6 +412,33 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .foot-certs{display:flex;gap:1.5rem;align-items:center}
 .foot-certs span{font-size:.65rem;color:var(--gray-400);display:flex;align-items:center;gap:.3rem}
 
+/* ═══ SUBSCRIBE & SAVE ═══ */
+.sub-box{margin-top:1rem;border:1px solid var(--teal-light);border-radius:var(--radius);overflow:hidden;display:none}
+.sub-box.show{display:block}
+.sub-header{display:flex;align-items:center;justify-content:space-between;padding:.65rem .85rem;background:var(--teal-bg);cursor:pointer;transition:background .15s}
+.sub-header:hover{background:var(--teal-light)}
+.sub-header-left{display:flex;align-items:center;gap:.5rem}
+.sub-icon{width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sub-title{font-size:.82rem;font-weight:600;color:var(--teal)}
+.sub-badge{font-family:var(--mono);font-size:.6rem;font-weight:700;padding:.15rem .4rem;background:var(--teal);color:#fff;border-radius:3px;letter-spacing:.03em}
+.sub-body{padding:.85rem;border-top:1px solid var(--teal-light)}
+.sub-options{display:flex;flex-direction:column;gap:.45rem}
+.sub-opt{display:flex;align-items:center;gap:.6rem;padding:.55rem .7rem;border:1px solid var(--gray-100);border-radius:4px;cursor:pointer;transition:all .15s var(--ease-out-strong)}
+.sub-opt:hover{border-color:var(--teal);background:var(--teal-bg)}
+.sub-opt.selected{border-color:var(--teal);background:var(--teal-bg)}
+.sub-opt input[type="radio"]{accent-color:var(--teal);margin:0}
+.sub-opt-info{flex:1}
+.sub-opt-freq{font-size:.82rem;font-weight:600;color:var(--gray-700)}
+.sub-opt-price{font-family:var(--mono);font-size:.78rem;color:var(--teal);font-weight:600;margin-top:.1rem}
+.sub-opt-save{font-size:.65rem;color:var(--green);font-weight:600;background:var(--green-light);padding:.1rem .35rem;border-radius:2px;margin-left:.4rem}
+.sub-opt-original{font-size:.72rem;color:var(--gray-400);text-decoration:line-through;margin-left:.3rem}
+.sub-btn{display:block;width:100%;margin-top:.65rem;padding:.55rem;background:var(--teal);color:#fff;font-size:.82rem;font-weight:600;border-radius:4px;border:none;cursor:pointer;transition:all .15s var(--ease-out-strong);text-align:center}
+.sub-btn:hover{background:var(--teal-hover)}
+.sub-btn:active{transform:scale(0.97)}
+.sub-note{font-size:.68rem;color:var(--gray-400);margin-top:.5rem;line-height:1.5;text-align:center}
+/* Grid badge for subscription-eligible products */
+.pc-sub-badge{position:absolute;bottom:.45rem;right:.45rem;font-size:.55rem;font-weight:700;padding:.12rem .4rem;background:var(--teal-bg);color:var(--teal);border-radius:3px;border:1px solid var(--teal-light);letter-spacing:.02em}
+
 /* ═══ EMIL DESIGN ENGINEERING POLISH ═══ */
 
 /* Button press feedback — Emil: buttons must feel responsive (scale 0.97 on :active) */
@@ -971,6 +998,21 @@ input,select,textarea{font-family:inherit;font-size:inherit}
           <div class="pd-trust-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Ships to 40+ countries</div>
           <div class="pd-trust-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Institutional pricing</div>
         </div>
+        <!-- Subscribe & Save -->
+        <div class="sub-box" id="subBox">
+          <div class="sub-header" onclick="toggleSubBody()">
+            <div class="sub-header-left">
+              <div class="sub-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 15.5A10 10 0 0 1 21.5 8.5M21.5 8.5A10 10 0 0 1 2.5 15.5"/></svg></div>
+              <span class="sub-title">Subscribe &amp; Save</span>
+            </div>
+            <span class="sub-badge" id="subBadge">SAVE 10%</span>
+          </div>
+          <div class="sub-body" id="subBody" style="display:none">
+            <div class="sub-options" id="subOptions"></div>
+            <button class="sub-btn" id="subBtn" onclick="addSubscription()">Subscribe — <span id="subBtnPrice">€0.00</span>/delivery</button>
+            <div class="sub-note">Cancel or modify anytime · Billed automatically · Free to pause</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pd-related-title">Related Products</div>
@@ -1288,7 +1330,7 @@ function renderProducts(cat){
   else if(activeSort==='newest') filtered=filtered.slice().reverse();
   document.getElementById('productGrid').innerHTML=filtered.length?filtered.map(p=>{
     const safeName=esc(p.name);
-    return `<div class="pc" onclick="viewProduct('${p.id}')"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
+    return `<div class="pc" onclick="viewProduct('${p.id}')"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}${SUB_ELIGIBLE_CATS.includes(p.cat)&&p.price>0?'<span class="pc-sub-badge">Subscribe &amp; Save</span>':''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
       <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2)+' <span style="font-size:.6rem;font-weight:400;color:var(--gray-400)">HT</span>':'Contact us'}</div>
       ${!p.inStock?`<button class="pc-btn" style="background:var(--gray-300);cursor:not-allowed" disabled>Out of Stock</button>`:p.price>0?`<button class="pc-btn" onclick="event.stopPropagation();addToCart('${p.id}')">Add to Cart</button>`:`<button class="pc-btn" onclick="event.stopPropagation();go('contact')" style="background:var(--navy)">Request Quote</button>`}
     </div></div>`}).join(''):'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-400)">No products match the selected filters.</div>';
@@ -1427,6 +1469,9 @@ function viewProduct(id){
   }
   renderRelated(fill);
 
+  // Render subscription box if eligible
+  renderSubBox(p);
+
   go('product');
 }
 
@@ -1446,6 +1491,8 @@ function selectVariant(sel){
   selectedVariantPrice=parseFloat(sel.value);
   selectedVariantLabel=sel.options[sel.selectedIndex].text.split(' — ')[0];
   document.getElementById('pdPrice').textContent='€'+selectedVariantPrice.toFixed(2)+' HT';
+  // Update subscription box with new variant price
+  if(currentSubProduct) renderSubBox(currentSubProduct);
 }
 
 function pdQtyChange(d){
@@ -1473,13 +1520,110 @@ function addToCartQty(id){
 }
 
 function addToCart(id){const p=products.find(x=>x.id===id);const e=cart.find(x=>x.cartKey===id||x.id===id);if(e)e.qty++;else cart.push({...p,cartKey:id,qty:1});updateCart();showToast(p.name+' added to cart')}
+
+// ─── SUBSCRIBE & SAVE ───
+// Categories eligible for subscription
+const SUB_ELIGIBLE_CATS = ['Preserved / Live Feed', 'Dry Feed'];
+// Placeholder discounts (will be updated after client validation)
+const SUB_TIERS = [
+  {key:'bimonthly', label:'Every 2 months', discount:0.10, badge:'SAVE 10%'},
+  {key:'monthly', label:'Every month', discount:0.15, badge:'SAVE 15%'},
+];
+let selectedSubTier = null;
+let currentSubProduct = null;
+
+function isSubEligible(product){
+  return product && product.price > 0 && product.inStock !== false && SUB_ELIGIBLE_CATS.includes(product.cat);
+}
+
+function renderSubBox(product){
+  const box = document.getElementById('subBox');
+  const body = document.getElementById('subBody');
+  if(!isSubEligible(product)){
+    box.classList.remove('show');
+    return;
+  }
+  box.classList.add('show');
+  body.style.display = 'none'; // collapsed by default
+  currentSubProduct = product;
+  selectedSubTier = SUB_TIERS[0]; // default to bimonthly
+
+  const basePrice = selectedVariantPrice || product.price;
+  const maxDiscount = Math.max(...SUB_TIERS.map(t=>t.discount));
+  document.getElementById('subBadge').textContent = 'SAVE ' + Math.round(maxDiscount*100) + '%';
+
+  // Render options
+  const opts = document.getElementById('subOptions');
+  opts.innerHTML = SUB_TIERS.map((t, i) => {
+    const discounted = (basePrice * (1 - t.discount)).toFixed(2);
+    const saving = (basePrice * t.discount).toFixed(2);
+    return `<div class="sub-opt ${i===0?'selected':''}" onclick="selectSubTier(${i})" data-tier="${i}">
+      <input type="radio" name="subFreq" ${i===0?'checked':''}>
+      <div class="sub-opt-info">
+        <div class="sub-opt-freq">${t.label}</div>
+        <div class="sub-opt-price">€${discounted} HT <span class="sub-opt-original">€${basePrice.toFixed(2)}</span> <span class="sub-opt-save">-${Math.round(t.discount*100)}%</span></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Update button price
+  const defPrice = (basePrice * (1 - SUB_TIERS[0].discount)).toFixed(2);
+  document.getElementById('subBtnPrice').textContent = '€' + defPrice;
+}
+
+function toggleSubBody(){
+  const body = document.getElementById('subBody');
+  body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function selectSubTier(idx){
+  selectedSubTier = SUB_TIERS[idx];
+  const basePrice = selectedVariantPrice || (currentSubProduct ? currentSubProduct.price : 0);
+  const discounted = (basePrice * (1 - selectedSubTier.discount)).toFixed(2);
+
+  // Update UI
+  document.querySelectorAll('.sub-opt').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+    el.querySelector('input').checked = (i === idx);
+  });
+  document.getElementById('subBtnPrice').textContent = '€' + discounted;
+}
+
+function addSubscription(){
+  if(!currentSubProduct || !selectedSubTier) return;
+  const basePrice = selectedVariantPrice || currentSubProduct.price;
+  const discountedPrice = Math.round(basePrice * (1 - selectedSubTier.discount) * 100) / 100;
+  const subName = (selectedVariantLabel ? currentSubProduct.name + ' (' + selectedVariantLabel + ')' : currentSubProduct.name) + ' — ' + selectedSubTier.label;
+  const cartKey = (currentSubProduct.id || '') + '_sub_' + selectedSubTier.key + (selectedVariantLabel ? '_' + selectedVariantLabel.replace(/\s+/g,'') : '');
+
+  const existing = cart.find(x => x.cartKey === cartKey);
+  if(existing){
+    existing.qty += pdQtyVal;
+  } else {
+    cart.push({
+      ...currentSubProduct,
+      id: currentSubProduct.id,
+      cartKey: cartKey,
+      name: subName,
+      price: discountedPrice,
+      qty: pdQtyVal,
+      isSubscription: true,
+      subFrequency: selectedSubTier.key,
+      subDiscount: selectedSubTier.discount,
+      originalPrice: basePrice,
+    });
+  }
+  updateCart();
+  showToast('Subscription added: ' + subName);
+}
 function updateCart(){
   const b=document.getElementById('cartBadge'),n=cart.reduce((s,i)=>s+i.qty,0);
   b.textContent=n;b.classList.toggle('hide',n===0);
   document.getElementById('cBody').innerHTML=cart.length?cart.map(i=>{
     const key=i.cartKey||i.id;
     const safeName=esc(i.name);
-    return `<div class="c-item"><div class="c-item-img"><img src="${i.img}" alt="${safeName}" style="width:100%;height:100%;object-fit:contain"></div><div class="c-item-info"><div class="c-item-name">${safeName}</div><div class="c-item-price">€${i.price.toFixed(2)}</div><div class="c-item-qty"><button onclick="chg('${key}',-1)">−</button><span>${i.qty}</span><button onclick="chg('${key}',1)">+</button></div><div class="c-item-rm" onclick="rm('${key}')">Remove</div></div></div>`;
+    const subLabel=i.isSubscription?`<div style="font-size:.6rem;color:var(--teal);font-weight:600;margin-top:.15rem">🔄 ${i.subFrequency==='monthly'?'Monthly':'Bimonthly'} · -${Math.round((i.subDiscount||0)*100)}%</div>`:'';
+    return `<div class="c-item"><div class="c-item-img"><img src="${i.img}" alt="${safeName}" style="width:100%;height:100%;object-fit:contain"></div><div class="c-item-info"><div class="c-item-name">${safeName}</div><div class="c-item-price">€${i.price.toFixed(2)}${i.isSubscription?' <span style="text-decoration:line-through;color:var(--gray-300);font-size:.68rem">€'+i.originalPrice.toFixed(2)+'</span>':''}</div>${subLabel}<div class="c-item-qty"><button onclick="chg('${key}',-1)">−</button><span>${i.qty}</span><button onclick="chg('${key}',1)">+</button></div><div class="c-item-rm" onclick="rm('${key}')">Remove</div></div></div>`;
   }).join(''):'<div class="c-empty">Your cart is empty.</div>';
   document.getElementById('cTotal').textContent='€'+cart.reduce((s,i)=>s+i.price*i.qty,0).toFixed(2);
   // Show Cool Box notice if cart has live feed products
