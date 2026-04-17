@@ -556,7 +556,9 @@ input,select,textarea{font-family:inherit;font-size:inherit}
   <div class="c-head"><h3>Your Cart</h3><div class="c-x" onclick="toggleCart()">×</div></div>
   <div class="c-body" id="cBody"><div class="c-empty">Your cart is empty.<br>Browse our catalog to get started.</div></div>
   <div class="c-foot">
+    <div id="cartCoolBoxNotice" style="display:none;padding:.45rem .65rem;background:var(--blue-light);border-radius:4px;font-size:.7rem;color:var(--blue);margin-bottom:.6rem">❄️ Cool Box (€20/1-5 units) will be added for temperature-sensitive products</div>
     <div class="c-total"><span class="tl">Subtotal (excl. VAT)</span><span class="tv" id="cTotal">€0.00</span></div>
+    <div style="font-size:.65rem;color:var(--gray-400);margin-top:-.5rem;margin-bottom:.6rem">All prices HT · VAT calculated at checkout</div>
     <button class="c-checkout" onclick="goCheckout()">Proceed to Checkout →</button>
     <button class="c-checkout" onclick="quoteFromCart()" style="background:var(--navy);margin-top:.4rem;font-size:.78rem">Request a Quote Instead →</button>
   </div>
@@ -951,7 +953,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
         <div id="pdTagWrap"></div>
         <div class="pd-price" id="pdPrice"></div>
         <div id="pdVariantWrap" style="display:none;margin:.5rem 0"><label style="font-size:.8rem;font-weight:600;color:var(--gray-600);display:block;margin-bottom:.35rem">Granulometry</label><select id="pdVariantSel" onchange="selectVariant(this)" style="width:100%;padding:.5rem .75rem;border:1px solid var(--gray-200);border-radius:4px;font-size:.85rem;color:var(--gray-700)"></select></div>
-        <div class="pd-vat">Price excl. VAT · Shipping calculated at checkout</div>
+        <div class="pd-vat">Price excl. VAT (HT) · VAT added at checkout based on your location</div>
         <div class="pd-divider"></div>
         <div class="pd-desc" id="pdDesc"></div>
         <div class="pd-specs" id="pdSpecs"></div>
@@ -1114,7 +1116,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
           <div class="ck-panel-body">
             <div id="shipZoneInfo" style="margin-bottom:.75rem;padding:.55rem .75rem;background:var(--teal-light);border-radius:4px;font-size:.78rem;color:var(--teal);font-weight:500"></div>
             <div class="ck-radio-group" id="shipMethods">
-              <div class="ck-radio selected" id="shipStandard" onclick="selectShip(this, calcShipCost('standard'))">
+              <div class="ck-radio selected" id="shipStandard" onclick="selectShip(this, calcShipCost())">
                 Standard Delivery<span class="r-price" id="shipStandardPrice">€30.00</span>
               </div>
               <div class="ck-radio" onclick="selectShip(this,0)">
@@ -1155,10 +1157,11 @@ input,select,textarea{font-family:inherit;font-size:inherit}
           <div class="ck-items" id="ckItems"></div>
           <div class="ck-totals">
             <div class="ck-totals-row"><span class="label">Subtotal</span><span class="value" id="ckSubtotal">€0.00</span></div>
-            <div class="ck-totals-row"><span class="label">Shipping</span><span class="value" id="ckShipping">€12.90</span></div>
-            <div class="ck-totals-row"><span class="label">VAT (20%)</span><span class="value" id="ckVat">€0.00</span></div>
-            <div class="ck-totals-row total"><span class="label">Total</span><span class="value" id="ckGrandTotal">€0.00</span></div>
-            <div class="ck-vat-note">Prices in EUR, VAT calculated at checkout</div>
+            <div class="ck-totals-row" id="ckCoolBoxRow" style="display:none"><span class="label">Cool Box (temp. controlled)</span><span class="value" id="ckCoolBox">€0.00</span></div>
+            <div class="ck-totals-row"><span class="label">Shipping</span><span class="value" id="ckShipping">€0.00</span></div>
+            <div class="ck-totals-row"><span class="label">VAT</span><span class="value" id="ckVat">Calculated at payment</span></div>
+            <div class="ck-totals-row total"><span class="label">Total (excl. VAT)</span><span class="value" id="ckGrandTotal">€0.00</span></div>
+            <div class="ck-vat-note">Prices in EUR · VAT added automatically by Stripe based on your location</div>
           </div>
           <button class="ck-place-order" id="stripeBtn" onclick="initiateStripeCheckout()">Pay Securely with Stripe →</button>
           <div class="ck-secure">
@@ -1195,64 +1198,65 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 const B='https://planktovie.biz/wp-content/uploads/';
 const products=[
   // ── Feed Dispenser (FishGun) ──
-  {id:1,name:"75 ml Diet-Tube – FishGun",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:137.77,img:B+'2020/09/3-300x300.png',tag:"",tc:""},
-  {id:2,name:"FishGun D2: Solid Feed Dispenser",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:2734.01,img:B+'2020/09/1-300x300.png',tag:"Pro",tc:"tag-pro"},
-  {id:3,name:"FishGun L3: Zooplankton Dispenser",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:3589.72,img:B+'2023/09/image_50366977-removebg-preview-300x300.png',tag:"Pro",tc:"tag-pro"},
-  {id:4,name:"Round NFC Tags (x100)",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:60.00,img:B+'2019/09/NFC-chips-300x300.jpg',tag:"",tc:""},
-  {id:5,name:"RFID Tag Holder (Aquaneering)",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:516.75,img:B+'2020/09/IMG_20200911_163020-300x300.jpg',tag:"",tc:""},
-  {id:6,name:"Desiccant Bags",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:7.20,img:B+'2019/10/bag-dessiccant-300x300.jpg',tag:"",tc:""},
-  {id:7,name:"Conical Falcon Tubes – 50 ml",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:8.48,img:B+'2020/08/Tube-falcon-50-ml-300x300.png',tag:"",tc:""},
+  {id:1,name:"75 ml Diet-Tube – FishGun",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:114.81,img:B+'2020/09/3-300x300.png',tag:"",tc:""},
+  {id:2,name:"FishGun D2: Solid Feed Dispenser",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:2278.34,img:B+'2020/09/1-300x300.png',tag:"Pro",tc:"tag-pro"},
+  {id:3,name:"FishGun L3: Zooplankton Dispenser",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:2991.43,img:B+'2023/09/image_50366977-removebg-preview-300x300.png',tag:"Pro",tc:"tag-pro"},
+  {id:4,name:"Round NFC Tags (x100)",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:50.0,img:B+'2019/09/NFC-chips-300x300.jpg',tag:"",tc:""},
+  {id:5,name:"RFID Tag Holder (Aquaneering)",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:430.62,img:B+'2020/09/IMG_20200911_163020-300x300.jpg',tag:"",tc:""},
+  {id:6,name:"Desiccant Bags",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:6.0,img:B+'2019/10/bag-dessiccant-300x300.jpg',tag:"",tc:""},
+  {id:7,name:"Conical Falcon Tubes – 50 ml",cat:"Feed Dispenser",brand:"Planktovie",aud:"Scientist",price:7.07,img:B+'2020/08/Tube-falcon-50-ml-300x300.png',tag:"",tc:""},
   // ── Preserved / Live Feed ──
-  {id:8,name:"L-type Rotifers (1 Million)",cat:"Preserved / Live Feed",brand:"Planktovie",aud:"Scientist",price:74.46,img:B+'2018/09/B003-5-l_-type-rotifers-1M-2-300x300.png',tag:"",tc:""},
-  {id:9,name:"L-type Rotifers (5 Million)",cat:"Preserved / Live Feed",brand:"Planktovie",aud:"Scientist",price:295.48,img:B+'2018/09/B003-5-l_-type-rotifers-5M-3-300x300.png',tag:"",tc:""},
-  {id:10,name:"L-type Rotifers (10 Million)",cat:"Preserved / Live Feed",brand:"Planktovie",aud:"Scientist",price:442.61,img:B+'2018/09/B005-l_-type-rotifers-10M-certified-300x300.png',tag:"Best Seller",tc:"tag-best"},
-  {id:20,name:"Daphnia (2K)",cat:"Preserved / Live Feed",brand:"Planktovie",aud:"Scientist",price:74.46,img:B+'2018/11/daphnie02produit-2-300x300.jpg',tag:"",tc:""},
-  {id:21,name:"Shell-Free Artemia Eggs",cat:"Preserved / Live Feed",brand:"Ocean Nutrition",aud:"Aquaculturist",price:70.73,img:B+'2018/09/B055-9-300x300.png',tag:"",tc:""},
-  {id:22,name:"GSL Artemia Cysts >250 npg (0.5 kg)",cat:"Preserved / Live Feed",brand:"Ocean Nutrition",aud:"Aquaculturist",price:164.04,img:B+'2018/09/B051-2-300x300.png',tag:"",tc:""},
-  {id:23,name:"Micro Artemia Cysts 430 µm (0.5 kg)",cat:"Preserved / Live Feed",brand:"Ocean Nutrition",aud:"Aquaculturist",price:306.00,img:B+'2018/09/B050-1-7-300x300.png',tag:"",tc:""},
-  {id:24,name:"Phyto-Feast (177 ml)",cat:"Preserved / Live Feed",brand:"Reef Nutrition",aud:"Aquarist",price:19.25,img:B+'2018/09/B007-phyto-feast-7-300x300.png',tag:"",tc:""},
-  {id:25,name:"Phyto-Feast (473 ml)",cat:"Preserved / Live Feed",brand:"Reef Nutrition",aud:"Aquarist",price:43.78,img:B+'2018/09/B007-phyto-feast-3-300x300.png',tag:"",tc:""},
+  {id:8,name:"L-type Rotifers (1 Million)",cat:"Preserved / Live Feed",brand:"Planktovie",aud:"Scientist",price:62.05,img:B+'2018/09/B003-5-l_-type-rotifers-1M-2-300x300.png',tag:"",tc:""},
+  {id:9,name:"L-type Rotifers (5 Million)",cat:"Preserved / Live Feed",brand:"Planktovie",aud:"Scientist",price:246.23,img:B+'2018/09/B003-5-l_-type-rotifers-5M-3-300x300.png',tag:"",tc:""},
+  {id:10,name:"L-type Rotifers (10 Million)",cat:"Preserved / Live Feed",brand:"Planktovie",aud:"Scientist",price:368.84,img:B+'2018/09/B005-l_-type-rotifers-10M-certified-300x300.png',tag:"Best Seller",tc:"tag-best"},
+  {id:20,name:"Daphnia (2K)",cat:"Preserved / Live Feed",brand:"Planktovie",aud:"Scientist",price:62.05,img:B+'2018/11/daphnie02produit-2-300x300.jpg',tag:"",tc:""},
+  {id:21,name:"Shell-Free Artemia Eggs",cat:"Preserved / Live Feed",brand:"Ocean Nutrition",aud:"Aquaculturist",price:58.94,img:B+'2018/09/B055-9-300x300.png',tag:"",tc:""},
+  {id:22,name:"GSL Artemia Cysts >250 npg (0.5 kg)",cat:"Preserved / Live Feed",brand:"Ocean Nutrition",aud:"Aquaculturist",price:136.7,img:B+'2018/09/B051-2-300x300.png',tag:"",tc:""},
+  {id:23,name:"Micro Artemia Cysts 430 µm (0.5 kg)",cat:"Preserved / Live Feed",brand:"Ocean Nutrition",aud:"Aquaculturist",price:255.0,img:B+'2018/09/B050-1-7-300x300.png',tag:"",tc:""},
+  {id:24,name:"Phyto-Feast (177 ml)",cat:"Preserved / Live Feed",brand:"Reef Nutrition",aud:"Aquarist",price:16.04,img:B+'2018/09/B007-phyto-feast-7-300x300.png',tag:"",tc:""},
+  {id:25,name:"Phyto-Feast (473 ml)",cat:"Preserved / Live Feed",brand:"Reef Nutrition",aud:"Aquarist",price:36.48,img:B+'2018/09/B007-phyto-feast-3-300x300.png',tag:"",tc:""},
   // ── Dry Feed ──
   // ── Salt for Aquariums ──
-  {id:27,name:"Gemma Micro",cat:"Dry Feed",brand:"Skretting",aud:"Scientist",price:96.04,img:B+'2017/09/Capture-decran-2025-07-28-164419.png',tag:"Best Seller",tc:"tag-best",variants:[{label:"75 µm",price:96.04},{label:"150 µm",price:84.24},{label:"300 µm",price:110.00},{label:"500 µm",price:110.00}]},
-  {id:30,name:"Reef Salt+ Bucket 5kg (Aquaforest)",cat:"Salt for Aquariums",brand:"Aquaforest",aud:"Aquarist",price:29.93,img:B+'2024/10/Reef-salt-bucket-5kg-essai.jpg',tag:"",tc:""},
+  {id:27,name:"Gemma Micro",cat:"Dry Feed",brand:"Skretting",aud:"Scientist",price:80.03,img:B+'2017/09/Capture-decran-2025-07-28-164419.png',tag:"Best Seller",tc:"tag-best",variants:[{label:"75 µm",price:80.03},{label:"150 µm",price:70.2},{label:"300 µm",price:91.67},{label:"500 µm",price:91.67}]},
+  {id:30,name:"Reef Salt+ Bucket 5kg (Aquaforest)",cat:"Salt for Aquariums",brand:"Aquaforest",aud:"Aquarist",price:24.94,img:B+'2024/10/Reef-salt-bucket-5kg-essai.jpg',tag:"",tc:""},
   // ── Equipment ──
-  {id:31,name:"Electrostatic Labels",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:13.50,img:B+'2022/01/VERT-300x300.webp',tag:"",tc:""},
-  {id:33,name:"Compact Culture System",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:156.78,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"",tc:""},
-  {id:34,name:"Floss Retainer for Zooplankton",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:7.24,img:B+'2019/12/Gaine-bleu-sur-floss-1-300x300.png',tag:"",tc:""},
-  {id:35,name:"Zooplankton Reactor",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:616.03,img:B+'2019/10/admin-ajax.jpg',tag:"",tc:""},
-  {id:36,name:"KAMOER F4 WIFI – Dosing Pump",cat:"Equipment",brand:"Planktovie",aud:"Aquarist",price:315.15,img:B+'2019/05/https___www.aqua-store.fr_116681-large_default_kamoer-f4-wi-fi-pompe-doseuse-pour-aquarium-300x300.jpg',tag:"",tc:""},
-  {id:37,name:"Flexible Tube",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:2.83,img:B+'2018/09/Divers2.png',tag:"",tc:""},
-  {id:38,name:"Rotifer Floss (10 pcs)",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:139.90,img:B+'2018/09/A004-rotifer_floss-1-1-5-300x300.png',tag:"",tc:""},
-  {id:39,name:"Counting Chamber, Plastic",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:123.36,img:B+'2018/09/A013-14-counting_chamber-6-300x300.png',tag:"",tc:""},
-  {id:40,name:"Sieve 120 µm",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:30.01,img:B+'2018/09/67c52aac72664f13e0bd38478b9a6612-300x300.png',tag:"",tc:""},
-  {id:41,name:"Sieve 41 µm",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:73.49,img:B+'2018/09/A001-harvest_sieve_parts-12-300x300.png',tag:"",tc:""},
-  {id:42,name:"Refractometer",cat:"Equipment",brand:"Planktovie",aud:"Aquarist",price:63.92,img:B+'2018/09/A011-refractometer-10-300x300.png',tag:"",tc:""},
-  {id:43,name:"1 Channel Dosing Pump",cat:"Equipment",brand:"Planktovie",aud:"Aquarist",price:91.76,img:B+'2016/10/tec-1-ng-pomp-de-dosage-1-canal-300x300.png',tag:"",tc:""},
-  {id:44,name:"Heater Eheim",cat:"Equipment",brand:"Eheim",aud:"Aquarist",price:93.92,img:B+'2018/09/A007-heater_Eheim-12-300x300.png',tag:"",tc:""},
-  {id:45,name:"Air Pump Eheim",cat:"Equipment",brand:"Eheim",aud:"Aquarist",price:85.51,img:B+'2018/09/A006-Air_Pump_Eheim1-300x300.png',tag:"",tc:""},
+  {id:31,name:"Electrostatic Labels",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:11.25,img:B+'2022/01/VERT-300x300.webp',tag:"",tc:""},
+  {id:33,name:"Compact Culture System",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:130.65,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"",tc:""},
+  {id:34,name:"Floss Retainer for Zooplankton",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:6.03,img:B+'2019/12/Gaine-bleu-sur-floss-1-300x300.png',tag:"",tc:""},
+  {id:35,name:"Zooplankton Reactor",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:513.36,img:B+'2019/10/admin-ajax.jpg',tag:"",tc:""},
+  {id:36,name:"KAMOER F4 WIFI – Dosing Pump",cat:"Equipment",brand:"Planktovie",aud:"Aquarist",price:262.62,img:B+'2019/05/https___www.aqua-store.fr_116681-large_default_kamoer-f4-wi-fi-pompe-doseuse-pour-aquarium-300x300.jpg',tag:"",tc:""},
+  {id:37,name:"Flexible Tube",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:2.36,img:B+'2018/09/Divers2.png',tag:"",tc:""},
+  {id:38,name:"Rotifer Floss (10 pcs)",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:116.58,img:B+'2018/09/A004-rotifer_floss-1-1-5-300x300.png',tag:"",tc:""},
+  {id:39,name:"Counting Chamber, Plastic",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:102.8,img:B+'2018/09/A013-14-counting_chamber-6-300x300.png',tag:"",tc:""},
+  {id:40,name:"Sieve 120 µm",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:25.01,img:B+'2018/09/67c52aac72664f13e0bd38478b9a6612-300x300.png',tag:"",tc:""},
+  {id:41,name:"Sieve 41 µm",cat:"Equipment",brand:"Planktovie",aud:"Scientist",price:61.24,img:B+'2018/09/A001-harvest_sieve_parts-12-300x300.png',tag:"",tc:""},
+  {id:42,name:"Refractometer",cat:"Equipment",brand:"Planktovie",aud:"Aquarist",price:53.27,img:B+'2018/09/A011-refractometer-10-300x300.png',tag:"",tc:""},
+  {id:43,name:"1 Channel Dosing Pump",cat:"Equipment",brand:"Planktovie",aud:"Aquarist",price:76.47,img:B+'2016/10/tec-1-ng-pomp-de-dosage-1-canal-300x300.png',tag:"",tc:""},
+  {id:44,name:"Heater Eheim",cat:"Equipment",brand:"Eheim",aud:"Aquarist",price:78.27,img:B+'2018/09/A007-heater_Eheim-12-300x300.png',tag:"",tc:""},
+  {id:45,name:"Air Pump Eheim",cat:"Equipment",brand:"Eheim",aud:"Aquarist",price:71.26,img:B+'2018/09/A006-Air_Pump_Eheim1-300x300.png',tag:"",tc:""},
   // ── Supplements ──
-  {id:46,name:"Calcium Chloride",cat:"Supplements",brand:"Planktovie",aud:"Aquarist",price:19.07,img:B+'2018/10/Produto-12_grandeCACL2-1KG-300x300.jpg',tag:"",tc:""},
-  {id:47,name:"Magnesium Chloride",cat:"Supplements",brand:"Planktovie",aud:"Aquarist",price:18.73,img:B+'2018/10/Produto-13__grandeMAGNESIUM1KG-300x300.jpg',tag:"",tc:""},
+  {id:46,name:"Calcium Chloride",cat:"Supplements",brand:"Planktovie",aud:"Aquarist",price:15.89,img:B+'2018/10/Produto-12_grandeCACL2-1KG-300x300.jpg',tag:"",tc:""},
+  {id:47,name:"Magnesium Chloride",cat:"Supplements",brand:"Planktovie",aud:"Aquarist",price:15.61,img:B+'2018/10/Produto-13__grandeMAGNESIUM1KG-300x300.jpg',tag:"",tc:""},
   // ── Pests & Water Conditioning ──
-  {id:48,name:"Aiptasia Controller",cat:"Pests & Water",brand:"Planktovie",aud:"Aquarist",price:9.50,img:B+'2018/09/cONTRO2.png',tag:"Sale",tc:"tag-sale"},
-  {id:49,name:"ClorAm-X",cat:"Pests & Water",brand:"Planktovie",aud:"Scientist",price:31.13,img:B+'2018/09/A016-ClorAm-X-5lb-9-300x300.png',tag:"",tc:""},
+  {id:48,name:"Aiptasia Controller",cat:"Pests & Water",brand:"Planktovie",aud:"Aquarist",price:7.92,img:B+'2018/09/cONTRO2.png',tag:"Sale",tc:"tag-sale"},
+  {id:49,name:"ClorAm-X",cat:"Pests & Water",brand:"Planktovie",aud:"Scientist",price:25.94,img:B+'2018/09/A016-ClorAm-X-5lb-9-300x300.png',tag:"",tc:""},
   // ── Tests & Analysis ──
-  {id:50,name:"WaterLink Spin Touch Photometer",cat:"Tests & Analysis",brand:"Planktovie",aud:"Scientist",price:2764.03,img:B+'2020/12/photometre-300x300.jpg',tag:"Pro",tc:"tag-pro"},
-  {id:51,name:"Freshwater Test Disks – SpinTouch",cat:"Tests & Analysis",brand:"Planktovie",aud:"Scientist",price:505.98,img:B+'2021/07/LF1XeCxQ-300x300.png',tag:"",tc:""},
-  {id:52,name:"Seawater Test Disks – SpinTouch",cat:"Tests & Analysis",brand:"Planktovie",aud:"Scientist",price:654.17,img:B+'2021/07/w3BQL9Hw-300x300.png',tag:"",tc:""},
-  {id:53,name:"Sanitary Analysis of Culture",cat:"Tests & Analysis",brand:"Planktovie",aud:"Scientist",price:420.00,img:B+'2020/01/Analyse-sanitaires-Pathogen-free-1-300x300.png',tag:"",tc:""},
-  {id:54,name:"Triton Lab's N-DOC Test",cat:"Tests & Analysis",brand:"Planktovie",aud:"Aquarist",price:55.20,img:B+'2019/11/7-300x300.png',tag:"Sale",tc:"tag-sale"},
-  {id:55,name:"Triton Lab's ICP-OES Test",cat:"Tests & Analysis",brand:"Planktovie",aud:"Aquarist",price:55.20,img:B+'2019/11/8-300x300.png',tag:"Sale",tc:"tag-sale"},
+  {id:50,name:"WaterLink Spin Touch Photometer",cat:"Tests & Analysis",brand:"Planktovie",aud:"Scientist",price:2303.36,img:B+'2020/12/photometre-300x300.jpg',tag:"Pro",tc:"tag-pro"},
+  {id:51,name:"Freshwater Test Disks – SpinTouch",cat:"Tests & Analysis",brand:"Planktovie",aud:"Scientist",price:421.65,img:B+'2021/07/LF1XeCxQ-300x300.png',tag:"",tc:""},
+  {id:52,name:"Seawater Test Disks – SpinTouch",cat:"Tests & Analysis",brand:"Planktovie",aud:"Scientist",price:545.14,img:B+'2021/07/w3BQL9Hw-300x300.png',tag:"",tc:""},
+  {id:53,name:"Sanitary Analysis of Culture",cat:"Tests & Analysis",brand:"Planktovie",aud:"Scientist",price:350.0,img:B+'2020/01/Analyse-sanitaires-Pathogen-free-1-300x300.png',tag:"",tc:""},
+  {id:54,name:"Triton Lab's N-DOC Test",cat:"Tests & Analysis",brand:"Planktovie",aud:"Aquarist",price:46.0,img:B+'2019/11/7-300x300.png',tag:"Sale",tc:"tag-sale"},
+  {id:55,name:"Triton Lab's ICP-OES Test",cat:"Tests & Analysis",brand:"Planktovie",aud:"Aquarist",price:46.0,img:B+'2019/11/8-300x300.png',tag:"Sale",tc:"tag-sale"},
   // ── Consulting ──
-  {id:56,name:"Ecotoxicology",cat:"Consulting",brand:"Planktovie",aud:"Scientist",price:0,img:B+'2024/07/Logo-corail-1-300x300.png',tag:"",tc:""},
-  {id:57,name:"FishGun Maintenance",cat:"Consulting",brand:"Planktovie",aud:"Scientist",price:250.00,img:B+'2024/04/1158856-200.png',tag:"",tc:""},
-  {id:58,name:"PLANKTOVIE Consulting",cat:"Consulting",brand:"Planktovie",aud:"Scientist",price:0,img:B+'2018/09/option-integree-v1-2-300x300.png',tag:"",tc:""},
+  {id:56,name:"Ecotoxicology",cat:"Consulting",brand:"Planktovie",aud:"Scientist",price:0.0,img:B+'2024/07/Logo-corail-1-300x300.png',tag:"",tc:""},
+  {id:57,name:"FishGun Maintenance",cat:"Consulting",brand:"Planktovie",aud:"Scientist",price:208.33,img:B+'2024/04/1158856-200.png',tag:"",tc:""},
+  {id:58,name:"PLANKTOVIE Consulting",cat:"Consulting",brand:"Planktovie",aud:"Scientist",price:0.0,img:B+'2018/09/option-integree-v1-2-300x300.png',tag:"",tc:""},
   // ── Aquatic Maintenance & Filtration (March 2026) ──
-  {id:100,name:"Biological Filter Media (1L)",cat:"Aquatic Maintenance & Filtration",brand:"Planktovie",aud:"Scientist",price:0,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"New",tc:"tag-new"},
-  {id:101,name:"UV Sterilizer 9W",cat:"Aquatic Maintenance & Filtration",brand:"Planktovie",aud:"Aquaculturist",price:0,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"New",tc:"tag-new"},
-  {id:102,name:"Mechanical Filter Sock 200µm",cat:"Aquatic Maintenance & Filtration",brand:"Planktovie",aud:"Scientist",price:0,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"New",tc:"tag-new"},
+  {id:100,name:"Biological Filter Media (1L)",cat:"Aquatic Maintenance & Filtration",brand:"Planktovie",aud:"Scientist",price:0.0,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"New",tc:"tag-new"},
+  {id:101,name:"UV Sterilizer 9W",cat:"Aquatic Maintenance & Filtration",brand:"Planktovie",aud:"Aquaculturist",price:0.0,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"New",tc:"tag-new"},
+  {id:102,name:"Mechanical Filter Sock 200µm",cat:"Aquatic Maintenance & Filtration",brand:"Planktovie",aud:"Scientist",price:0.0,img:B+'2018/09/A002-CCS_kit-1-300x300.png',tag:"New",tc:"tag-new"},
 ];
+// Fallback prices are already HT (converted at build time)
 let cart=[];
 // Load cart from localStorage
 try{const saved=localStorage.getItem('planktovie_cart');if(saved)cart=JSON.parse(saved)}catch(e){}
@@ -1272,17 +1276,20 @@ function getFiltered(){
 }
 
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+
+let activeSort='default';
+
 function renderProducts(cat){
   if(cat!==undefined) activeCat=cat;
   let filtered=getFiltered();
   // Apply sorting
   if(activeSort==='price-asc') filtered=filtered.slice().sort((a,b)=>a.price-b.price);
   else if(activeSort==='price-desc') filtered=filtered.slice().sort((a,b)=>b.price-a.price);
-  else if(activeSort==='newest') filtered=filtered.slice().sort((a,b)=>b.id-a.id);
+  else if(activeSort==='newest') filtered=filtered.slice().reverse();
   document.getElementById('productGrid').innerHTML=filtered.length?filtered.map(p=>{
     const safeName=esc(p.name);
     return `<div class="pc" onclick="viewProduct('${p.id}')"><div class="pc-img">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
-      <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2):'Contact us'}</div>
+      <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2)+' <span style="font-size:.6rem;font-weight:400;color:var(--gray-400)">HT</span>':'Contact us'}</div>
       ${!p.inStock?`<button class="pc-btn" style="background:var(--gray-300);cursor:not-allowed" disabled>Out of Stock</button>`:p.price>0?`<button class="pc-btn" onclick="event.stopPropagation();addToCart('${p.id}')">Add to Cart</button>`:`<button class="pc-btn" onclick="event.stopPropagation();go('contact')" style="background:var(--navy)">Request Quote</button>`}
     </div></div>`}).join(''):'<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-400)">No products match the selected filters.</div>';
   const topbar=document.querySelector('.shop-top .r');
@@ -1318,7 +1325,6 @@ function filterCat(cat){activeCat=cat;renderProducts()}
 function filterBrand(brand){activeBrand=brand;renderProducts()}
 function filterAud(aud){activeAud=aud;renderProducts()}
 
-let activeSort='default';
 function sortProducts(sort){activeSort=sort;renderProducts()}
 
 function goShopCat(cat){
@@ -1354,14 +1360,14 @@ function viewProduct(id){
   document.getElementById('galleryImg').innerHTML=`<img src="${p.img}" alt="${esc(p.name)}">`;
   document.getElementById('pdCat').textContent=p.cat;
   document.getElementById('pdName').textContent=p.name;
-  document.getElementById('pdPrice').textContent=p.price>0?'€'+p.price.toFixed(2):'Contact us';
+  document.getElementById('pdPrice').textContent=p.price>0?'€'+p.price.toFixed(2)+' HT':'Contact us';
   // Variant dropdown for products with variants (e.g. Gemma Micro)
   const varWrap=document.getElementById('pdVariantWrap');
   const varSel=document.getElementById('pdVariantSel');
   if(p.variants&&p.variants.length){
     varWrap.style.display='block';
-    varSel.innerHTML=p.variants.map(v=>`<option value='${v.price}'>${v.label} — €${v.price.toFixed(2)}</option>`).join('');
-    document.getElementById('pdPrice').textContent='€'+p.variants[0].price.toFixed(2);
+    varSel.innerHTML=p.variants.map(v=>`<option value='${v.price}'>${v.label} — €${v.price.toFixed(2)} HT</option>`).join('');
+    document.getElementById('pdPrice').textContent='€'+p.variants[0].price.toFixed(2)+' HT';
     selectedVariantPrice=p.variants[0].price;
     selectedVariantLabel=p.variants[0].label;
   } else {
@@ -1428,7 +1434,7 @@ function renderRelated(items){
   document.getElementById('pdRelated').innerHTML=items.map(p=>{
     const safeName=esc(p.name);
     return `<div class="pc" onclick="viewProduct('${p.id}')"><div class="pc-img" style="height:130px">${p.tag?`<span class="pc-tag ${p.tc}">${p.tag}</span>`:''}<img src="${p.img}" alt="${safeName}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f0f4f8;color:#8b95a3;font-size:.7rem;text-align:center;padding:.5rem;font-family:var(--mono)\\'>${safeName}</div>')"></div><div class="pc-body">
-      <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">€${p.price.toFixed(2)}</div>
+      <div class="pc-cat">${p.cat}</div><div class="pc-name">${safeName}</div><div class="pc-price">${p.price>0?'€'+p.price.toFixed(2)+' <span style="font-size:.6rem;font-weight:400;color:var(--gray-400)">HT</span>':'Contact us'}</div>
       <button class="pc-btn" onclick="event.stopPropagation();addToCart('${p.id}')">Add to Cart</button>
     </div></div>`}).join('');
 }
@@ -1439,7 +1445,7 @@ let selectedVariantLabel=null;
 function selectVariant(sel){
   selectedVariantPrice=parseFloat(sel.value);
   selectedVariantLabel=sel.options[sel.selectedIndex].text.split(' — ')[0];
-  document.getElementById('pdPrice').textContent='€'+selectedVariantPrice.toFixed(2);
+  document.getElementById('pdPrice').textContent='€'+selectedVariantPrice.toFixed(2)+' HT';
 }
 
 function pdQtyChange(d){
@@ -1476,6 +1482,12 @@ function updateCart(){
     return `<div class="c-item"><div class="c-item-img"><img src="${i.img}" alt="${safeName}" style="width:100%;height:100%;object-fit:contain"></div><div class="c-item-info"><div class="c-item-name">${safeName}</div><div class="c-item-price">€${i.price.toFixed(2)}</div><div class="c-item-qty"><button onclick="chg('${key}',-1)">−</button><span>${i.qty}</span><button onclick="chg('${key}',1)">+</button></div><div class="c-item-rm" onclick="rm('${key}')">Remove</div></div></div>`;
   }).join(''):'<div class="c-empty">Your cart is empty.</div>';
   document.getElementById('cTotal').textContent='€'+cart.reduce((s,i)=>s+i.price*i.qty,0).toFixed(2);
+  // Show Cool Box notice if cart has live feed products
+  const cbNotice=document.getElementById('cartCoolBoxNotice');
+  if(cbNotice){
+    const hasLiveFeed=cart.some(i=>i.cat==='Preserved / Live Feed');
+    cbNotice.style.display=hasLiveFeed?'block':'none';
+  }
   // Persist cart to localStorage
   try{localStorage.setItem('planktovie_cart',JSON.stringify(cart))}catch(e){}
 }
@@ -1693,6 +1705,13 @@ function getShipZone(){
   return 'other';
 }
 
+// Cool Box: €20 per 1-5 units of Preserved / Live Feed products
+function calcCoolBoxCost(){
+  const liveFeedQty=cart.filter(i=>i.cat==='Preserved / Live Feed').reduce((s,i)=>s+i.qty,0);
+  if(liveFeedQty===0) return 0;
+  return Math.ceil(liveFeedQty/5)*20;
+}
+
 function calcShipCost(){
   const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const zone=getShipZone();
@@ -1703,13 +1722,14 @@ function calcShipCost(){
 function updateShipping(){
   const zone=getShipZone();
   const cost=calcShipCost();
+  const coolBox=calcCoolBoxCost();
   const flag=zone==='france'?'🇫🇷 France':'🌍 Europe / International';
-  const pct=zone==='france'?'30 base + 8%':'60 base + 10%';
-  const label=flag+' — €'+pct+' of order (€'+cost.toFixed(2)+')';
+  const pct=zone==='france'?'€30 base + 8%':'€60 base + 10%';
+  const label=flag+' — '+pct+' (€'+cost.toFixed(2)+')'+(coolBox>0?' + Cool Box €'+coolBox.toFixed(2):'');
   const info=document.getElementById('shipZoneInfo');
   if(info) info.textContent=label;
   const priceEl=document.getElementById('shipStandardPrice');
-  if(priceEl) priceEl.textContent='€'+cost.toFixed(2);
+  if(priceEl) priceEl.textContent='€'+(cost+coolBox).toFixed(2);
   const stdRadio=document.getElementById('shipStandard');
   if(stdRadio&&stdRadio.classList.contains('selected')){
     shipCost=cost;
@@ -1745,8 +1765,15 @@ function renderCheckout(){
 
 function updateTotals(){
   const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const grand=sub+shipCost;
+  const coolBox=calcCoolBoxCost();
+  const grand=sub+shipCost+coolBox;
   document.getElementById('ckSubtotal').textContent='€'+sub.toFixed(2);
+  // Show/hide Cool Box row
+  const cbRow=document.getElementById('ckCoolBoxRow');
+  if(cbRow){
+    if(coolBox>0){cbRow.style.display='';document.getElementById('ckCoolBox').textContent='€'+coolBox.toFixed(2)}
+    else{cbRow.style.display='none'}
+  }
   document.getElementById('ckShipping').textContent=shipCost>0?'€'+shipCost.toFixed(2):'Free';
   document.getElementById('ckVat').textContent='Calculated at payment';
   document.getElementById('ckGrandTotal').textContent='€'+grand.toFixed(2)+' excl. VAT';
@@ -1774,14 +1801,16 @@ async function initiateStripeCheckout(){
 
   const zone=getShipZone?getShipZone():'france';
   const shippingCost=calcShipCost?calcShipCost():30;
+  const coolBoxCost=calcCoolBoxCost?calcCoolBoxCost():0;
 
   try{
     const res=await fetch('/api/create-checkout',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        cart:cart.map(i=>({id:i.id,name:i.name,price:i.price,qty:i.qty})),
+        cart:cart.map(i=>({id:i.id,name:i.name,price:i.price,qty:i.qty,cat:i.cat||''})),
         shipping:{cost:shippingCost,zone},
+        coolBox:{cost:coolBoxCost},
         billing:{first,last,email,org:document.getElementById('ckOrg')?.value||''},
       })
     });
@@ -1915,20 +1944,28 @@ async function loadProducts() {
       products.length = 0;
       data.result.forEach(function(p, i) {
         if (!p.name) return;
+        // Convert TTC → HT (prices from Sanity/WordPress are TTC, divide by 1.20)
+        var priceHT = typeof p.price === 'number' ? Math.round((p.price / 1.20) * 100) / 100 : 0;
+        var variantsHT = null;
+        if (p.variants && p.variants.length) {
+          variantsHT = p.variants.map(function(v) {
+            return { label: v.label, price: Math.round((v.price / 1.20) * 100) / 100 };
+          });
+        }
         products.push({
           id: p.id,
           name: p.name,
           cat: p.cat || '',
           brand: p.brand || 'Planktovie',
           aud: p.aud || 'Scientist',
-          price: typeof p.price === 'number' ? p.price : 0,
+          price: priceHT,
           img: p.img ? p.img + '?w=300&h=300&fit=crop&auto=format' : '',
           tag: p.tag || '',
           tc: tagClassMap[p.tag] || '',
           desc: p.description || '',
           sku: p.sku || '',
           inStock: p.inStock !== false,
-          variants: p.variants || null,
+          variants: variantsHT,
         });
       });
       console.log('Loaded ' + products.length + ' products from Sanity');

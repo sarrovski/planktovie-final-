@@ -1,15 +1,14 @@
 // api/create-checkout.js — Vercel Serverless Function
-// Creates a Stripe Checkout Session with SERVER-SIDE price validation
+// Prices are HT (excl. VAT) — Stripe Tax handles VAT based on customer location
+// Cool Box: €20 per 1-5 units of Preserved / Live Feed
 
 const Stripe = require('stripe');
 
-// Sanity config
 const SANITY_ID = 'xysumkw1';
 const SANITY_DS = 'production';
 
-// Fetch product prices from Sanity to prevent client-side price manipulation
 async function fetchSanityPrices() {
-  const groq = `*[_type == "product"] { "id": _id, name, price, variants }`;
+  const groq = `*[_type == "product"] { "id": _id, name, price, category, variants }`;
   const url = `https://${SANITY_ID}.api.sanity.io/v2024-01-01/data/query/${SANITY_DS}?query=${encodeURIComponent(groq)}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error('Failed to fetch product prices from Sanity');
@@ -17,8 +16,12 @@ async function fetchSanityPrices() {
   return data.result || [];
 }
 
+// Sanity prices are TTC — convert to HT
+function toHT(priceTTC) {
+  return Math.round((priceTTC / 1.20) * 100) / 100;
+}
+
 module.exports = async function handler(req, res) {
-  // CORS — restrict to your domain
   const allowedOrigins = ['https://planktovie.biz', 'https://www.planktovie.biz', 'https://planktovie-final.vercel.app'];
   const origin = req.headers.origin || '';
   if (allowedOrigins.includes(origin)) {
@@ -35,13 +38,12 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { cart, shipping, billing } = req.body || {};
+    const { cart, shipping, coolBox, billing } = req.body || {};
 
     if (!cart || !Array.isArray(cart) || cart.length === 0) {
       return res.status(400).json({ error: 'Cart is empty.' });
     }
 
-    // ── SERVER-SIDE PRICE VALIDATION ──
     let sanityProducts;
     try {
       sanityProducts = await fetchSanityPrices();
@@ -51,8 +53,8 @@ module.exports = async function handler(req, res) {
     }
 
     const stripe = new Stripe(STRIPE_SECRET, { apiVersion: '2024-04-10' });
-
     const lineItems = [];
+    let liveFeedQty = 0;
 
     for (const item of cart) {
       if (!item.id || !item.qty || item.qty < 1) {
@@ -64,29 +66,24 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: `Product not found: ${item.name || item.id}` });
       }
 
-      // Determine validated price
-      let validatedPrice = sanityProduct.price;
+      let validatedPriceHT;
 
       if (sanityProduct.variants && sanityProduct.variants.length > 0) {
-        // Check if client price matches any variant
         const matchingVariant = sanityProduct.variants.find(
-          v => Math.round(v.price * 100) === Math.round(item.price * 100)
+          v => Math.round(toHT(v.price) * 100) === Math.round(item.price * 100)
         );
-        if (matchingVariant) {
-          validatedPrice = matchingVariant.price;
-        } else {
-          console.warn(`Variant price mismatch for ${sanityProduct.name}: client=${item.price}`);
-          validatedPrice = sanityProduct.variants[0].price;
-        }
+        validatedPriceHT = matchingVariant ? toHT(matchingVariant.price) : toHT(sanityProduct.variants[0].price);
       } else {
-        if (Math.round(item.price * 100) !== Math.round(sanityProduct.price * 100)) {
-          console.warn(`Price mismatch for ${sanityProduct.name}: client=€${item.price}, server=€${sanityProduct.price}`);
-        }
-        validatedPrice = sanityProduct.price;
+        validatedPriceHT = toHT(sanityProduct.price);
       }
 
-      if (typeof validatedPrice !== 'number' || validatedPrice <= 0) {
-        return res.status(400).json({ error: `${sanityProduct.name} requires a quote. Please use the quote form.` });
+      if (typeof validatedPriceHT !== 'number' || validatedPriceHT <= 0) {
+        return res.status(400).json({ error: `${sanityProduct.name} requires a quote.` });
+      }
+
+      const cat = sanityProduct.category || item.cat || '';
+      if (cat === 'Preserved / Live Feed') {
+        liveFeedQty += Math.round(item.qty);
       }
 
       lineItems.push({
@@ -94,15 +91,15 @@ module.exports = async function handler(req, res) {
           currency: 'eur',
           product_data: {
             name: item.name || sanityProduct.name,
-            metadata: { sku: `PKV-${String(item.id).padStart(4, '0')}` },
+            metadata: { sku: item.id },
           },
-          unit_amount: Math.round(validatedPrice * 100),
+          unit_amount: Math.round(validatedPriceHT * 100),
         },
         quantity: Math.min(Math.max(Math.round(item.qty), 1), 100),
       });
     }
 
-    // Recalculate shipping server-side
+    // Shipping — recalculated server-side
     if (shipping && shipping.cost > 0) {
       const subtotal = lineItems.reduce((s, li) => s + (li.price_data.unit_amount * li.quantity), 0) / 100;
       const zone = shipping.zone === 'france' ? 'france' : 'other';
@@ -115,6 +112,19 @@ module.exports = async function handler(req, res) {
           unit_amount: Math.round(serverShipCost * 100),
         },
         quantity: 1,
+      });
+    }
+
+    // Cool Box — €20 per 1-5 units of live feed (recalculated server-side)
+    if (liveFeedQty > 0) {
+      const coolBoxCount = Math.ceil(liveFeedQty / 5);
+      lineItems.push({
+        price_data: {
+          currency: 'eur',
+          product_data: { name: `Cool Box — Temperature-controlled packaging` },
+          unit_amount: 2000,
+        },
+        quantity: coolBoxCount,
       });
     }
 
@@ -131,7 +141,7 @@ module.exports = async function handler(req, res) {
           'PL','CZ','HU','RO','GR','HR','US','CA','AU','JP','SG','GB',
         ],
       },
-      automatic_tax: { enabled: false },
+      automatic_tax: { enabled: true },
       customer_email: billing?.email || undefined,
       metadata: {
         source: 'planktovie-website',
