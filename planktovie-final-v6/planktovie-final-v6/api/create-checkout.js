@@ -141,7 +141,7 @@ module.exports = async function handler(req, res) {
           'PL','CZ','HU','RO','GR','HR','US','CA','AU','JP','SG','GB',
         ],
       },
-      automatic_tax: { enabled: true },
+      automatic_tax: { enabled: false },
       customer_email: billing?.email || undefined,
       metadata: {
         source: 'planktovie-website',
