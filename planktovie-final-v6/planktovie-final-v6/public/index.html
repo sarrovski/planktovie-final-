@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Planktovie — Aquatic Organism Solutions for Research & Aquaculture</title>
+<meta name="description" content="Planktovie develops nutritional solutions and precision equipment for zebrafish, aquaculture, and aquariology. Serving 300+ research labs in 40+ countries.">
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600;7..72,700&family=Figtree:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -1397,7 +1398,7 @@ const catDescs={
 
 let pdQtyVal=1;
 
-function viewProduct(id){
+function viewProduct(id, opts){
   const p=products.find(x=>x.id===id);
   if(!p) return;
   pdQtyVal=1;
@@ -1478,7 +1479,25 @@ function viewProduct(id){
   // Render subscription box if eligible
   renderSubBox(p);
 
-  go('product');
+  // Navigate to product page with URL
+  const noPush = opts && opts.noPush;
+  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+  document.getElementById('page-product').classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  document.querySelectorAll('.nav-link')[1]?.classList.add('active'); // Shop
+  window.scrollTo({top:0,behavior:'instant'});
+  const mn=document.getElementById('mobileNav');
+  if(mn)mn.classList.remove('open');
+
+  // Update URL, title, meta
+  const slug = slugify(p.name);
+  document.title = p.name + ' — Planktovie';
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if(metaDesc) metaDesc.content = (p.desc || catDescs[p.cat] || '').slice(0, 160) + ' | Buy from Planktovie — European supplier for zebrafish research and aquaculture.';
+
+  if(!noPush) {
+    history.pushState({ page: 'product', productId: id }, '', '/shop/' + slug);
+  }
 }
 
 function renderRelated(items){
@@ -1688,16 +1707,69 @@ function quoteFromCart(){
 }
 function showToast(m){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 
-function go(page){
+// ─── URL ROUTING ───
+const PAGE_TITLES = {
+  home: 'Planktovie — Aquatic Organism Solutions for Research & Aquaculture',
+  shop: 'Shop — Planktovie',
+  brand: 'Our Brand — Planktovie',
+  training: 'Training — Planktovie',
+  resources: 'Resources — Planktovie',
+  careers: 'Careers — Planktovie',
+  about: 'About — Planktovie',
+  contact: 'Request a Quote — Planktovie',
+  checkout: 'Checkout — Planktovie',
+  product: 'Product — Planktovie',
+};
+
+const PAGE_PATHS = {
+  home: '/',
+  shop: '/shop',
+  brand: '/brand',
+  training: '/training',
+  resources: '/resources',
+  careers: '/careers',
+  about: '/about',
+  contact: '/contact',
+  checkout: '/checkout',
+};
+
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+}
+
+function go(page, opts) {
+  const pushUrl = opts && opts.noPush;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
   const m={home:0,shop:1,brand:2,training:3,resources:4,careers:5,about:6};
   if(m[page]!==undefined)document.querySelectorAll('.nav-link')[m[page]]?.classList.add('active');
   window.scrollTo({top:0,behavior:'instant'});
-  // Close mobile nav if open
   const mn=document.getElementById('mobileNav');
   if(mn)mn.classList.remove('open');
+
+  // Update URL and title
+  document.title = PAGE_TITLES[page] || PAGE_TITLES.home;
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if(metaDesc) metaDesc.content = getMetaDesc(page);
+
+  if(!pushUrl) {
+    const path = PAGE_PATHS[page] || '/';
+    history.pushState({ page }, '', path);
+  }
+}
+
+function getMetaDesc(page) {
+  const descs = {
+    home: 'Planktovie develops nutritional solutions and precision equipment for zebrafish, aquaculture, and aquariology. Serving 300+ research labs in 40+ countries.',
+    shop: 'Buy zebrafish nutrition, live feeds, Gemma Micro, rotifers, Daphnia, Phyto-Feast, and lab equipment. European distributor of Reed Mariculture and Skretting.',
+    brand: 'FishGun D2 semi-automatic feed dispenser, Growing Micro, live plankton cultures. Developed by Planktovie in partnership with CNRS.',
+    training: 'Expert training for zebrafish facilities, rotifer culture, and aquatic system maintenance. Qualiopi certified.',
+    resources: 'Zebrafish feeding protocols, scientific publications, equipment guides, and sanitary certificates.',
+    about: 'Planktovie — 20+ years of experience in aquatic organism nutrition. Based in Marseille, serving research labs worldwide.',
+    contact: 'Request a quote for institutional pricing, custom solutions, or technical inquiries. Response within 1 business day.',
+  };
+  return descs[page] || descs.home;
 }
 
 function toggleMobile(){
@@ -2101,6 +2173,59 @@ function resetQuoteForm(){
   }
 })();
 
+// ─── ROUTE HANDLER (back/forward buttons + initial load) ───
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.page) {
+    if (e.state.page === 'product' && e.state.productId) {
+      viewProduct(e.state.productId, { noPush: true });
+    } else {
+      go(e.state.page, { noPush: true });
+    }
+  } else {
+    parseRoute();
+  }
+});
+
+function parseRoute() {
+  const path = window.location.pathname.toLowerCase();
+
+  // Static pages
+  const routes = {
+    '/': 'home',
+    '/shop': 'shop',
+    '/brand': 'brand',
+    '/training': 'training',
+    '/resources': 'resources',
+    '/careers': 'careers',
+    '/about': 'about',
+    '/contact': 'contact',
+    '/checkout': 'checkout',
+  };
+
+  if (routes[path]) {
+    go(routes[path], { noPush: true });
+    return;
+  }
+
+  // Product page: /shop/some-product-slug
+  if (path.startsWith('/shop/') && path.length > 6) {
+    const slug = path.slice(6);
+    // Find product by matching slug
+    const match = products.find(p => slugify(p.name) === slug);
+    if (match) {
+      viewProduct(match.id, { noPush: true });
+      return;
+    }
+    // Product not found yet (products might not be loaded), try again after load
+    window._pendingSlug = slug;
+    go('shop', { noPush: true });
+    return;
+  }
+
+  // Default
+  go('home', { noPush: true });
+}
+
 // ─── SANITY CMS INTEGRATION ───
 const SANITY_ID = 'xysumkw1';
 const SANITY_DS = 'production';
@@ -2158,8 +2283,31 @@ async function loadProducts() {
     console.log('Sanity unavailable, using fallback: ' + err.message);
   }
   renderProducts();
+
+  // Resolve pending product slug from URL (if user arrived directly on /shop/some-product)
+  if (window._pendingSlug) {
+    const match = products.find(p => slugify(p.name) === window._pendingSlug);
+    if (match) {
+      viewProduct(match.id, { noPush: true });
+    }
+    delete window._pendingSlug;
+  }
 }
 loadProducts();
+
+// Parse initial route (runs after products load via loadProducts → parseRoute)
+// For static pages, parse immediately; for product pages, loadProducts will handle it
+setTimeout(function() {
+  const path = window.location.pathname.toLowerCase();
+  // Only parse non-product routes immediately (product routes wait for Sanity)
+  if (!path.startsWith('/shop/') || path === '/shop') {
+    // Check for Stripe return params first
+    const p = new URLSearchParams(window.location.search);
+    if (!p.get('checkout') && !p.get('subscription')) {
+      parseRoute();
+    }
+  }
+}, 100);
 // Career page FR/EN toggle
 let careerLang = 'en';
 function toggleCareerLang() {
