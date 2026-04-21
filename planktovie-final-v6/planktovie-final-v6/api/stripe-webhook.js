@@ -22,7 +22,7 @@ module.exports = async function handler(req, res) {
   const STRIPE_SECRET  = process.env.STRIPE_SECRET_KEY;
   const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
   const RESEND_KEY     = process.env.RESEND_API_KEY;
-  const ORDER_EMAIL    = process.env.QUOTE_EMAIL || 'info@planktovie.biz';
+  const ORDER_EMAIL    = process.env.SALES_EMAIL || 'sales@planktovie.biz';
 
   if (!STRIPE_SECRET || !WEBHOOK_SECRET) {
     return res.status(500).json({ error: 'Stripe not configured.' });
