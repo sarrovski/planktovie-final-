@@ -987,7 +987,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
     <div id="quoteSuccess" style="display:none;padding:2.5rem 1rem;text-align:center">
       <div style="width:48px;height:48px;border-radius:50%;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
       <h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--navy);margin-bottom:.4rem">Quote Request Sent</h3>
-      <p style="font-size:.88rem;color:var(--gray-500);max-width:360px;margin:0 auto .75rem">Thank you. Our team will review your request and respond within one business day.</p>
+      <p style="font-size:.88rem;color:var(--gray-500);max-width:400px;margin:0 auto .5rem" id="quoteSuccessMsg">Thank you. A preliminary quote has been generated and emailed to you. Our team will confirm within one business day.</p>
       <button class="btn btn-outline btn-sm" onclick="resetQuoteForm()">Send Another Request</button>
     </div>
     <div class="ci">
@@ -2181,6 +2181,7 @@ async function submitQuote(){
     }
     if(!res.ok) throw new Error(data.error||'Failed to send');
     document.getElementById('quoteForm').style.display='none';
+    document.getElementById('quoteSuccessMsg').textContent=data.message||'Thank you. Our team will review your request and respond within one business day.';
     document.getElementById('quoteSuccess').style.display='block';
   }catch(e){
     errEl.textContent=e.message||'Something went wrong. Please try again or email us directly.';
