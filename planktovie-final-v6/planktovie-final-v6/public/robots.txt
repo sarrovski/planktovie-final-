@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://planktovie.biz/sitemap.xml
+
+# Block admin/API paths
+Disallow: /api/
+Disallow: /checkout

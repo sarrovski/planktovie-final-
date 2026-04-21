@@ -1,18 +1,181 @@
 {
+  "redirects": [
+    {
+      "source": "/en",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/shop",
+      "destination": "/shop",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/shop/",
+      "destination": "/shop",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/shop/:path*",
+      "destination": "/shop",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/product/:slug*",
+      "destination": "/shop",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/product-category/:path*",
+      "destination": "/shop",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/about",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/about/",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/rd",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/rd/",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/our-brand",
+      "destination": "/brand",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/our-brand/",
+      "destination": "/brand",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/category/protocols",
+      "destination": "/resources",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/category/protocols/",
+      "destination": "/resources",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/category/tutorial-videos",
+      "destination": "/resources",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/category/tutorial-videos/",
+      "destination": "/resources",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/category/:path*",
+      "destination": "/resources",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/faq/:path*",
+      "destination": "/resources",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/protocols/:path*",
+      "destination": "/resources",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/contact",
+      "destination": "/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/contact/",
+      "destination": "/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/:path*",
+      "destination": "/",
+      "statusCode": 301
+    }
+  ],
   "rewrites": [
-    { "source": "/api/quote", "destination": "/api/quote" },
-    { "source": "/api/create-checkout", "destination": "/api/create-checkout" },
-    { "source": "/api/create-subscription", "destination": "/api/create-subscription" },
-    { "source": "/api/stripe-webhook", "destination": "/api/stripe-webhook" },
-    { "source": "/api/subscription-webhook", "destination": "/api/subscription-webhook" },
-    { "source": "/shop/:slug", "destination": "/index.html" },
-    { "source": "/shop", "destination": "/index.html" },
-    { "source": "/brand", "destination": "/index.html" },
-    { "source": "/training", "destination": "/index.html" },
-    { "source": "/resources", "destination": "/index.html" },
-    { "source": "/careers", "destination": "/index.html" },
-    { "source": "/about", "destination": "/index.html" },
-    { "source": "/contact", "destination": "/index.html" },
-    { "source": "/checkout", "destination": "/index.html" }
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/api/quote",
+      "destination": "/api/quote"
+    },
+    {
+      "source": "/api/create-checkout",
+      "destination": "/api/create-checkout"
+    },
+    {
+      "source": "/api/create-subscription",
+      "destination": "/api/create-subscription"
+    },
+    {
+      "source": "/api/stripe-webhook",
+      "destination": "/api/stripe-webhook"
+    },
+    {
+      "source": "/api/subscription-webhook",
+      "destination": "/api/subscription-webhook"
+    },
+    {
+      "source": "/shop/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/shop",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/brand",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/training",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/resources",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/careers",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/checkout",
+      "destination": "/index.html"
+    }
   ]
 }

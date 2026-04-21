@@ -5,6 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Planktovie — Aquatic Organism Solutions for Research & Aquaculture</title>
 <meta name="description" content="Planktovie develops nutritional solutions and precision equipment for zebrafish, aquaculture, and aquariology. Serving 300+ research labs in 40+ countries.">
+<meta name="keywords" content="zebrafish nutrition, live feed, rotifers, Daphnia, Gemma Micro, Phyto-Feast, aquaculture feed, FishGun, zebrafish lab equipment, Reed Mariculture Europe, Skretting Gemma Micro, rotifer culture, plankton culture">
+<meta property="og:title" content="Planktovie — Aquatic Organism Solutions for Research & Aquaculture">
+<meta property="og:description" content="Nutritional solutions and precision equipment for zebrafish labs, aquaculture, and aquariology. 58+ products, 40+ countries.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://planktovie.biz">
+<link rel="canonical" href="https://planktovie.biz">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Planktovie",
+  "url": "https://planktovie.biz",
+  "logo": "https://planktovie.biz/plankto-logo-light-v2.png",
+  "description": "Nutritional solutions and precision equipment for aquatic organisms — zebrafish, aquaculture, and aquariology.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "45 rue Frédéric Joliot Curie",
+    "addressLocality": "Marseille",
+    "postalCode": "13013",
+    "addressCountry": "FR"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "info@planktovie.biz",
+    "contactType": "sales"
+  },
+  "sameAs": ["https://www.linkedin.com/company/planktovie"],
+  "foundingDate": "2016",
+  "numberOfEmployees": {"@type": "QuantitativeValue", "value": "10"}
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600;7..72,700&family=Figtree:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -1494,6 +1525,31 @@ function viewProduct(id, opts){
   document.title = p.name + ' — Planktovie';
   const metaDesc = document.querySelector('meta[name="description"]');
   if(metaDesc) metaDesc.content = (p.desc || catDescs[p.cat] || '').slice(0, 160) + ' | Buy from Planktovie — European supplier for zebrafish research and aquaculture.';
+
+  // JSON-LD Schema.org Product markup for SEO
+  let existingLd = document.getElementById('product-jsonld');
+  if(!existingLd) { existingLd = document.createElement('script'); existingLd.id = 'product-jsonld'; existingLd.type = 'application/ld+json'; document.head.appendChild(existingLd); }
+  const ldData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": p.name,
+    "description": (p.desc || catDescs[p.cat] || '').slice(0, 300),
+    "brand": { "@type": "Brand", "name": p.brand || "Planktovie" },
+    "sku": p.sku || p.id,
+    "category": p.cat,
+    "image": p.img || '',
+    "url": window.location.origin + '/shop/' + slug,
+    "offers": {
+      "@type": "Offer",
+      "url": window.location.origin + '/shop/' + slug,
+      "priceCurrency": "EUR",
+      "price": p.price > 0 ? p.price.toFixed(2) : undefined,
+      "availability": p.availability === 'preorder' ? 'https://schema.org/PreOrder' : p.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      "seller": { "@type": "Organization", "name": "Planktovie" }
+    }
+  };
+  if(p.price <= 0) delete ldData.offers.price;
+  existingLd.textContent = JSON.stringify(ldData);
 
   if(!noPush) {
     history.pushState({ page: 'product', productId: id }, '', '/shop/' + slug);
