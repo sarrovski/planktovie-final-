@@ -413,15 +413,15 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .foot-certs span{font-size:.65rem;color:var(--gray-400);display:flex;align-items:center;gap:.3rem}
 
 /* ═══ SUBSCRIBE & SAVE ═══ */
-.sub-box{margin:.6rem 0;border:1.5px solid var(--teal);border-radius:var(--radius);overflow:hidden;display:none;background:var(--teal-bg)}
+.sub-box{margin:.6rem 0;border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;display:none;background:var(--gray-50);opacity:.7;pointer-events:none}
 .sub-box.show{display:block}
-.sub-header{display:flex;align-items:center;justify-content:space-between;padding:.65rem .85rem;cursor:pointer;transition:background .15s}
-.sub-header:hover{background:rgba(0,122,110,.06)}
+.sub-header{display:flex;align-items:center;justify-content:space-between;padding:.65rem .85rem}
 .sub-header-left{display:flex;align-items:center;gap:.5rem}
-.sub-icon{width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sub-title{font-size:.84rem;font-weight:700;color:var(--teal)}
-.sub-teaser{font-size:.7rem;color:var(--gray-500);margin-top:.1rem}
-.sub-teaser strong{color:var(--teal);font-weight:700}
+.sub-icon{width:28px;height:28px;border-radius:50%;background:var(--gray-300);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sub-title{font-size:.84rem;font-weight:700;color:var(--gray-400)}
+.sub-teaser{font-size:.7rem;color:var(--gray-400);margin-top:.1rem}
+.sub-teaser strong{color:var(--gray-500);font-weight:600}
+.sub-soon{font-family:var(--mono);font-size:.58rem;font-weight:700;padding:.18rem .5rem;background:var(--gray-300);color:#fff;border-radius:3px;letter-spacing:.04em;text-transform:uppercase}
 .sub-chevron{color:var(--teal);transition:transform .2s var(--ease-out-strong);flex-shrink:0}
 .sub-chevron.open{transform:rotate(180deg)}
 .sub-body{padding:.85rem;border-top:1px solid rgba(0,122,110,.12)}
@@ -998,7 +998,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
                 <div class="sub-teaser" id="subTeaser">From €0.00/delivery — Save up to 15%</div>
               </div>
             </div>
-            <svg class="sub-chevron" id="subChevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            <span class="sub-soon">Coming soon</span>
           </div>
           <div class="sub-body" id="subBody" style="display:none">
             <div class="sub-options" id="subOptions"></div>
@@ -1560,7 +1560,7 @@ function renderSubBox(product){
 
   // Set teaser text
   const teaser = document.getElementById('subTeaser');
-  if(teaser) teaser.innerHTML = 'From <strong>€' + bestPrice + '/delivery</strong> — Save up to ' + Math.round(bestDiscount*100) + '%';
+  if(teaser) teaser.innerHTML = 'Save up to ' + Math.round(bestDiscount*100) + '% with automatic deliveries';
 
   const opts = document.getElementById('subOptions');
   opts.innerHTML = SUB_TIERS.map((t, i) => {
