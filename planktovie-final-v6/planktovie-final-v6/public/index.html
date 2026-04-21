@@ -413,34 +413,32 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .foot-certs span{font-size:.65rem;color:var(--gray-400);display:flex;align-items:center;gap:.3rem}
 
 /* ═══ SUBSCRIBE & SAVE ═══ */
-.sub-box{margin:.75rem 0 .25rem;border:2px solid var(--teal);border-radius:8px;overflow:hidden;display:none;background:linear-gradient(135deg, var(--teal-bg) 0%, #f0faf9 100%);box-shadow:0 2px 12px rgba(0,122,110,.1)}
+.sub-box{margin:.75rem 0 .25rem;border:1.5px solid var(--teal);border-radius:var(--radius);overflow:hidden;display:none;background:var(--teal-bg)}
 .sub-box.show{display:block}
-.sub-header{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;cursor:pointer;transition:background .15s}
+.sub-header{display:flex;align-items:center;justify-content:space-between;padding:.7rem .9rem;cursor:pointer;transition:background .15s}
 .sub-header:hover{background:rgba(0,122,110,.06)}
-.sub-header-left{display:flex;align-items:center;gap:.55rem}
-.sub-icon{width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:sub-pulse 2s ease-in-out infinite}
-@keyframes sub-pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,122,110,.3)}50%{box-shadow:0 0 0 8px rgba(0,122,110,0)}}
-.sub-title{font-size:.92rem;font-weight:700;color:var(--teal)}
-.sub-badge{font-family:var(--mono);font-size:.65rem;font-weight:700;padding:.2rem .55rem;background:var(--teal);color:#fff;border-radius:4px;letter-spacing:.03em;animation:sub-badge-pop .3s var(--ease-out-strong)}
-@keyframes sub-badge-pop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-.sub-body{padding:1rem;border-top:1px solid rgba(0,122,110,.15)}
-.sub-options{display:flex;flex-direction:column;gap:.5rem}
-.sub-opt{display:flex;align-items:center;gap:.65rem;padding:.65rem .8rem;background:#fff;border:2px solid var(--gray-100);border-radius:6px;cursor:pointer;transition:all .15s var(--ease-out-strong)}
-.sub-opt:hover{border-color:var(--teal);background:#fff}
-.sub-opt.selected{border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px rgba(0,122,110,.12)}
-.sub-opt input[type="radio"]{accent-color:var(--teal);margin:0;width:18px;height:18px}
+.sub-header-left{display:flex;align-items:center;gap:.5rem}
+.sub-icon{width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sub-title{font-size:.86rem;font-weight:700;color:var(--teal)}
+.sub-badge{font-family:var(--mono);font-size:.62rem;font-weight:700;padding:.18rem .5rem;background:var(--teal);color:#fff;border-radius:3px;letter-spacing:.03em}
+.sub-body{padding:.85rem;border-top:1px solid rgba(0,122,110,.12)}
+.sub-options{display:flex;flex-direction:column;gap:.45rem}
+.sub-opt{display:flex;align-items:center;gap:.6rem;padding:.6rem .75rem;background:#fff;border:1.5px solid var(--gray-100);border-radius:5px;cursor:pointer;transition:all .15s var(--ease-out-strong)}
+.sub-opt:hover{border-color:var(--teal)}
+.sub-opt.selected{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,122,110,.1)}
+.sub-opt input[type="radio"]{accent-color:var(--teal);margin:0;width:16px;height:16px}
 .sub-opt-info{flex:1}
-.sub-opt-freq{font-size:.88rem;font-weight:700;color:var(--gray-700)}
-.sub-opt-price{font-family:var(--mono);font-size:.82rem;color:var(--teal);font-weight:700;margin-top:.15rem}
-.sub-opt-save{font-size:.68rem;color:#fff;font-weight:700;background:var(--green);padding:.15rem .45rem;border-radius:3px;margin-left:.4rem}
-.sub-opt-original{font-size:.75rem;color:var(--gray-400);text-decoration:line-through;margin-left:.3rem}
-.sub-savings{font-size:.72rem;color:var(--green);font-weight:600;margin-top:.2rem}
-.sub-btn{display:block;width:100%;margin-top:.75rem;padding:.7rem;background:var(--teal);color:#fff;font-size:.88rem;font-weight:700;border-radius:6px;border:none;cursor:pointer;transition:all .15s var(--ease-out-strong);text-align:center;letter-spacing:.02em}
-.sub-btn:hover{background:var(--teal-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,122,110,.25)}
+.sub-opt-freq{font-size:.84rem;font-weight:600;color:var(--gray-700)}
+.sub-opt-price{font-family:var(--mono);font-size:.8rem;color:var(--teal);font-weight:600;margin-top:.1rem}
+.sub-opt-save{font-size:.62rem;color:#fff;font-weight:700;background:var(--green);padding:.12rem .4rem;border-radius:3px;margin-left:.35rem}
+.sub-opt-original{font-size:.72rem;color:var(--gray-400);text-decoration:line-through;margin-left:.3rem}
+.sub-savings{font-size:.68rem;color:var(--green);font-weight:600;margin-top:.15rem}
+.sub-btn{display:block;width:100%;margin-top:.65rem;padding:.6rem;background:var(--teal);color:#fff;font-size:.84rem;font-weight:600;border-radius:5px;border:none;cursor:pointer;transition:all .15s var(--ease-out-strong);text-align:center}
+.sub-btn:hover{background:var(--teal-hover)}
 .sub-btn:active{transform:scale(0.97)}
-.sub-note{font-size:.7rem;color:var(--gray-400);margin-top:.55rem;line-height:1.5;text-align:center}
+.sub-note{font-size:.68rem;color:var(--gray-400);margin-top:.5rem;line-height:1.5;text-align:center}
 /* Grid badge for subscription-eligible products */
-.pc-sub-badge{position:absolute;bottom:.45rem;right:.45rem;font-size:.58rem;font-weight:700;padding:.15rem .45rem;background:var(--teal);color:#fff;border-radius:3px;letter-spacing:.02em}
+.pc-sub-badge{position:absolute;bottom:.45rem;right:.45rem;font-size:.55rem;font-weight:700;padding:.12rem .4rem;background:var(--teal);color:#fff;border-radius:3px;letter-spacing:.02em}
 
 /* ═══ EMIL DESIGN ENGINEERING POLISH ═══ */
 
@@ -1003,7 +1001,7 @@ input,select,textarea{font-family:inherit;font-size:inherit}
           </div>
         </div>
         <div class="pd-divider"></div>
-        <div style="font-size:.72rem;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Or buy once</div>
+        <div style="font-size:.7rem;color:var(--gray-400);margin-bottom:.35rem">or buy once</div>
         <div class="pd-actions">
           <div class="pd-qty">
             <button onclick="pdQtyChange(-1)">−</button>
