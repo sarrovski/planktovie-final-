@@ -413,30 +413,33 @@ input,select,textarea{font-family:inherit;font-size:inherit}
 .foot-certs span{font-size:.65rem;color:var(--gray-400);display:flex;align-items:center;gap:.3rem}
 
 /* ═══ SUBSCRIBE & SAVE ═══ */
-.sub-box{margin:.75rem 0 .25rem;border:1.5px solid var(--teal);border-radius:var(--radius);overflow:hidden;display:none;background:var(--teal-bg)}
+.sub-box{margin:.6rem 0;border:1.5px solid var(--teal);border-radius:var(--radius);overflow:hidden;display:none;background:var(--teal-bg)}
 .sub-box.show{display:block}
-.sub-header{display:flex;align-items:center;justify-content:space-between;padding:.7rem .9rem;cursor:pointer;transition:background .15s}
+.sub-header{display:flex;align-items:center;justify-content:space-between;padding:.65rem .85rem;cursor:pointer;transition:background .15s}
 .sub-header:hover{background:rgba(0,122,110,.06)}
 .sub-header-left{display:flex;align-items:center;gap:.5rem}
 .sub-icon{width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sub-title{font-size:.86rem;font-weight:700;color:var(--teal)}
-.sub-badge{font-family:var(--mono);font-size:.62rem;font-weight:700;padding:.18rem .5rem;background:var(--teal);color:#fff;border-radius:3px;letter-spacing:.03em}
+.sub-title{font-size:.84rem;font-weight:700;color:var(--teal)}
+.sub-teaser{font-size:.7rem;color:var(--gray-500);margin-top:.1rem}
+.sub-teaser strong{color:var(--teal);font-weight:700}
+.sub-chevron{color:var(--teal);transition:transform .2s var(--ease-out-strong);flex-shrink:0}
+.sub-chevron.open{transform:rotate(180deg)}
 .sub-body{padding:.85rem;border-top:1px solid rgba(0,122,110,.12)}
 .sub-options{display:flex;flex-direction:column;gap:.45rem}
-.sub-opt{display:flex;align-items:center;gap:.6rem;padding:.6rem .75rem;background:#fff;border:1.5px solid var(--gray-100);border-radius:5px;cursor:pointer;transition:all .15s var(--ease-out-strong)}
+.sub-opt{display:flex;align-items:center;gap:.6rem;padding:.55rem .7rem;background:#fff;border:1.5px solid var(--gray-100);border-radius:5px;cursor:pointer;transition:all .15s var(--ease-out-strong)}
 .sub-opt:hover{border-color:var(--teal)}
-.sub-opt.selected{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,122,110,.1)}
+.sub-opt.selected{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,122,110,.08)}
 .sub-opt input[type="radio"]{accent-color:var(--teal);margin:0;width:16px;height:16px}
 .sub-opt-info{flex:1}
-.sub-opt-freq{font-size:.84rem;font-weight:600;color:var(--gray-700)}
-.sub-opt-price{font-family:var(--mono);font-size:.8rem;color:var(--teal);font-weight:600;margin-top:.1rem}
-.sub-opt-save{font-size:.62rem;color:#fff;font-weight:700;background:var(--green);padding:.12rem .4rem;border-radius:3px;margin-left:.35rem}
+.sub-opt-freq{font-size:.82rem;font-weight:600;color:var(--gray-700)}
+.sub-opt-price{font-family:var(--mono);font-size:.78rem;color:var(--teal);font-weight:600;margin-top:.1rem}
+.sub-opt-save{font-size:.62rem;color:#fff;font-weight:700;background:var(--green);padding:.1rem .35rem;border-radius:3px;margin-left:.35rem}
 .sub-opt-original{font-size:.72rem;color:var(--gray-400);text-decoration:line-through;margin-left:.3rem}
 .sub-savings{font-size:.68rem;color:var(--green);font-weight:600;margin-top:.15rem}
-.sub-btn{display:block;width:100%;margin-top:.65rem;padding:.6rem;background:var(--teal);color:#fff;font-size:.84rem;font-weight:600;border-radius:5px;border:none;cursor:pointer;transition:all .15s var(--ease-out-strong);text-align:center}
+.sub-btn{display:block;width:100%;margin-top:.6rem;padding:.55rem;background:var(--teal);color:#fff;font-size:.82rem;font-weight:600;border-radius:4px;border:none;cursor:pointer;transition:all .15s var(--ease-out-strong);text-align:center}
 .sub-btn:hover{background:var(--teal-hover)}
 .sub-btn:active{transform:scale(0.97)}
-.sub-note{font-size:.68rem;color:var(--gray-400);margin-top:.5rem;line-height:1.5;text-align:center}
+.sub-note{font-size:.66rem;color:var(--gray-400);margin-top:.45rem;line-height:1.5;text-align:center}
 /* Grid badge for subscription-eligible products */
 .pc-sub-badge{position:absolute;bottom:.45rem;right:.45rem;font-size:.55rem;font-weight:700;padding:.12rem .4rem;background:var(--teal);color:#fff;border-radius:3px;letter-spacing:.02em}
 
@@ -985,23 +988,24 @@ input,select,textarea{font-family:inherit;font-size:inherit}
         <div class="pd-divider"></div>
         <div class="pd-desc" id="pdDesc"></div>
         <div class="pd-specs" id="pdSpecs"></div>
-        <!-- Subscribe & Save — shown before Add to Cart for visibility -->
+        <!-- Subscribe & Save -->
         <div class="sub-box" id="subBox">
           <div class="sub-header" onclick="toggleSubBody()">
             <div class="sub-header-left">
-              <div class="sub-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 15.5A10 10 0 0 1 21.5 8.5M21.5 8.5A10 10 0 0 1 2.5 15.5"/></svg></div>
-              <span class="sub-title">Subscribe &amp; Save</span>
+              <div class="sub-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 15.5A10 10 0 0 1 21.5 8.5M21.5 8.5A10 10 0 0 1 2.5 15.5"/></svg></div>
+              <div>
+                <span class="sub-title">Subscribe &amp; Save</span>
+                <div class="sub-teaser" id="subTeaser">From €0.00/delivery — Save up to 15%</div>
+              </div>
             </div>
-            <span class="sub-badge" id="subBadge">SAVE 15%</span>
+            <svg class="sub-chevron" id="subChevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
-          <div class="sub-body" id="subBody">
+          <div class="sub-body" id="subBody" style="display:none">
             <div class="sub-options" id="subOptions"></div>
             <button class="sub-btn" id="subBtn" onclick="addSubscription()">Subscribe — <span id="subBtnPrice">€0.00</span>/delivery</button>
             <div class="sub-note">✓ Cancel anytime · ✓ Billed automatically · ✓ Free to pause</div>
           </div>
         </div>
-        <div class="pd-divider"></div>
-        <div style="font-size:.7rem;color:var(--gray-400);margin-bottom:.35rem">or buy once</div>
         <div class="pd-actions">
           <div class="pd-qty">
             <button onclick="pdQtyChange(-1)">−</button>
@@ -1539,30 +1543,28 @@ function isSubEligible(product){
 function renderSubBox(product){
   const box = document.getElementById('subBox');
   const body = document.getElementById('subBody');
+  const chevron = document.getElementById('subChevron');
   if(!isSubEligible(product)){
     box.classList.remove('show');
-    // Show "Or buy once" label only when sub box is hidden
-    const buyOnceLabel = box.previousElementSibling;
-    if(buyOnceLabel && buyOnceLabel.textContent.includes('buy once')) buyOnceLabel.style.display='none';
     return;
   }
   box.classList.add('show');
-  body.style.display = 'block'; // open by default — more visible
+  body.style.display = 'none';
+  if(chevron) chevron.classList.remove('open');
   currentSubProduct = product;
   selectedSubTier = SUB_TIERS[0];
 
   const basePrice = selectedVariantPrice || product.price;
-  const maxDiscount = Math.max(...SUB_TIERS.map(t=>t.discount));
-  document.getElementById('subBadge').textContent = 'SAVE ' + Math.round(maxDiscount*100) + '%';
+  const bestDiscount = Math.max(...SUB_TIERS.map(t=>t.discount));
+  const bestPrice = (basePrice * (1 - bestDiscount)).toFixed(2);
 
-  // Show "Or buy once" label
-  const buyOnceLabel = box.nextElementSibling;
-  if(buyOnceLabel && buyOnceLabel.textContent.includes('buy once')) buyOnceLabel.style.display='';
+  // Set teaser text
+  const teaser = document.getElementById('subTeaser');
+  if(teaser) teaser.innerHTML = 'From <strong>€' + bestPrice + '/delivery</strong> — Save up to ' + Math.round(bestDiscount*100) + '%';
 
   const opts = document.getElementById('subOptions');
   opts.innerHTML = SUB_TIERS.map((t, i) => {
     const discounted = (basePrice * (1 - t.discount)).toFixed(2);
-    const savingPerOrder = (basePrice * t.discount).toFixed(2);
     const ordersPerYear = t.key === 'monthly' ? 12 : 6;
     const yearlySaving = (basePrice * t.discount * ordersPerYear).toFixed(0);
     return `<div class="sub-opt ${i===0?'selected':''}" onclick="selectSubTier(${i})" data-tier="${i}">
@@ -1581,7 +1583,10 @@ function renderSubBox(product){
 
 function toggleSubBody(){
   const body = document.getElementById('subBody');
-  body.style.display = body.style.display === 'none' ? 'block' : 'none';
+  const chevron = document.getElementById('subChevron');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if(chevron) chevron.classList.toggle('open', !isOpen);
 }
 
 function selectSubTier(idx){
