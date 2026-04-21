@@ -1586,32 +1586,49 @@ function selectSubTier(idx){
   document.getElementById('subBtnPrice').textContent = '€' + discounted;
 }
 
-function addSubscription(){
+async function addSubscription(){
   if(!currentSubProduct || !selectedSubTier) return;
   const basePrice = selectedVariantPrice || currentSubProduct.price;
   const discountedPrice = Math.round(basePrice * (1 - selectedSubTier.discount) * 100) / 100;
-  const subName = (selectedVariantLabel ? currentSubProduct.name + ' (' + selectedVariantLabel + ')' : currentSubProduct.name) + ' — ' + selectedSubTier.label;
-  const cartKey = (currentSubProduct.id || '') + '_sub_' + selectedSubTier.key + (selectedVariantLabel ? '_' + selectedVariantLabel.replace(/\s+/g,'') : '');
+  const productName = selectedVariantLabel ? currentSubProduct.name + ' (' + selectedVariantLabel + ')' : currentSubProduct.name;
 
-  const existing = cart.find(x => x.cartKey === cartKey);
-  if(existing){
-    existing.qty += pdQtyVal;
-  } else {
-    cart.push({
-      ...currentSubProduct,
-      id: currentSubProduct.id,
-      cartKey: cartKey,
-      name: subName,
-      price: discountedPrice,
-      qty: pdQtyVal,
-      isSubscription: true,
-      subFrequency: selectedSubTier.key,
-      subDiscount: selectedSubTier.discount,
-      originalPrice: basePrice,
+  const btn = document.getElementById('subBtn');
+  btn.disabled = true;
+  btn.textContent = 'Redirecting to Stripe…';
+
+  try {
+    const res = await fetch('/api/create-subscription', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        productId: currentSubProduct.id,
+        productName: productName,
+        price: discountedPrice,
+        originalPrice: basePrice,
+        qty: pdQtyVal,
+        frequency: selectedSubTier.key,
+        discount: selectedSubTier.discount,
+        cat: currentSubProduct.cat || '',
+        variantLabel: selectedVariantLabel || '',
+      })
     });
+    const contentType = res.headers.get('content-type') || '';
+    let data;
+    if (contentType.includes('application/json')) {
+      data = await res.json();
+    } else {
+      throw new Error('Server error (' + res.status + '). Please try again.');
+    }
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || 'Could not create subscription');
+    }
+  } catch (err) {
+    showToast('Subscription error: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = 'Subscribe — €' + discountedPrice.toFixed(2) + '/delivery';
   }
-  updateCart();
-  showToast('Subscription added: ' + subName);
 }
 function updateCart(){
   const b=document.getElementById('cartBadge'),n=cart.reduce((s,i)=>s+i.qty,0);
@@ -2051,6 +2068,18 @@ function resetQuoteForm(){
   if(p.get('checkout')==='cancelled'){
     history.replaceState({},'',window.location.pathname);
     setTimeout(()=>{go('checkout');showToast('Payment cancelled — your cart is still saved.');},150);
+  }
+  // Subscription return
+  if(p.get('subscription')==='success'){
+    history.replaceState({},'',window.location.pathname);
+    setTimeout(()=>{
+      go('shop');
+      showToast('Subscription activated! You will receive a confirmation email shortly.');
+    },150);
+  }
+  if(p.get('subscription')==='cancelled'){
+    history.replaceState({},'',window.location.pathname);
+    setTimeout(()=>{showToast('Subscription setup cancelled.');},150);
   }
 })();
 
