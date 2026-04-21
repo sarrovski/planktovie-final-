@@ -1437,9 +1437,9 @@ function viewProduct(id){
   } else if(p.price>0){
     document.querySelector('.pd-qty').style.display='flex';
     document.getElementById('pdAddBtn').style.display='block';
-    document.getElementById('pdAddBtn').textContent='Add to Cart';
+    document.getElementById('pdAddBtn').textContent=p.availability==='preorder'?'Preorder':'Add to Cart';
     document.getElementById('pdAddBtn').disabled=false;
-    document.getElementById('pdAddBtn').style.background='';
+    document.getElementById('pdAddBtn').style.background=p.availability==='preorder'?'var(--amber)':'';
     document.getElementById('pdAddBtn').style.cursor='';
   } else {
     document.querySelector('.pd-qty').style.display='none';
@@ -1462,7 +1462,7 @@ function viewProduct(id){
     <div class="pd-spec"><span class="spec-label">Category</span><span class="spec-value">${p.cat}</span></div>
     <div class="pd-spec"><span class="spec-label">Brand</span><span class="spec-value">${p.brand}</span></div>
     <div class="pd-spec"><span class="spec-label">Reference</span><span class="spec-value">${p.sku||p.id}</span></div>
-    <div class="pd-spec"><span class="spec-label">Availability</span><span class="spec-value" style="color:${p.inStock?'var(--green)':'var(--red)'}">${p.inStock?'In Stock':'Out of Stock'}</span></div>
+    <div class="pd-spec"><span class="spec-label">Availability</span><span class="spec-value" style="color:${p.availability==='preorder'?'var(--amber)':p.inStock?'var(--green)':'var(--red)'}">${p.availability==='preorder'?'Preorder Only':p.inStock?'In Stock':'Out of Stock'}</span></div>
     <div class="pd-spec"><span class="spec-label">Certification</span><span class="spec-value">QM Diagnostics Sanitary Tested</span></div>
   `;
 
@@ -2116,7 +2116,7 @@ async function loadProducts() {
       d,'cat',d,': coalesce(category, ',d,d,'), brand, ',
       d,'aud',d,': coalesce(audience, ',d,'Scientist',d,'), price, ',
       d,'img',d,': image.asset->url, tag, sku, inStock, description, ',
-      d,'slug',d,': slug.current, variants }'
+      d,'slug',d,': slug.current, variants, availability }'
     ];
     var groq = parts.join('');
     var endpoint = ['https://',SANITY_ID,'.api.sanity.io/v2024-01-01/data/query/',SANITY_DS].join('');
@@ -2146,6 +2146,7 @@ async function loadProducts() {
           desc: p.description || '',
           sku: p.sku || '',
           inStock: p.inStock !== false,
+          availability: p.availability || '',
           variants: p.variants || null,
         });
       });
