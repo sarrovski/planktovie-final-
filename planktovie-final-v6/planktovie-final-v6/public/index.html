@@ -1300,8 +1300,8 @@ const products=[
 ];
 // Fallback prices are already HT (converted at build time)
 let cart=[];
-// Load cart from localStorage
-try{const saved=localStorage.getItem('planktovie_cart');if(saved)cart=JSON.parse(saved)}catch(e){}
+// Load cart from localStorage, filter out broken items (missing name/price)
+try{const saved=localStorage.getItem('planktovie_cart');if(saved){cart=JSON.parse(saved).filter(i=>i&&i.name&&typeof i.price==='number')}}catch(e){}
 
 let activeCat='all', activeBrand='all', activeAud='all';
 
@@ -1519,7 +1519,7 @@ function addToCartQty(id){
   showToast(pdQtyVal+'× '+cartName+' added to cart');
 }
 
-function addToCart(id){const p=products.find(x=>x.id===id);const e=cart.find(x=>x.cartKey===id||x.id===id);if(e)e.qty++;else cart.push({...p,cartKey:id,qty:1});updateCart();showToast(p.name+' added to cart')}
+function addToCart(id){const p=products.find(x=>x.id===id);if(!p)return;const e=cart.find(x=>x.cartKey===id||x.id===id);if(e)e.qty++;else cart.push({...p,cartKey:id,qty:1});updateCart();showToast(p.name+' added to cart')}
 
 // ─── SUBSCRIBE & SAVE ───
 // Categories eligible for subscription
@@ -2088,28 +2088,21 @@ async function loadProducts() {
       products.length = 0;
       data.result.forEach(function(p, i) {
         if (!p.name) return;
-        // Convert TTC → HT (prices from Sanity/WordPress are TTC, divide by 1.20)
-        var priceHT = typeof p.price === 'number' ? Math.round((p.price / 1.20) * 100) / 100 : 0;
-        var variantsHT = null;
-        if (p.variants && p.variants.length) {
-          variantsHT = p.variants.map(function(v) {
-            return { label: v.label, price: Math.round((v.price / 1.20) * 100) / 100 };
-          });
-        }
+        // Prices in Sanity are already HT — no conversion needed
         products.push({
           id: p.id,
           name: p.name,
           cat: p.cat || '',
           brand: p.brand || 'Planktovie',
           aud: p.aud || 'Scientist',
-          price: priceHT,
+          price: typeof p.price === 'number' ? p.price : 0,
           img: p.img ? p.img + '?w=300&h=300&fit=crop&auto=format' : '',
           tag: p.tag || '',
           tc: tagClassMap[p.tag] || '',
           desc: p.description || '',
           sku: p.sku || '',
           inStock: p.inStock !== false,
-          variants: variantsHT,
+          variants: p.variants || null,
         });
       });
       console.log('Loaded ' + products.length + ' products from Sanity');

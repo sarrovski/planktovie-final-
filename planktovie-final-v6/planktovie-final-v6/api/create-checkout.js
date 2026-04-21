@@ -16,9 +16,15 @@ async function fetchSanityPrices() {
   return data.result || [];
 }
 
-// Sanity prices are TTC — convert to HT
-function toHT(priceTTC) {
-  return Math.round((priceTTC / 1.20) * 100) / 100;
+// Sanity prices are already HT — no conversion needed
+function getValidatedPrice(sanityProduct, clientPrice) {
+  if (sanityProduct.variants && sanityProduct.variants.length > 0) {
+    const match = sanityProduct.variants.find(
+      v => Math.round(v.price * 100) === Math.round(clientPrice * 100)
+    );
+    return match ? match.price : sanityProduct.variants[0].price;
+  }
+  return sanityProduct.price;
 }
 
 module.exports = async function handler(req, res) {
@@ -66,18 +72,9 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: `Product not found: ${item.name || item.id}` });
       }
 
-      let validatedPriceHT;
+      let validatedPrice = getValidatedPrice(sanityProduct, item.price);
 
-      if (sanityProduct.variants && sanityProduct.variants.length > 0) {
-        const matchingVariant = sanityProduct.variants.find(
-          v => Math.round(toHT(v.price) * 100) === Math.round(item.price * 100)
-        );
-        validatedPriceHT = matchingVariant ? toHT(matchingVariant.price) : toHT(sanityProduct.variants[0].price);
-      } else {
-        validatedPriceHT = toHT(sanityProduct.price);
-      }
-
-      if (typeof validatedPriceHT !== 'number' || validatedPriceHT <= 0) {
+      if (typeof validatedPrice !== 'number' || validatedPrice <= 0) {
         return res.status(400).json({ error: `${sanityProduct.name} requires a quote.` });
       }
 
@@ -93,7 +90,7 @@ module.exports = async function handler(req, res) {
             name: item.name || sanityProduct.name,
             metadata: { sku: item.id },
           },
-          unit_amount: Math.round(validatedPriceHT * 100),
+          unit_amount: Math.round(validatedPrice * 100),
         },
         quantity: Math.min(Math.max(Math.round(item.qty), 1), 100),
       });
